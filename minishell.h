@@ -5,6 +5,9 @@
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
+#include "libft/libft.h"
+#include <stdio.h>
+
 typedef enum e_rdir_type
 {
 	RDIR, // >
