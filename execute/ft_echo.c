@@ -14,9 +14,9 @@ int	check_n(char *content)
 
 void	ft_echo(t_cmd	*cmd)
 {
-	int	n;
-	int	i;
-	int	j;
+	long	n;
+	long	i;
+	long	j;
 	
 	j = -1;
 	i = 0;
