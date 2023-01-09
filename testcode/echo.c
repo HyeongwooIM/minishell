@@ -1,4 +1,7 @@
 #include "../minishell.h"
+#include <unistd.h>
+
+#include "../minishell.h"
 
 int	check_n(char *content)
 {
@@ -27,4 +30,15 @@ void	ft_echo(t_cmd	*cmd)
 	if (!n)
 		write(1, "\n", 1);
 	return ;
+}
+
+int main()
+{
+	t_cmd cmd;
+
+	cmd.name = "echo";
+	cmd.content = "123 123 123 ";
+
+	ft_echo(&cmd);
+	return (0);
 }
