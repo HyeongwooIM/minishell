@@ -23,13 +23,6 @@ typedef struct s_rdir
 	struct s_rdir *next;
 }	t_rdir;
 
-typedef struct s_token
-{
-	int type;
-	char *word;
-	struct s_token *next;
-}	t_token;
-
 typedef struct s_env
 {
 	char *key;
@@ -41,10 +34,11 @@ extern t_env g_env;
 
 typedef struct s_cmd
 {
-	// input: cat (null) > a > b < c < d : no option
+	// input: cat (null) > a > b < c < d (no option)
 	char *name; // ex : "cat"
-	char *content; // ex : NULL
+	char **content; // ex : NULL
 	struct t_rdir *rdir; // rdir->type: RDIR(>), rdir->file: "a", rdir->next->type: RDIR(>), rdir->next->file: "b" ...
+	int is_heredoc; // heredoc 여부
 	struct s_cmd *next;
 }	t_cmd;
 
