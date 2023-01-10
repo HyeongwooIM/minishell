@@ -5,21 +5,8 @@
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 #include "libft/libft.h"
 #include <stdio.h>
-=======
-=======
->>>>>>> Stashed changes
-# define PATH_MAX = 1024;
-
-#include <unistd.h>
-#include <stdlib.h>
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 
 typedef enum e_rdir_type
 {
