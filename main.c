@@ -32,6 +32,25 @@ void	save_envs(char *envp[], t_env **envs)
 	}
 }
 
+/* 추후 refactoring에 필요
+int	cpy_str(char *dest, const char *src, size_t dstsize)
+{
+	int	i;
+	int	src_len;
+
+	i = 0;
+	src_len = ft_strlen(src);
+	if (dstsize == 0)
+		return (src_len);
+	while (src[i] != '\0' && i + 1 < dstsize)
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	return (src_len);
+}
+*/
+
 char	*join_with(char *a, char *b, char *c)
 {
 	char *str;
@@ -39,10 +58,12 @@ char	*join_with(char *a, char *b, char *c)
 	int i;
 	int j;
 
+	if (!a || !b)
+		return (0);
 	len = ft_strlen(a) + ft_strlen(b) + ft_strlen(c);
 	str = malloc(sizeof(char) * len + 1);
 	if (!str)
-		return ;
+		return (NULL);
 	i = 0;
 	while (i < ft_strlen(a))
 	{
@@ -67,6 +88,19 @@ char	*join_with(char *a, char *b, char *c)
 	return (str);
 }
 
+int get_size(t_env *envs)
+{
+	int	size;
+
+	size = 0;
+	while (envs != NULL)
+	{
+		envs = envs->next;
+		size++;
+	}
+	return (size);
+}
+
 char	**lst_to_arr(t_env *envs)
 {
 	char **arr;
@@ -75,17 +109,12 @@ char	**lst_to_arr(t_env *envs)
 	int i;
 
 	tmp = envs;
-	size = 0;
-	while (tmp != NULL)
-	{
-		tmp = tmp->next;
-		size++;
-	}
+	size = get_size(envs);
 	arr = malloc(sizeof(char *) * size + 1);
 	if (!arr)
-		return ;
+		return (NULL);
 	i = 0;
-	while (i < size)
+	while (i < size && envs != NULL)
 	{
 		arr[i] = join_with(envs->key, envs->value, "=");
 		envs = envs->next;
@@ -99,9 +128,37 @@ int main(int argc, char *argv[], char *envp[])
 {
 	t_env	*envs;
 	// signal 정의
+
 	// envp 정보화
 	save_envs(envp, &envs);
-	// parse
-	// execute
+
+	/* lst 잘 만들어졌는지 확인
+	printf("========lst========\n");
+	int size = 0;
+	while (envs != NULL)
+	{
+		printf("%s: %s\n", envs->key, envs->value);
+		envs = envs->next;
+		size++;
+	}
+	printf("lst size: %d\n", size);
+	*/
+
+	/* lst_to_arr 함수 확인
+	char **arr = lst_to_arr(envs);
+	printf("========arr========\n");
+	int i = 0;
+	while (arr[i] != NULL)
+	{
+		printf("%s\n", arr[i]);
+		i++;
+	}
+	*/
+
+	while (1)
+	{
+		// parse
+		// execute
+	}
 	// free
 }
