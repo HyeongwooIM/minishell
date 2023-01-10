@@ -32,6 +32,6 @@ void	execute(t_cmd	*cmd)
 	if (cmd->next == 0 && check_builtin(cmd->name))
 		single_builtin(cmd);
 	else
-		ft_exe();
+		ft_exe(cmd);
 	return ;
 }

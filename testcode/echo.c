@@ -41,14 +41,17 @@ void	ft_echo(t_cmd	*cmd)
 	return ;
 }
 
-int main(int argc, char** argv)
+int main(int argc, char **argv, char **envp)
 {
-	t_cmd cmd;
-	char *str[10] = {"-nnnnnnnnn", "123", "132"};
+	// t_cmd cmd;
+	if (argc && argv[0])
+		;
+	// char *str[10] = {"-nnnnnnnnn", "123", "132"};
 
 	// printf("%c", str[0][1]);
-	cmd.content = str;
+	// cmd.content = str;
 
-	ft_echo(&cmd);
+	printf("%s", envp[0]);
+	// ft_echo(&cmd);
 	return (0);
 }
