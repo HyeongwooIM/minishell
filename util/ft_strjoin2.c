@@ -3,18 +3,19 @@
 char **ft_strjoin2(char *str, char **arr)
 {
 	long	word_num;
-	long	word_len;
 	long	i;
 	char	**res;
 
 	word_num = -1;
 	while (arr[++word_num])
 		;
-	res = (char **)malloc(sizeof(char *) * word_num + 2);
+	res = (char **)malloc(sizeof(char *) * (word_num + 2));
+	res[word_num + 1] = 0;
 	if (!res)
-		return (1); //error
-	res[word_num] = 0;
+		return (0); //error
+	res[0] = ft_strdup(str);
 	i = -1;
 	while (++i < word_num)
-
+		res[i + 1] = ft_strdup(arr[i]);
+	return (res);
 }

@@ -1,31 +1,6 @@
 #include "../minishell.h"
 
-char	*find_path(char *cmd)
-{
-	char	**paths;
-	char	*path;
-	int		i;
-	char	*part_path;
-
-	i = 0;
-	while (ft_strnstr(envp[i], "PATH=", 5) == 0)
-		i++;
-	paths = ft_split(envp[i] + 5, ':');
-	i = 0;
-	while (paths[i])
-	{
-		part_path = ft_strjoin(paths[i], "/");
-		path = ft_strjoin(part_path, cmd);
-		free(part_path);
-		if (access(path, F_OK) == 0)
-			return (path);
-		free(path);
-		i++;
-	}
-	return (0);
-}
-
-char *fint_path(char *cmd)
+char *find_path(char *cmd, t_env *env)
 {
 	t_env *temp;
 	char **paths;
@@ -33,8 +8,8 @@ char *fint_path(char *cmd)
 	char *path;
 	int	i;
 
-	temp = &g_env;
-	while (!ft_strcmp(temp->key, "PATH"))
+	temp = env;
+	while (ft_strcmp(temp->key, "PATH"))
 		temp = temp->next;
 	paths = ft_split(temp->value, ':');
 	i = -1;
@@ -50,15 +25,14 @@ char *fint_path(char *cmd)
 	return (0); //error?
 }
 
-void ft_exe(t_cmd *cmd)
+void ft_exe(t_cmd *cmd, t_env *env)
 {
 	char	**content;
 	char	*path;
-	char 	**paths;
 	int		i;
 	char	**envp;
 
-	path = get_path(cmd->name);
+	path = find_path(cmd->name, env);
 	content = ft_strjoin2(path, cmd->content);
 	i = -1;
 	if (!path)
@@ -68,7 +42,8 @@ void ft_exe(t_cmd *cmd)
 		free(content);
 		//error_exit("cmd not found");
 	}
-	envp = lst_to_arr(&g_env);
-	if (execve(path, cmd, envp) == -1)
-		error_exit("exeve error");
+	envp = lst_to_arr(env);
+	if (execve(path, content, envp) == -1)
+		// error_exit("exeve error");
+		;
 }
