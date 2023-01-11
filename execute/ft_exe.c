@@ -1,24 +1,27 @@
 #include "../minishell.h"
 
-char *find_path(char *cmd, t_env *env)
+char *find_path(char *cmd, t_env *env, int *is_path)
 {
-	t_env *temp;
 	char **paths;
 	char *part_path;
 	char *path;
 	int	i;
 
-	temp = env;
-	while (ft_strcmp(temp->key, "PATH"))
-		temp = temp->next;
-	paths = ft_split(temp->value, ':');
+	while (env && ft_strcmp(env->key, "PATH"))
+		env = env->next;
+	if(!env)
+	{
+		*is_path = 0;
+		return (0);
+	}
+	paths = ft_split(env->value, ':');
 	i = -1;
 	while (paths[++i])
 	{
 		part_path = ft_strjoin(paths[i], "/");
 		path = ft_strjoin(part_path, cmd);
 		free(part_path);
-		if (access(path, F_OK) == 0)
+		if ((path, F_OK) == 0)
 			return (path);
 		free(path);
 	}
@@ -31,19 +34,22 @@ void ft_exe(t_cmd *cmd, t_env *env)
 	char	*path;
 	int		i;
 	char	**envp;
+	int		is_path;
 
-	path = find_path(cmd->name, env);
-	content = ft_strjoin2(path, cmd->content);
-	i = -1;
+	path = find_path(cmd->name, env, &is_path);
 	if (!path)
 	{
-		while (content[++i])
-			free(content[i]);
-		free(content);
-		//error_exit("cmd not found");
+		if(!is_path)
+		{
+			path = cmd->name;
+			content = ft_strjoin2(path, cmd->content);
+			envp = lst_to_arr(env);
+			if (execve(path, content, envp) == -1)
+				printf("No such file or directory");
+		}
 	}
+
+	content = ft_strjoin2(path, cmd->content);
 	envp = lst_to_arr(env);
-	if (execve(path, content, envp) == -1)
-		// error_exit("exeve error");
-		;
+	(execve(path, content, envp) == -1);
 }

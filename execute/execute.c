@@ -24,13 +24,13 @@ void	check_heredoc(t_cmd	*cmd)
 	return ;
 }
 
-void	execute(t_cmd	*cmd)
+void	execute(t_cmd	*cmd, t_env *env)
 {
 	int	pipe_cnt;
 
 	check_heredoc(cmd);
 	if (cmd->next == 0 && check_builtin(cmd->name))
-		single_builtin(cmd);
+		single_builtin(cmd, env);
 	else
 		ft_exe(cmd);
 	return ;

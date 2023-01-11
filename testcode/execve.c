@@ -101,6 +101,7 @@ void	save_envs(char *envp[], t_env **envs)
 			return ;
 		cur->next = tmp;
 		cur = cur->next;
+		cur->next = 0;
 		i++;
 	}
 }
@@ -138,18 +139,33 @@ char **ft_strjoin2(char *str, char **arr)
 		res[i + 1] = ft_strdup(arr[i]);
 	return (res);
 }
-
-char *find_path(char *cmd, t_env *env)
+# define FULL 0
+# define PART 1
+char *find_path(char *cmd, t_env *env, int *is_path)
 {
 	t_env *temp;
 	char **paths;
+	// char *path[2];
 	char *part_path;
 	char *path;
 	int	i;
 
+	// path[FULL] path[PART]
+
 	temp = env;
-	while (ft_strcmp(temp->key, "PATH"))
+	while (temp && ft_strcmp(temp->key, "PATH"))
 		temp = temp->next;
+	if (!temp)
+	{
+		*is_path = 0;
+		return (0);
+		//파일 체크해서 없으면 no search file
+	}
+	else
+	{
+		*is_path = 2;
+		// printf("%d\n", *is_path);
+	}
 	paths = ft_split(temp->value, ':');
 	i = -1;
 	while (paths[++i])
@@ -170,21 +186,37 @@ void ft_exe(t_cmd *cmd, t_env *env)
 	char	*path;
 	int		i;
 	char	**envp;
+	int		is_path;
 
-	path = find_path(cmd->name, env);
-	content = ft_strjoin2(path, cmd->content);
-	i = -1;
-	if (!path)
+	path = find_path(cmd->name, env, &is_path);
+	if (!is_path || !path)
 	{
-		while (content[++i])
-			free(content[i]);
-		free(content);
-		//error_exit("cmd not found");
-	}
-	envp = lst_to_arr(env);
-	if (execve(path, content, envp) == -1)
+		if (!is_path)
+		{
+			path = cmd->name;
+			content = ft_strjoin2(path, cmd->content);
+			envp = lst_to_arr(env);
+			if (execve(path, content, envp) == -1)
+				printf("No such file or directory");
+		}
+		else
+			printf("cmmend not found");
+		exit(0);
 		// error_exit("exeve error");
-		;
+	}
+	// content = ft_strjoin2(path, cmd->content);
+	// i = -1;
+	// if (!path)
+	// {
+	// 	while (content[++i])
+	// 		free(content[i]);
+	// 	free(content);
+	// 	//error_exit("cmd not found");
+	// }
+	// envp = lst_to_arr(env);
+	// if (execve(path, content, envp) == -1)
+	// 	printf("command not found");
+		// error_exit("exeve error");
 }
 
 int main (int argc, char **argv, char **envp)
@@ -196,7 +228,7 @@ int main (int argc, char **argv, char **envp)
 	if (argc && argv)
 		;
 	char	*content[5] = {"-al", 0};
-	cmd.name = "ls";
+	cmd.name = "l";
 	cmd.content = content;
 	ft_exe(&cmd, env);
 	return (0);

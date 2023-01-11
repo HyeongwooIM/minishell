@@ -1,19 +1,19 @@
 #include "../minishell.h"
 
-int	single_builtin(t_cmd *cmd)
+int	single_builtin(t_cmd *cmd, t_env env)
 {
 	if (ft_strcmp(cmd->name, "echo"))
-		ft_echo(cmd);
+		ft_echo(cmd, env);
 	else if (ft_strcmp(cmd->name, "cd"))
-		ft_cd(cmd);
+		ft_cd(cmd, env);
 	else if (ft_strcmp(cmd->name, "pwd"))
-		ft_pwd(cmd);
+		ft_pwd(cmd, env);
 	else if (ft_strcmp(cmd->name, "export"))
-		ft_export(cmd);
+		ft_export(cmd, env);
 	else if (ft_strcmp(cmd->name, "unset"))
-		ft_unset(cmd);
+		ft_unset(cmd, env);
 	else if (ft_strcmp(cmd->name, "env"))
-		ft_env(cmd);
+		ft_env(cmd, env);
 	else if (ft_strcmp(cmd->name, "exit"))
 		ft_exit(cmd);
 	return (0);
