@@ -6,45 +6,40 @@
 
 t_info g_info;
 
-void	init_env_lst(t_env **env_lst)
+t_env	*new_env(char *key, char *value)
 {
-	/* 이거는 나중에 구조체 초기화로 옮기면 될 듯 */
-	*env_lst = malloc(sizeof(t_env) * 1);
-	if (!*env_lst)
-		return ;
-	(*env_lst)->key = NULL;
-	(*env_lst)->value = NULL;
-	(*env_lst)->next = NULL;
+	t_env *node;
+
+	node = malloc(sizeof(t_env) * 1);
+	if (!node)
+		return (NULL);
+	node->key = key;
+	node->value = value;
+	node->next = NULL;
+	return (node);
 }
 
 void	save_envs(char *envp[])
 {
 	t_env	*cur;
+	t_env	*head;
 	t_env	*tmp;
 	char	**path;
 	int		i;
 
-	init_env_lst(&(g_info.env_lst));
-	i = 0;
-	cur = g_info.env_lst;
-	tmp = cur;
+	path = ft_split(envp[0], '=');
+	cur = new_env(path[0], path[1]);
+	head = cur;
+	i = 1;
 	while (envp[i] != NULL)
 	{
-		if (tmp == NULL)
-		{
-			tmp = malloc(sizeof(t_env) * 1);
-			if (!tmp)
-				return ;
-		}
 		path = ft_split(envp[i], '=');
-		tmp->key = path[0];
-		tmp->value = path[1];
-		tmp->next = NULL;
-		cur = tmp;
-		cur = cur->next;
+		tmp = new_env(path[0], path[1]);
+		cur->next = tmp;
+		cur = cur-> next;
 		i++;
-		free(tmp);
 	}
+	g_info.env_lst = head;
 }
 
 /* 추후 refactoring에 필요
