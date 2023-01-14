@@ -9,6 +9,14 @@
 #include "minishell.h"
 #include "./parse.h"
 
+int is_space(char c)
+{
+	if (c == ' ' || c == '\t' || c == '\v' || \
+			c == '\n' || c == '\f' || c == '\r')
+		return (1);
+	return (0);
+}
+
 void	add_token(t_token **tokens, const char *chunk, int chunk_size)
 {
 	int		type;
@@ -36,7 +44,7 @@ void	add_token(t_token **tokens, const char *chunk, int chunk_size)
 	tmp = malloc(sizeof(t_token) * 1);
 	tmp->word = word;
 	tmp->type = type;
-	if ((*tokens)->word == NULL)
+	if (*tokens == NULL)
 		*tokens = tmp;
 	else
 	{
@@ -54,18 +62,17 @@ void	input_tokenize(char *input, t_token **tokens)
 	tokens = malloc(sizeof(t_token) * 1);
 	if (!tokens)
 		return ;
-	while (*input != '\n')
+	while (*input != '\0' || *input != '\n')
 	{
-		while (*input == ' ')
+		while (is_space(*input))
 			input++;
 		chunk = input;
 		chunk_size = 1;
 		if (*input == '\'')
 		{
-			while (*input + chunk_size != '\'')
+			while (input[chunk_size] != '\'')
 			{
-				if (*input + chunk_size== '\n' \
-				|| *input + chunk_size == ' ')
+				if (input[chunk_size] == '\0')
 					// 안 닫혔을 때: syntax error?
 					return ;
 				chunk_size++;
@@ -73,29 +80,28 @@ void	input_tokenize(char *input, t_token **tokens)
 		}
 		else if (*input == '\"')
 		{
-			while (*input + chunk_size != '\"')
+			while (input[chunk_size] != '\"')
 			{
-				if (*input + chunk_size == '\n' \
-				|| *input + chunk_size == ' ')
+				if (input[chunk_size] == '\0')
 					// 안 닫혔을 때: syntax error?
 					return ;
 				chunk_size++;
+				printf("%c", input[chunk_size]);
 			}
 		}
 		else if (*input == '>')
 		{
-			if (*input + chunk_size != '>')
+			if (input[chunk_size] != '>')
 				chunk_size++;
 		}
 		else if (*input == '<')
 		{
-			if (*input + chunk_size != '<')
+			if (input[chunk_size] != '<')
 				chunk_size++;
 		}
 		else
 		{
-			while (*input + chunk_size != '\n'\
-				|| *input + chunk_size != ' ')
+			while (is_space(*input) || input[chunk_size] == '\0')
 				chunk_size++;
 		}
 		add_token(tokens, chunk, chunk_size);
@@ -103,7 +109,7 @@ void	input_tokenize(char *input, t_token **tokens)
 	}
 }
 
-int	main(void)
+int	parse(void)
 {
 	char *input;
 	t_token *tokens;
@@ -113,9 +119,7 @@ int	main(void)
 		input = readline("minishell$ ");
 		// token화 하기
 		input_tokenize(input, &tokens);
-		printf("hi");
 	}
-	printf("bi");
 	/* 토큰 확인 */
 	while (tokens != NULL)
 	{
