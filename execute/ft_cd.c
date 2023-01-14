@@ -1,37 +1,55 @@
 #include "../minishell.h"
 
-void	restore_pwd(char *cwd)
+// t_env *init_env(char *str)
+// {
+// 	t_env	*env;
+	
+// 	env = g_info->env_list;
+// 	while (env && env->next)
+// 		env = env->next;
+// 	env->next = malloc(sizeof(t_env));
+// 	if (!env->next)
+// 		exit(1);
+// 	env = env->next;
+// 	env->key = ft_strdup(str);
+// 	if (!env->key)
+// 		exit(1);
+// 	env->value = 0;
+// 	env->next = 0;
+// 	return (env);
+// }
+
+void	edit_pwd(char *cwd)
 {
+	char *cwd_temp;
+	t_env *env_pwd;
+	t_env *env_oldpwd;
 
-}
-
-char *path_copy(char *content)
-{
-	int	len;
-	char *str;
-
-	len = 0;
-	while (content[len] != ' ' && content[len])
-		len;
-	str = malloc(sizeof(char) * (len + 1));
-	str[len] = 0;
-	while (--len > 0)
-		str[len] = content[len];
-	return (str);
+	env_pwd = find_env_add("PWD");
+	env_oldpwd = find_env_add("OLDPWD");
+	if (!env_pwd || !env_oldpwd)
+		exit(1);
+	if (env_oldpwd->value)
+		free(env_oldpwd->value);
+	env_oldpwd->value = env_pwd->value;
+	env_pwd->value = ft_strdup(cwd);
+	if (!env_pwd->value)
+		exit(1) ; // error
 }
 
 void	ft_cd(t_cmd *cmd)
 {
 	char get_cwd[PATH_MAX];
 	char *cd_path;
+	char *path;
 
-	if (cmd->content == 0 || cmd->content[1])
-		return ; // 에러처리
-	cd_path = path_copy(cmd->content);
-	if (!chdir(cd_path))
-		; // error
-	if (!getcwd(get_cwd, 4096))
-		; // error
-	restore_pwd(get_cwd);
-	
+	path = *cmd->content;
+
+	if (cmd && cmd->content == 0)
+		eixt(1); // error
+	if (!chdir(path))
+		exit(1); // error
+	if (!getcwd(get_cwd, PATH_MAX))
+		exit(1); // error
+	edit_pwd(get_cwd);
 }

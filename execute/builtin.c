@@ -7,9 +7,9 @@ int	single_builtin(t_cmd *cmd, t_env env)
 	else if (ft_strcmp(cmd->name, "cd"))
 		ft_cd(cmd, env);
 	else if (ft_strcmp(cmd->name, "pwd"))
-		ft_pwd(cmd, env);
+		ft_pwd();
 	else if (ft_strcmp(cmd->name, "export"))
-		ft_export(cmd, env);
+		ft_export(cmd);
 	else if (ft_strcmp(cmd->name, "unset"))
 		ft_unset(cmd, env);
 	else if (ft_strcmp(cmd->name, "env"))

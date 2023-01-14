@@ -2,6 +2,8 @@
 
 int	check_n(char *content)
 {
+	if (!content)
+		return (0);
 	if(*content == '-')
 		content++;
 	else
@@ -26,7 +28,7 @@ void	ft_echo(t_cmd	*cmd)
 	{
 		ft_putstr_fd(*str, 1);
 		str++;
-		if( *str)
+		if(*str)
 			write(1, " ", 1);
 	}
 	if (!n)
