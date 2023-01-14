@@ -17,7 +17,32 @@ int is_space(char c)
 	return (0);
 }
 
-void	add_token(t_token **tokens, const char *chunk, int chunk_size)
+t_token	*new_token(int type, char *word)
+{
+	t_token *node;
+
+	node = malloc(sizeof(t_token) * 1);
+	if (!node)
+		return (NULL);
+	node->type = type;
+	node->word = word;
+	node->next = NULL;
+	return (node);
+}
+
+void	add_token(t_token **tokens, int type, char *word)
+{
+	if (*tokens == NULL)
+		*tokens = new_token(type, word);
+	else
+	{
+		while ((*tokens)->next != NULL)
+			*tokens = (*tokens)->next;
+		(*tokens)->next = new_token(type, word);
+	}
+}
+
+void	make_token(t_token **tokens, const char *chunk, int chunk_size)
 {
 	int		type;
 	char	*word;
@@ -41,17 +66,7 @@ void	add_token(t_token **tokens, const char *chunk, int chunk_size)
 	while (++i < chunk_size)
 		word[i] = chunk[i];
 	word[i] = '\0';
-	tmp = malloc(sizeof(t_token) * 1);
-	tmp->word = word;
-	tmp->type = type;
-	if (*tokens == NULL)
-		*tokens = tmp;
-	else
-	{
-		while (*tokens != NULL)
-			*tokens = (*tokens)->next;
-		(*tokens)->next = tmp;
-	}
+	add_token(tokens, type, word);
 }
 
 void	input_tokenize(char *input, t_token **tokens)
@@ -59,10 +74,9 @@ void	input_tokenize(char *input, t_token **tokens)
 	char *chunk;
 	int chunk_size;
 
-	tokens = malloc(sizeof(t_token) * 1);
-	if (!tokens)
-		return ;
-	while (*input != '\0' || *input != '\n')
+	tokens = malloc(sizeof(t_token *) * 1);
+	// NULL가드
+	while (*input)
 	{
 		while (is_space(*input))
 			input++;
@@ -74,7 +88,7 @@ void	input_tokenize(char *input, t_token **tokens)
 			{
 				if (input[chunk_size] == '\0')
 					// 안 닫혔을 때: syntax error?
-					return ;
+					exit(1);
 				chunk_size++;
 			}
 		}
@@ -84,9 +98,8 @@ void	input_tokenize(char *input, t_token **tokens)
 			{
 				if (input[chunk_size] == '\0')
 					// 안 닫혔을 때: syntax error?
-					return ;
+					exit(1);
 				chunk_size++;
-				printf("%c", input[chunk_size]);
 			}
 		}
 		else if (*input == '>')
@@ -104,12 +117,13 @@ void	input_tokenize(char *input, t_token **tokens)
 			while (is_space(*input) || input[chunk_size] == '\0')
 				chunk_size++;
 		}
-		add_token(tokens, chunk, chunk_size);
+		chunk_size++;
+		make_token(tokens, chunk, chunk_size);
 		input = input + chunk_size;
 	}
 }
 
-int	parse(void)
+int	main(void)
 {
 	char *input;
 	t_token *tokens;

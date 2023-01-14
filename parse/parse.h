@@ -26,5 +26,9 @@ typedef struct s_token
 	struct s_token *next;
 }	t_token;
 
+//typedef struct s_parse
+//{
+//	struct s_token *token_lst;
+//}	t_parse;
 
 #endif
