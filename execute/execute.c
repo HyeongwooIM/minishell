@@ -1,4 +1,4 @@
-#include "../minishell.h
+#include "../minishell.h"
 
 void	check_rdir(t_rdir *rdir)
 {
@@ -14,6 +14,7 @@ void	check_rdir(t_rdir *rdir)
 void	check_heredoc(t_cmd	*cmd)
 {
 	t_cmd	*tmp;
+	int		heredoc_cnt;
 
 	tmp = cmd;
 	while (tmp) {
@@ -23,13 +24,14 @@ void	check_heredoc(t_cmd	*cmd)
 	return ;
 }
 
-void	execute(t_cmd	cmd)
+void	execute(t_cmd	*cmd)
 {
-	if(cmd)
-	{
-		//히어독 체크
-		//히어
-		check_heredoc(cmd);
-	}
+	int	pipe_cnt;
+
+	check_heredoc(cmd);
+	if (cmd->next == 0 && check_builtin(cmd->name))
+		single_builtin(cmd);
+	else
+		ft_exe(cmd);
 	return ;
 }
