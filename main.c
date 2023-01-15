@@ -4,32 +4,42 @@
 
 #include "minishell.h"
 
-t_env g_env;
+t_info g_info;
 
-void	save_envs(char *envp[], t_env **envs)
+t_env	*new_env(char *key, char *value)
+{
+	t_env *node;
+
+	node = malloc(sizeof(t_env) * 1);
+	if (!node)
+		return (NULL);
+	node->key = key;
+	node->value = value;
+	node->next = NULL;
+	return (node);
+}
+
+void	save_envs(char *envp[])
 {
 	t_env	*cur;
+	t_env	*head;
 	t_env	*tmp;
 	char	**path;
 	int		i;
 
-	cur = malloc(sizeof(t_env) * 1);
-	if (!tmp)
-		return ;
-	*envs = cur;
-	i = 0;
+	path = ft_split(envp[0], '=');
+	cur = new_env(path[0], path[1]);
+	head = cur;
+	i = 1;
 	while (envp[i] != NULL)
 	{
 		path = ft_split(envp[i], '=');
-		cur->key = path[0];
-		cur->value = path[1];
-		tmp = malloc(sizeof(t_env) * 1);
-		if (!tmp)
-			return ;
+		tmp = new_env(path[0], path[1]);
 		cur->next = tmp;
-		cur = cur->next;
+		cur = cur-> next;
 		i++;
 	}
+	g_info.env_lst = head;
 }
 
 /* 추후 refactoring에 필요
@@ -51,41 +61,14 @@ int	cpy_str(char *dest, const char *src, size_t dstsize)
 }
 */
 
-char	*join_with(char *a, char *b, char *c)
+char	*join_three(char *start, char *end, char *middle)
 {
-	char *str;
-	int len; //size_t?
-	int i;
-	int j;
+	char *join_two;
+	char *ret;
 
-	if (!a || !b)
-		return (0);
-	len = ft_strlen(a) + ft_strlen(b) + ft_strlen(c);
-	str = malloc(sizeof(char) * len + 1);
-	if (!str)
-		return (NULL);
-	i = 0;
-	while (i < ft_strlen(a))
-	{
-		str[i] = a[i];
-		i++;
-	}
-	j = 0;
-	while (j < ft_strlen(c))
-	{
-		str[i] = c[j];
-		i++;
-		j++;
-	}
-	j = 0;
-	while (j < ft_strlen(b))
-	{
-		str[i]= b[j];
-		i++;
-		j++;
-	}
-	str[i] = '\0';
-	return (str);
+	join_two = ft_strjoin(start, middle);
+	ret = ft_strjoin(join_two, end);
+	return (ret);
 }
 
 int get_size(t_env *envs)
@@ -116,7 +99,7 @@ char	**lst_to_arr(t_env *envs)
 	i = 0;
 	while (i < size && envs != NULL)
 	{
-		arr[i] = join_with(envs->key, envs->value, "=");
+		arr[i] = join_three(envs->key, envs->value, "=");
 		envs = envs->next;
 		i++;
 	}
@@ -126,23 +109,25 @@ char	**lst_to_arr(t_env *envs)
 
 int main(int argc, char *argv[], char *envp[])
 {
-	t_env	*envs;
+	t_cmd	*cmds;
+
 	// signal 정의
 
-	// envp 정보화
-	save_envs(envp, &envs);
+	// 구조체 초기화
 
-	/* lst 잘 만들어졌는지 확인
+	// envp 정보화
+	save_envs(envp);
+
+	/* lst 잘 만들어졌는지 확인 */
+	t_env *cur = g_info.env_lst;
+	int i = 0;
 	printf("========lst========\n");
-	int size = 0;
-	while (envs != NULL)
+	while (cur != NULL)
 	{
-		printf("%s: %s\n", envs->key, envs->value);
-		envs = envs->next;
-		size++;
+		printf("lst %d: %s=%s\n", i++, cur->key, cur->value);
+		cur = cur->next;
 	}
-	printf("lst size: %d\n", size);
-	*/
+
 
 	/* lst_to_arr 함수 확인
 	char **arr = lst_to_arr(envs);
