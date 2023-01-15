@@ -19,16 +19,18 @@ typedef enum e_token_type
 	PIPE
 }	t_token_type;
 
+//typedef struct s_chunk
+//{
+//	int type;
+//	char *word;
+//	struct s_chunk *next;
+//}	t_chunk;
+
 typedef struct s_token
 {
 	int type;
 	char *word;
 	struct s_token *next;
 }	t_token;
-
-//typedef struct s_parse
-//{
-//	struct s_token *token_lst;
-//}	t_parse;
 
 #endif
