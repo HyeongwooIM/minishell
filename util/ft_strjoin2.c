@@ -2,13 +2,13 @@
 
 char **ft_strjoin2(char *str, char **arr)
 {
-	long	word_num;
-	long	i;
+	unsigned int	word_num;
+	long			i;
 	char	**res;
 
-	word_num = -1;
-	while (arr[++word_num])
-		;
+	word_num = 0;
+	while (arr[word_num])
+		++word_num;
 	res = (char **)malloc(sizeof(char *) * (word_num + 2));
 	res[word_num + 1] = 0;
 	if (!res)

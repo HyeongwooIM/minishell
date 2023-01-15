@@ -2,37 +2,34 @@
 
 int	check_n(char *content)
 {
-	long i;
-
-	i = 0;
-	while (content[0] == '-' && content[++i] == 'n')
-		;
-	if (content[i] == 0)
+	if (!content)
+		return (0);
+	if(*content == '-')
+		content++;
+	else
+		return (0);
+	while (*content == 'n')
+		content++;
+	if (*content == 0)
 		return (1);
 	return (0);
 }
 
 void	ft_echo(t_cmd	*cmd)
 {
-	long	n;
-	long	i;
-	long	j;
+	int	n;
+	char **str;
 	
-	j = -1;
-	i = 0;
-	n = check_n(cmd->content[0]);
-	while (cmd->content[++j])
+	str = cmd->content;
+	n = check_n(*str);
+	if (n)
+		str++;
+	while (*str)
 	{
-		if (j == 0 && n)
-			j = 1;
-		else
-			i = 0;
-		while (cmd->content[j][i])
-		{
-			write(1, &cmd->content[j][i], 1);
-			i++;
-		}
-		write(1, " ", 1);
+		ft_putstr_fd(*str, 1);
+		str++;
+		if(*str)
+			write(1, " ", 1);
 	}
 	if (!n)
 		write(1, "\n", 1);
