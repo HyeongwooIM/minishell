@@ -7,7 +7,6 @@
 
 #include "libft/libft.h"
 #include <stdio.h>
-#include <stdlib.h>
 
 typedef enum e_rdir_type
 {
@@ -24,6 +23,15 @@ typedef struct s_rdir
 	struct s_rdir *next;
 }	t_rdir;
 
+typedef struct s_env
+{
+	char *key;
+	char *value;
+	struct s_env *next;
+}	t_env;
+
+extern t_env g_env;
+
 typedef struct s_cmd
 {
 	// input: cat (null) > a > b < c < d (no option)
@@ -33,19 +41,5 @@ typedef struct s_cmd
 	int is_heredoc; // heredoc 여부
 	struct s_cmd *next;
 }	t_cmd;
-
-typedef struct s_env
-{
-	char *key;
-	char *value;
-	struct s_env *next;
-}	t_env;
-
-typedef struct s_info
-{
-	struct s_env *env_lst;
-}	t_info;
-
-extern t_info g_info;
 
 #endif
