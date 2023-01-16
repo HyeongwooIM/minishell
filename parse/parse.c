@@ -30,22 +30,64 @@ t_token	*new_token(int type, char *word)
 	return (node);
 }
 
-void	add_token(int type, char *word, t_token **tokens)
+int quote_size(const char *str, char quote)
 {
-	if ((*tokens)->word == NULL)
+	int i;
+
+	i = 1;
+	while (str[i])
 	{
-		(*tokens)->type = type;
-		(*tokens)->word = word;
+		if (str[i] == '\0')
+			// 안 닫혔을 때: syntax error?
+			exit(1);
+		if (str[i] == quote)
+		{
+			i++;
+			break ;
+		}
+		i++;
+	}
+	return (i);
+}
+
+int rdir_size(const char *str, char rdir)
+{
+	int i;
+
+	i = 1;
+	if (str[i] == rdir)
+		i++;
+	return (i);
+}
+
+int count_size(const char *str, char sign)
+{
+	int size;
+
+	size = 0;
+	if (sign == '\'' || sign == '\"')
+		size = quote_size(str, sign);
+	else if (sign == '>' || sign == '<')
+		size = rdir_size(str, sign);
+	return (size);
+}
+
+void	add_chunk(int type, char *word, t_token *chunk)
+{
+	if (chunk->word == NULL)
+	{
+		chunk->type = type;
+		chunk->word = word;
 	}
 	else
 	{
-		while ((*tokens)->next != NULL)
-			*tokens = (*tokens)->next;
-		(*tokens)->next = new_token(type, word);
+		while (chunk->next != NULL)
+			chunk = chunk->next;
+		chunk->next = new_token(type, word);
 	}
 }
 
-void	make_token(const char *chunk, int chunk_size, t_token **tokens)
+void	make_chunk(const char *chunk, int chunk_size, t_token *chunks)
 {
 	int		type;
 	char	*word;
@@ -68,63 +110,22 @@ void	make_token(const char *chunk, int chunk_size, t_token **tokens)
 	while (++i < chunk_size)
 		word[i] = chunk[i];
 	word[i] = '\0';
-	add_token(type, word, tokens);
+	add_chunk(type, word, chunks);
 }
 
-int quote_size(char *str, char quote)
+void	make_chunk_lst(char *input, t_token *chunks)
 {
-	int i;
-
-	i = 1;
-	while (str[i])
-	{
-		if (str[i] == '\0')
-			// 안 닫혔을 때: syntax error?
-			exit(1);
-		if (str[i] == quote)
-		{
-			i++;
-			break ;
-		}
-		i++;
-	}
-	return (i);
-}
-
-int rdir_size(char *str, char rdir)
-{
-	int i;
-
-	i = 1;
-	if (str[i] == rdir)
-		i++;
-	return (i);
-}
-
-/* 추후 함수명 make_chunk로 변경 */
-void	input_tokenize(char *input, t_token **tokens)
-{
-	t_token	*head;
-	char *chunk;
+	char *chunk_str;
 	int chunk_size;
 
-	*tokens = new_token(0, NULL);
-//	NULL 가드
-	head = *tokens;
 	while (*input)
 	{
 		while (is_space(*input))
 			input++;
-		chunk = input;
-		chunk_size = 1;
-		if (*input == '\'')
-			chunk_size = quote_size(input, '\'');
-		else if (*input == '\"')
-			chunk_size = quote_size(input, '\"');
-		else if (*input == '>')
-			chunk_size = rdir_size(input, '>');
-		else if (*input == '<')
-			chunk_size = rdir_size(input, '<');
+		chunk_str = input;
+		chunk_size = 0;
+		if (*input == '\'' || *input == '\"' || *input == '>' || *input == '<')
+			chunk_size = count_size(input, *input);
 		else
 		{
 			while (input[chunk_size])
@@ -134,29 +135,39 @@ void	input_tokenize(char *input, t_token **tokens)
 				chunk_size++;
 			}
 		}
-		make_token(chunk, chunk_size, &head);
+		make_chunk(chunk_str, chunk_size, chunks);
 		input = input + chunk_size;
 	}
 }
 
-/* input_tokenize 개괄 */
-//void	input_tokenize(char *input, t_token **tokens)
-//{
-//	/* token 할당 */
-//	/* while
-//	 * chunk_lst 만들기
-//	 	* size 재기(일단 white space 기준으로)
-//	 	* lst 생성 혹은 추가
-//	*/
-//	chunks = make_chunk(input, tokens);
-//	/* while
-//	 * token_lst 만들기
-//	 	* parse error 검사
-//	 	* "$" 치환 맟 "" 제거
-//	 	* lst 생성 및 추가
-//	*/
-//	tokens = make_token();
-//}
+void	make_token_lst(t_token *chunks, t_token *tokens)
+{
+	// 치환 작업
+	// 제거 작업
+}
+
+void	input_tokenize(char *input, t_token *tokens)
+{
+	t_token	*chunks;
+
+	/* token 할당 */
+
+	chunks = new_token(0, NULL);
+	//null 가드
+	/* while
+	 * chunk_lst 만들기
+	 	* size 재기(일단 white space 기준으로)
+	 	* lst 생성 혹은 추가
+	*/
+	make_chunk_lst(input, chunks);
+	/* while
+	 * token_lst 만들기
+	 	* parse error 검사
+	 	* "$" 치환 맟 "" 제거
+	 	* lst 생성 및 추가
+	*/
+	make_token_lst(chunks, tokens);
+}
 
 int	main(void)
 {
@@ -166,8 +177,9 @@ int	main(void)
 //	while ()
 	{
 		input = readline("minishell$ ");
+		tokens = new_token(0, NULL);
 		// token화 하기
-		input_tokenize(input, &tokens); // error를 받아서 여기서 free하기
+		input_tokenize(input, tokens); // error를 받아서 여기서 free하기
 		//$ 치환
 
 	}
