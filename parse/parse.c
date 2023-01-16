@@ -9,6 +9,8 @@
 #include "../minishell.h"
 #include "./parse.h"
 
+t_info g_info;
+
 int is_space(char c)
 {
 	if (c == ' ' || c == '\t' || c == '\v' || \
@@ -72,18 +74,18 @@ int count_size(const char *str, char sign)
 	return (size);
 }
 
-void	add_chunk(int type, char *word, t_token *chunk)
+void	add_node(int type, char *word, t_token *head)
 {
-	if (chunk->word == NULL)
+	if (head->word == NULL)
 	{
-		chunk->type = type;
-		chunk->word = word;
+		head->type = type;
+		head->word = word;
 	}
 	else
 	{
-		while (chunk->next != NULL)
-			chunk = chunk->next;
-		chunk->next = new_token(type, word);
+		while (head->next != NULL)
+			head = head->next;
+		head->next = new_token(type, word);
 	}
 }
 
@@ -101,8 +103,10 @@ void	make_chunk(const char *chunk, int chunk_size, t_token *chunks)
 		type = REDIRECT;
 	else if (*chunk == '|')
 		type = PIPE;
+	else if (*chunk == '$')
+		type = DOLLAR;
 	else
-		type = STR;
+		type = CHAR;
 	word = malloc(sizeof(char) * (chunk_size + 1));
 	if (!word)
 		return ;
@@ -110,7 +114,8 @@ void	make_chunk(const char *chunk, int chunk_size, t_token *chunks)
 	while (++i < chunk_size)
 		word[i] = chunk[i];
 	word[i] = '\0';
-	add_chunk(type, word, chunks);
+//	ft_strlcpy(word, chunk, chunk_size);
+	add_node(type, word, chunks);
 }
 
 void	make_chunk_lst(char *input, t_token *chunks)
@@ -140,10 +145,92 @@ void	make_chunk_lst(char *input, t_token *chunks)
 	}
 }
 
-void	make_token_lst(t_token *chunks, t_token *tokens)
+int	ft_strcmp(const char *str1, const char *str2)
 {
-	// 치환 작업
-	// 제거 작업
+	while (*str1 || *str2)
+	{
+		if (*str1 != *str2)
+			return (*str1 - *str2);
+		str1++;
+		str2++;
+	}
+	return (*str1 - *str2);
+}
+
+t_env *find_env(char *key)
+{
+	t_env *temp;
+
+	temp = g_info.env_lst;
+	while (temp && ft_strcmp(temp->key, key))
+		temp = temp->next;
+	if (!temp)
+		return (0);
+	return (temp);
+}
+
+char	*subtitute_dollar(t_token *chunk, char *str)
+{
+	t_env *env;
+	int	size;
+	char *key;
+
+	if (*str)
+	{
+		if (*str == '?')
+			return (ft_itoa(g_info.last_error));
+		else
+		{
+			size = 1;
+			while (!is_space(*(str + size)))
+				size++;
+			key = malloc(sizeof(char) * (size + 1));
+			if (!key)
+				exit (1);
+			ft_strlcpy(key, str, size);
+			env = find_env(key);
+			free(key);
+			if (env)
+				return (env->value);
+			else
+				return (ft_strdup(""));
+		}
+	}
+	return (NULL);
+}
+
+void	repair_chunk_lst(t_token *chunks)
+{
+	/* 치환 작업 및 제거
+	 * $와 "$" 뒤 문자와 일치하는 환경변수 key가 있으면 value로, 없으면 빈 문자열로 치환하면서
+	 	* $의 type은 DOLLAR -> CHAR "$"의 type은 D_QUOTE -> CHAR
+	 * ''는 ''만 제거
+	 	* ''의 type은 S_QUOTE -> CHAR
+	*/
+	t_token	*cur;
+	char *word;
+
+	cur = chunks;
+	while (cur != NULL)
+	{
+		if (cur->type == DOLLAR)
+			// $ 뒤 문자부터 공백까지의 단어를 뽑아서 일치하는 환경변수 key를 찾기
+			word = subtitute_dollar(cur, \
+			(cur->word) + 1); // sign + 1 == $ 뒤
+		else if (cur->type == D_QUOTE)
+			word = subtitute_dollar(cur, \
+			ft_strchr(cur->word, '$') + 1);
+		else if (cur->type == S_QUOTE)
+			word = cur->word++;
+		else
+		{
+			cur = cur->next;
+			continue ;
+		}
+		cur->word = word;
+		cur->type = CHAR;
+		cur = cur->next;
+	}
 }
 
 void	input_tokenize(char *input, t_token *tokens)
@@ -154,19 +241,23 @@ void	input_tokenize(char *input, t_token *tokens)
 
 	chunks = new_token(0, NULL);
 	//null 가드
+
 	/* while
 	 * chunk_lst 만들기
 	 	* size 재기(일단 white space 기준으로)
-	 	* lst 생성 혹은 추가
 	*/
 	make_chunk_lst(input, chunks);
+
+	/* "$" 치환 맟 '' 제거 */
+	repair_chunk_lst(chunks);
+
 	/* while
 	 * token_lst 만들기
 	 	* parse error 검사
-	 	* "$" 치환 맟 "" 제거
 	 	* lst 생성 및 추가
+	 	* 청크 리스트를 토큰 리스트에 깊은 복사 하면서 cmd 인지 cmd에 딸린 옵션인지.. 확인하고 type 바꿔주기
 	*/
-	make_token_lst(chunks, tokens);
+//	make_token_lst(chunks, tokens);
 }
 
 int	main(void)
@@ -180,10 +271,9 @@ int	main(void)
 		tokens = new_token(0, NULL);
 		// token화 하기
 		input_tokenize(input, tokens); // error를 받아서 여기서 free하기
-		//$ 치환
-
 	}
-	/* 토큰 확인 */
+
+	/* 확인용 */
 	while (tokens != NULL)
 	{
 		printf("%s\n", tokens->word);

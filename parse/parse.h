@@ -8,23 +8,21 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-typedef enum e_token_type
+typedef enum e_chunk_type
 {
-	STR,
-	CMD,
-	OPTION,
+	CHAR,
 	S_QUOTE, // ' '
 	D_QUOTE, // " "
+	DOLLAR, // $
 	REDIRECT,
 	PIPE
-}	t_token_type;
+}	t_chunk_type;
 
-//typedef struct s_chunk
-//{
-//	int type;
-//	char *word;
-//	struct s_chunk *next;
-//}	t_chunk;
+typedef enum e_token_type
+{
+	CMD,
+	OPTION,
+}	t_token_type;
 
 typedef struct s_token
 {
