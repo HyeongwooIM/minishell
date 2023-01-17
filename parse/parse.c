@@ -169,34 +169,72 @@ t_env *find_env(char *key)
 	return (temp);
 }
 
-char	*subtitute_dollar(t_token *chunk, char *str)
+/* $ 하나가 아니라 두개도 세개도 올 수 있으니까 문자열 다 돌면서 확인하기
+ * 1. 바로 뒤에 문자가 오면 whitespace 전까지의 문자/문자열 모두를 가져가서 일치하는 환경변수가 있는지 찾음
+ * 2. 바로 뒤에 숫자가 오면 그 숫자 하나만 가져가서 일치하는 환경변수가 있는지 찾음
+ * 3. 바로 뒤에 ?가 오면 마지막 에러넘을 가져와서 $? 전체를 치환
+ * 4. 바로 뒤에 whitespace나 공백이 오면 $포함하여 공백 전까지 출력
+ */
+
+/* 환경변수 치환 시(1, 2) split이랑 join 필요
+ * split할 지점 찾기 -> split 하기 -> 환경변수 치환하기 -> join 하기
+ */
+
+char	*change_word(t_token *chunk)
 {
 	t_env *env;
-	int	size;
+	char *str;
+	char *start;
 	char *key;
+	int	key_len;
+	int word_len;
 
-	if (*str)
+	str = chunk->word;
+	key_len = 0;
+	word_len = 0;
+	while (*str)
 	{
-		if (*str == '?')
-			return (ft_itoa(g_info.last_error));
-		else
+		while (*str == '$')
 		{
-			size = 1;
-			while (!is_space(*(str + size)))
-				size++;
-			key = malloc(sizeof(char) * (size + 1));
+			start = str + 1;
+			if (!start || is_space(*start))
+				break ;
+			else if ('a' < *start && *start < 'z')// $ 뒤에 문자 있을 때
+			{
+				while (!is_space(*(start + key_len)))
+					key_len++;
+			}
+			else if ('0' < *start && *start < '9') // $ 뒤에 숫자 있을 때
+				word_len++;
+		}
+		word_len++;
+		str++;
+
+
+//		---------------------------------------------------------------
+		if (*str == '?') //?일 때
+		{
+			if (g_info.last_error)
+				word_len += ft_strlen(ft_itoa(g_info.last_error));
+			//last_error가 없으면(g_info 초기화시 NONE enum 필요할 듯) word_len에는 영향 x
+		}
+		else // 일반 문자일 때
+		{
+			key_len = 1;
+			while (!is_space(*(str + key_len)))
+				key_len++;
+			key = malloc(sizeof(char) * (key_len + 1));
 			if (!key)
 				exit (1);
-			ft_strlcpy(key, str, size);
+			ft_strlcpy(key, str, key_len);
 			env = find_env(key);
 			free(key);
 			if (env)
-				return (env->value);
-			else
-				return (ft_strdup(""));
+				word_len += ft_strlen(env->value);
+			// env가 없으면 word_len에는 영향 x
 		}
+		str = str + word_len + 1;
 	}
-	return (NULL);
 }
 
 void	repair_chunk_lst(t_token *chunks)
@@ -215,11 +253,10 @@ void	repair_chunk_lst(t_token *chunks)
 	{
 		if (cur->type == DOLLAR)
 			// $ 뒤 문자부터 공백까지의 단어를 뽑아서 일치하는 환경변수 key를 찾기
-			word = subtitute_dollar(cur, \
-			(cur->word) + 1); // sign + 1 == $ 뒤
-		else if (cur->type == D_QUOTE)
-			word = subtitute_dollar(cur, \
-			ft_strchr(cur->word, '$') + 1);
+			word = change_word(cur); // $ 뒤부터
+		else if (cur->type == D_QUOTE && \
+		ft_strchr(cur->word, '$'))
+				word = change_word(cur); // " 뒤부터
 		else if (cur->type == S_QUOTE)
 			word = cur->word++;
 		else
