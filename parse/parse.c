@@ -62,7 +62,7 @@ int rdir_size(const char *str, char rdir)
 	return (i);
 }
 
-int count_size(const char *str, char sign)
+int count_chunk_size(const char *str, char sign)
 {
 	int size;
 
@@ -130,7 +130,7 @@ void	make_chunk_lst(char *input, t_token *chunks)
 		chunk_str = input;
 		chunk_size = 0;
 		if (*input == '\'' || *input == '\"' || *input == '>' || *input == '<')
-			chunk_size = count_size(input, *input);
+			chunk_size = count_chunk_size(input, *input);
 		else
 		{
 			while (input[chunk_size])
@@ -169,6 +169,31 @@ t_env *find_env(char *key)
 	return (temp);
 }
 
+int count_value_size(char *str)
+{
+	t_env *env;
+	char *key;
+	int word_len;
+	int key_len;
+
+	word_len = 0;
+	key_len = 0;
+	if ('a' < *str && *str < 'z')
+		while (!is_space(*(str + key_len)))
+			key_len++;
+	else if ('0' < *str && *str < '9')
+		key_len++;
+	key = malloc(sizeof(char) * (key_len + 1));
+	if (!key)
+		exit (1);
+	ft_strlcpy(key, str, key_len);
+	env = find_env(key);
+	if (env)
+		word_len += ft_strlen(env->value);
+	free(key);
+	return (word_len);
+}
+
 /* $ 하나가 아니라 두개도 세개도 올 수 있으니까 문자열 다 돌면서 확인하기
  * 1. 바로 뒤에 문자가 오면 whitespace 전까지의 문자/문자열 모두를 가져가서 일치하는 환경변수가 있는지 찾음
  * 2. 바로 뒤에 숫자가 오면 그 숫자 하나만 가져가서 일치하는 환경변수가 있는지 찾음
@@ -180,61 +205,50 @@ t_env *find_env(char *key)
  * split할 지점 찾기 -> split 하기 -> 환경변수 치환하기 -> join 하기
  */
 
-char	*change_word(t_token *chunk)
+void ft_ptr_split(char *str, char *point, char **bowl)
 {
-	t_env *env;
-	char *str;
+
+}
+
+char	*change_word(t_token *chunk, int split_cnt)
+{
+	char **splited_words;
+	char *word;
 	char *start;
-	char *key;
-	int	key_len;
 	int word_len;
 
-	str = chunk->word;
-	key_len = 0;
+	word = chunk->word;
 	word_len = 0;
-	while (*str)
-	{
-		while (*str == '$')
-		{
-			start = str + 1;
-			if (!start || is_space(*start))
-				break ;
-			else if ('a' < *start && *start < 'z')// $ 뒤에 문자 있을 때
+
+			// dollar가 포함 되어있을 때
+			splited_words = malloc(sizeof(char *) * (split_cnt + 1));
+			if (!splited_words)
+				exit(1);
+			ft_ptr_split(chunk->word, word, splited_words);
+			while (*splited_words)
 			{
-				while (!is_space(*(start + key_len)))
-					key_len++;
+				if (*splited_words[0] == '$')
+					subtitute_dollar();
+				(*splited_words)++;
 			}
-			else if ('0' < *start && *start < '9') // $ 뒤에 숫자 있을 때
-				word_len++;
-		}
-		word_len++;
-		str++;
 
 
-//		---------------------------------------------------------------
-		if (*str == '?') //?일 때
-		{
-			if (g_info.last_error)
-				word_len += ft_strlen(ft_itoa(g_info.last_error));
-			//last_error가 없으면(g_info 초기화시 NONE enum 필요할 듯) word_len에는 영향 x
-		}
-		else // 일반 문자일 때
-		{
-			key_len = 1;
-			while (!is_space(*(str + key_len)))
-				key_len++;
-			key = malloc(sizeof(char) * (key_len + 1));
-			if (!key)
-				exit (1);
-			ft_strlcpy(key, str, key_len);
-			env = find_env(key);
-			free(key);
-			if (env)
-				word_len += ft_strlen(env->value);
-			// env가 없으면 word_len에는 영향 x
-		}
-		str = str + word_len + 1;
-	}
+//		----------------------------------------------------------------------
+			start = word + 1;
+			if ('a' < *start && *start < 'z' || \
+			'0' < *start && *start < '9')// $ 뒤에 문자나 숫자 있을 때
+				word_len += count_value_size(start);
+			else if (*start == '?') //?일 때
+				if (g_info.last_error)
+					word_len += ft_strlen(ft_itoa(g_info.last_error));
+				//last_error가 없으면(g_info 초기화시 NONE enum 필요할 듯) word_len에는 영향 x
+			else // !start || is_space(*start) || 그 외 기호들
+			{
+				word++;
+				continue;
+			}
+			word += word_len;
+//		----------------------------------------------------------------------
 }
 
 void	repair_chunk_lst(t_token *chunks)
@@ -247,16 +261,23 @@ void	repair_chunk_lst(t_token *chunks)
 	*/
 	t_token	*cur;
 	char *word;
+	int dollar_cnt;
 
 	cur = chunks;
 	while (cur != NULL)
 	{
-		if (cur->type == DOLLAR)
-			// $ 뒤 문자부터 공백까지의 단어를 뽑아서 일치하는 환경변수 key를 찾기
-			word = change_word(cur); // $ 뒤부터
-		else if (cur->type == D_QUOTE && \
-		ft_strchr(cur->word, '$'))
-				word = change_word(cur); // " 뒤부터
+		if ((cur->type == DOLLAR) || \
+		(cur->type == D_QUOTE && ft_strchr(cur->word, '$')))
+		{
+			dollar_cnt = 0;
+			while (*(cur->word))
+			{
+				if (*(cur->word) == '$')
+					dollar_cnt++;
+				cur->word++;
+			}
+			word = change_word(cur, dollar_cnt + 1);
+		}
 		else if (cur->type == S_QUOTE)
 			word = cur->word++;
 		else
