@@ -28,7 +28,7 @@ void	input_tokenize(char *input, t_token *tokens)
 	make_chunk_lst(input, chunks);
 
 	/* "$" 치환 맟 '' 제거 */
-	modify_chunk_lst(chunks);
+    make_token_lst(chunks, tokens);
 
 	/* while
 	 * token_lst 만들기
@@ -36,7 +36,6 @@ void	input_tokenize(char *input, t_token *tokens)
 	 	* lst 생성 및 추가
 	 	* 청크 리스트를 토큰 리스트에 깊은 복사 하면서 cmd 인지 cmd에 딸린 옵션인지.. 확인하고 type 바꿔주기
 	*/
-//	make_token_lst(chunks, tokens);
 }
 
 int	main(void)
@@ -44,16 +43,16 @@ int	main(void)
 	char *input;
 	t_token *tokens;
 
-//	while ()
+	while (1)
 	{
 		input = readline("minishell$ ");
 		tokens = new_token(0, NULL);
 		// token화 하기
 		input_tokenize(input, tokens); // error를 받아서 여기서 free하기
+        make_cmd_lst(tokens);
 	}
 
 	/* 확인용 */
-
 	while (tokens != NULL)
 	{
 		printf("%s\n", tokens->word);
