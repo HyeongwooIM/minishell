@@ -25,6 +25,34 @@ int	ft_strcmp(const char *str1, const char *str2)
 	return (*str1 - *str2);
 }
 
+t_token	*init_token()
+{
+	t_token *ret;
+
+	ret = malloc(sizeof(t_token) * 1);
+	if (!ret)
+		exit(1);
+	ret->type = NONE;
+	ret->word = NULL;
+	ret->next = NULL;
+	return (ret);
+}
+
+t_cmd	*init_cmd()
+{
+	t_cmd *ret;
+
+	ret = malloc(sizeof(t_cmd) * 1);
+	if (!ret)
+		exit(1);
+	ret->name = NULL;
+	ret->content = NULL;
+	ret->rdir = NULL;
+	ret->is_heredoc = NONE;
+	ret->next = NULL;
+	return (ret);
+}
+
 t_token	*new_token(int type, char *word)
 {
 	t_token *node;
@@ -33,22 +61,49 @@ t_token	*new_token(int type, char *word)
 	if (!node)
 		exit(1);
 	node->type = type;
-	node->word = word;
+	node->word = ft_strdup(word);
 	node->next = NULL;
 	return (node);
 }
 
-void	add_node(int type, char *word, t_token *head)
+t_rdir	*new_rdir(int type, char *with)
 {
-	if (head->word == NULL)
+	t_rdir *node;
+
+	node = malloc(sizeof(t_token) * 1);
+	if (!node)
+		exit(1);
+	node->type = type;
+	node->here_doc_fd = 0;
+	node->with = ft_strdup(with);
+	node->next = NULL;
+	return (node);
+}
+
+void	add_rdir_node(int type, char *with, t_rdir *rdir)
+{
+	t_rdir *tmp;
+
+	tmp = rdir;
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	tmp->next = new_rdir(type, with);
+}
+
+void	add_token_node(int type, char *word, t_token *tokens)
+{
+	t_token *tmp;
+
+	tmp = tokens;
+	if (tmp->type == NONE)
 	{
-		head->type = type;
-		head->word = word;
+		tmp->type = type;
+		tmp->word = word;
 	}
 	else
 	{
-		while (head->next != NULL)
-			head = head->next;
-		head->next = new_token(type, word);
+		while (tmp->next != NULL)
+			tmp = tmp->next;
+		tmp->next = new_token(type, word);
 	}
 }

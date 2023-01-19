@@ -72,7 +72,7 @@ void	make_chunk(const char *chunk, int chunk_size, t_token *chunks)
 		word[i] = chunk[i];
 	word[i] = '\0';
 //	ft_strlcpy(word, chunk, chunk_size);
-	add_node(type, word, chunks);
+	add_token_node(type, word, chunks);
 }
 
 void	make_chunk_lst(char *input, t_token *chunks)
@@ -102,27 +102,14 @@ void	make_chunk_lst(char *input, t_token *chunks)
 	}
 }
 
-int main()
-{
-    t_token	*chunks;
-
-    /* token 할당 */
-//    char input[100] = "\"  \'   \"  \'$HOME\' \"\'\"";
-    char input[100] = "ls -al | cat << END >a";
-    chunks = new_token(0, NULL);
-    //null 가드
-
-    /* while
-     * chunk_lst 만들기
-         * size 재기(일단 white space 기준으로)
-    */
-    make_chunk_lst(input, chunks);
-
-    /* 확인용 */
-    while (chunks != NULL)
-    {
-        printf("%s\n", chunks->word);
-        chunks = chunks->next;
-    }
-    printf("\n");
-}
+//int main()
+//{
+//    t_token	*chunks;
+//
+////    char input[100] = "\"  \'   \"  \'$HOME\' \"\'\"";
+//    char input[100] = "ls -al | cat << END >a";
+//
+//    chunks = new_token(0, NULL);
+//    make_chunk_lst(input, chunks);
+//
+//}
