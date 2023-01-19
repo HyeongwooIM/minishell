@@ -7,10 +7,11 @@
 
 #include "libft/libft.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 typedef enum e_rdir_type
 {
-	RDIR, // >
+	RDIR, //
 	R_RDIR, // <
 	D_RDIR, // >>
 	HEREDOC // <<
@@ -19,9 +20,20 @@ typedef enum e_rdir_type
 typedef struct s_rdir
 {
 	int type;
+	int here_doc_fd;
 	char *with; //filename or endpoint(heredoc)
 	struct s_rdir *next;
 }	t_rdir;
+
+typedef struct s_cmd
+{
+	// input: cat (null) > a > b < c < d (no option)
+	char *name; // ex : "cat"
+	char **content; // ex : NULL
+	struct s_rdir *rdir; // rdir->type: RDIR(>), rdir->file: "a", rdir->next->type: RDIR(>), rdir->next->file: "b" ...
+	int is_heredoc; // heredoc 여부
+	struct s_cmd *next;
+}	t_cmd;
 
 typedef struct s_env
 {
@@ -30,16 +42,12 @@ typedef struct s_env
 	struct s_env *next;
 }	t_env;
 
-extern t_env g_env;
-
-typedef struct s_cmd
+typedef struct s_info
 {
-	// input: cat (null) > a > b < c < d (no option)
-	char *name; // ex : "cat"
-	char **content; // ex : NULL
-	struct t_rdir *rdir; // rdir->type: RDIR(>), rdir->file: "a", rdir->next->type: RDIR(>), rdir->next->file: "b" ...
-	int is_heredoc; // heredoc 여부
-	struct s_cmd *next;
-}	t_cmd;
+	struct s_env *env_lst;
+	int last_error;
+}	t_info;
+
+extern t_info g_info;
 
 #endif
