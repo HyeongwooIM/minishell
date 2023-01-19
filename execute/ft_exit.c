@@ -21,6 +21,8 @@ void ft_exit(t_cmd *cmd)
 
 	str = cmd->content;
 	len = 0;
+	if (!str)
+		exit(0);
 	while (*str && len++ >= 0)
 		str++;
 	if (len > 1)

@@ -4,7 +4,11 @@ void ft_unset(t_cmd *cmd)
 {
 	t_env	*env_temp;
 	t_env	*del_temp;
+	char 	**str;
 
+	str = cmd->content;
+	while (*str)
+	{
 	env_temp = g_info->env_list;
 	if (env_temp && ft_strcmp(env_temp->key, cmd->content))
 	{
@@ -25,4 +29,6 @@ void ft_unset(t_cmd *cmd)
 	free(del_temp->key);
 	free(del_temp->value);
 	free(del_temp);
+	str++;
+	}
 }

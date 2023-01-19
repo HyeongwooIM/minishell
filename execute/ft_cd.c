@@ -43,8 +43,9 @@ void	ft_cd(t_cmd *cmd)
 	char *cd_path;
 	char *path;
 
+	if (!cmd)
+		exit(1);
 	path = *cmd->content;
-
 	if (cmd && cmd->content == 0)
 		eixt(1); // error
 	if (!chdir(path))

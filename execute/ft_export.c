@@ -25,7 +25,7 @@ void epxort_null_print()
 {
 	t_env *env;
 
-	env = g_info->env_list;
+	env = g_info.env_list;
 	while (env)
 	{
 		printf("declare -x %s", env->key);
@@ -40,7 +40,11 @@ void ft_export(t_cmd *cmd)
 	t_env	*temp;
 	char	**env_arr;
 	char	*key_value;
+	char 	**str;
 
+	str = cmd->content;
+	while (*str)
+	{
 	key_value = *cmd->content;
 	if (!*key_value)
 	{
@@ -58,6 +62,8 @@ void ft_export(t_cmd *cmd)
 	}
 	free(*env_arr);
 	free(env_arr);
+	str++;
+	}
 	// key_value++;
 	// if (!key_value)
 	// 	return ;
