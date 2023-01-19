@@ -24,12 +24,12 @@ int main (int argc, char **argv, char **envp)
 		if (rdir[i][0] == '>' && rdir[i][1] == 0)
 		{
 			i++;
-			fd = open(rdir[i],  O_WRONLY | O_CREAT | O_TRUNC, 0777);
+			fd = open(rdir[i],  O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		}
 		else if (rdir[i][0] == '>' && rdir[i][1] == '>')
 		{
 			i++;
-			fd = open(rdir[i],  O_WRONLY | O_CREAT | O_APPEND, 0777);
+			fd = open(rdir[i],  O_WRONLY | O_CREAT | O_APPEND, 0644);
 		}
 		i++;
 	}

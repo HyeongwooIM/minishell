@@ -79,7 +79,6 @@ void ft_exe(t_cmd *cmd, t_env *env)
 				printf("No such file or directory");
 		}
 	}
-
 	content = ft_strjoin2(path, cmd->content);
 	envp = lst_to_arr(env);
 	(execve(path, content, envp) == -1);
