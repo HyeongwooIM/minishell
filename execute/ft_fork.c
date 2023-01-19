@@ -1,10 +1,9 @@
 #include "../minishell.h"
 
-void ft_fork()
+void ft_fork(int pipe_cnt, t_cmd *cmd)
 {
 	int **pipes;
 	int i;
-	int pipe_cnt;
 	pid_t pid;
 
 	i = -1;
@@ -26,6 +25,8 @@ void ft_fork()
 			if (i != 0)
 				dup2(pipes[i - 1][0], STDIN_FILENO);
 			pipe_close(pipes, i);
+			ft_exe(cmd);
 		}
+		cmd = cmd->next;
 	}
 }
