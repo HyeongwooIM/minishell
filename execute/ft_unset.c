@@ -9,10 +9,10 @@ void ft_unset(t_cmd *cmd)
 	str = cmd->content;
 	while (*str)
 	{
-	env_temp = g_info->env_list;
+	env_temp = g_info.env_lst;
 	if (env_temp && ft_strcmp(env_temp->key, cmd->content))
 	{
-		g_info->env_list = env_temp->next;
+		g_info.env_lst = env_temp->next;
 		free(env_temp->key);
 		free(env_temp->value);
 		free(env_temp);

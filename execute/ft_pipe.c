@@ -1,5 +1,24 @@
 #include "../minishell.h"
 
+void pipe_close(int **pipes, int i, int pipe_cnt)
+{
+	int j;
+
+	j = -1;
+	while (++j <= pipe_cnt)
+	{
+		if (j == (i - 1))
+			close(pipes[j][1]);
+		else if (j == i)
+			close(pipes[j][0]);
+		else
+		{
+			close(pipes[j][1]);
+			close(pipes[j][0]);
+		}
+	}
+}
+
 int check_pipe(t_cmd *cmd)
 {
 	unsigned int num;

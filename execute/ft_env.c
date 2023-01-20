@@ -6,7 +6,7 @@ void ft_env(t_cmd *cmd)
 
 	if (cmd->content)
 		exit(1);
-	env = g_info->env_list;
+	env = g_info.env_lst;
 	while (env)
 	{
 		if (env->value)

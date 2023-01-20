@@ -4,11 +4,11 @@ t_env *find_env_add(char *key)
 {
 	t_env *temp;
 
-	temp = g_info->env_list;
+	temp = g_info.env_lst;
 	if (!temp)
 	{
 		temp = new_env(key, 0);
-		g_info->env_list = temp;
+		g_info.env_lst = temp;
 	}
 	while (ft_strcmp(temp->key, key) && temp->next)
 		temp = temp->next;
