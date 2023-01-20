@@ -21,6 +21,10 @@ void pipe_close(int **pipes, int i, int pipe_cnt);
 void ft_rdir(t_rdir *rdir);
 void ft_exe(t_cmd *cmd, t_env *env);
 
+t_env *find_env_add(char *key);
+t_env *find_env(char *key);
+int	ft_strcmp(const char *str1, const char *str2);
+char **ft_strjoin2(char *str, char **arr);
 #endif
 
 
