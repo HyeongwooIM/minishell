@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-int	single_builtin(t_cmd *cmd, t_env env)
+int	single_builtin(t_cmd *cmd, t_env *env)
 {
 	if (ft_strcmp(cmd->name, "echo"))
 		ft_echo(cmd);

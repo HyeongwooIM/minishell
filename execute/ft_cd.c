@@ -47,7 +47,7 @@ void	ft_cd(t_cmd *cmd)
 		exit(1);
 	path = *cmd->content;
 	if (cmd && cmd->content == 0)
-		eixt(1); // error
+		exit(1); // error
 	if (!chdir(path))
 		exit(1); // error
 	if (!getcwd(get_cwd, PATH_MAX))

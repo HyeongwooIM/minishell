@@ -25,7 +25,7 @@ void epxort_null_print()
 {
 	t_env *env;
 
-	env = g_info.env_list;
+	env = g_info.env_lst;
 	while (env)
 	{
 		printf("declare -x %s", env->key);
@@ -48,7 +48,7 @@ void ft_export(t_cmd *cmd)
 	key_value = *cmd->content;
 	if (!*key_value)
 	{
-		export_null_print();
+//		export_null_print();
 		return ;
 	}
 	env_arr = find_key_value(key_value);

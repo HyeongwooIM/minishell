@@ -1,7 +1,7 @@
 #ifndef EXECUTE_H
 #define EXECUTE_H
 
-#include "minishell.h"
+#include "../minishell.h"
 
 typedef struct s_token t_token;
 typedef struct s_rdir t_rdir;
@@ -16,7 +16,7 @@ int pipe_count(t_cmd *cmd);
 void	check_heredoc(t_cmd	*cmd);
 
 int	check_builtin(char *cmd_name);
-int	single_builtin(t_cmd *cmd, t_env env);
+int	single_builtin(t_cmd *cmd, t_env *env);
 void	ft_echo(t_cmd	*cmd);
 void	ft_cd(t_cmd *cmd);
 void ft_pwd();

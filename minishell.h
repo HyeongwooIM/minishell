@@ -5,10 +5,17 @@
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
-#include "libft/libft.h"
-#include "parse.h"
+#define PATH_MAX 4096
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <fcntl.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+#include "libft/libft.h"
+#include "./execute/execute.h"
+#include "./parse/parse.h"
+
 
 /* parse */
 typedef enum e_chunk_type
@@ -77,5 +84,7 @@ typedef struct s_info
 extern t_info g_info;
 
 void    parse(t_cmd *cmds);
+char	**lst_to_arr(t_env *envs);
+t_env	*new_env(char *key, char *value);
 
 #endif

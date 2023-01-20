@@ -27,9 +27,9 @@ void ft_fork(int pipe_cnt, t_cmd *cmd)
 			pipe_close(pipes, i, pipe_cnt);
 			ft_rdir(cmd->rdir);
 			if (check_builtin(cmd->name))
-				single_builtin(cmd);
+				single_builtin(cmd, g_info.env_lst);
 			else
-				ft_exe(cmd);
+				ft_exe(cmd, g_info.env_lst);
 			exit(0);
 		}
 		cmd = cmd->next;

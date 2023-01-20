@@ -1,7 +1,7 @@
 //
 // Created by jiyun on 2023/01/19.
 //
-#include "../minishell.h"
+#include "/minishell.h"
 #include "./parse.h"
 
 
@@ -194,13 +194,6 @@ char    **split_words(char *s, int *size)
 }
 
 
-
-
-
-//	return (ret);
-}
-
-
 char	*change_word(t_token *chunk)
 {
 	int i;
@@ -261,16 +254,16 @@ void	replace_chunk(t_token *chunks)
 	}
 }
 
-int main()
-{
-    t_token	*chunks;
-
-    char input[100] = "\"  \'   \"  \'$HOME\' \"\'\""; //quote 잘 나누나?
-//    char input[100] = "\"  \' \" a \'"; //quote 에러 잘 뱉나?
-//    char input[50] = "<< END | > a";
-
-    chunks = init_token();
-    make_chunk_lst(input, chunks);
-
-    replace_chunk(chunks);
-}
+//int main()
+//{
+//    t_token	*chunks;
+//
+//    char input[100] = "\"  \'   \"  \'$HOME\' \"\'\""; //quote 잘 나누나?
+////    char input[100] = "\"  \' \" a \'"; //quote 에러 잘 뱉나?
+////    char input[50] = "<< END | > a";
+//
+//    chunks = init_token();
+//    make_chunk_lst(input, chunks);
+//
+//    replace_chunk(chunks);
+//}
