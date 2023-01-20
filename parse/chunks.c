@@ -1,26 +1,28 @@
 //
 // Created by jiyun on 2023/01/17.
 //
-#include "../minishell.h"
+#include "minishell.h"
 #include "parse.h"
 
 int quote_size(const char *str, char quote)
 {
 	int i;
+    int quote_close;
 
 	i = 1;
+    quote_close = 0;
 	while (str[i])
 	{
-		if (str[i] == '\0')
-			// 안 닫혔을 때: syntax error?
-			exit(1);
 		if (str[i] == quote)
 		{
 			i++;
+            quote_close = 1;
 			break ;
 		}
 		i++;
 	}
+    if (quote_close == 0)
+        exit(1);
 	return (i);
 }
 
@@ -67,11 +69,7 @@ void	make_chunk(const char *chunk, int chunk_size, t_token *chunks)
 	word = malloc(sizeof(char) * (chunk_size + 1));
 	if (!word)
 		return ;
-	i = -1;
-	while (++i < chunk_size)
-		word[i] = chunk[i];
-	word[i] = '\0';
-//	ft_strlcpy(word, chunk, chunk_size);
+	ft_strlcpy(word, chunk, chunk_size + 1);
 	add_token_node(type, word, chunks);
 }
 
@@ -101,15 +99,3 @@ void	make_chunk_lst(char *input, t_token *chunks)
 		input = input + chunk_size;
 	}
 }
-
-//int main()
-//{
-//    t_token	*chunks;
-//
-////    char input[100] = "\"  \'   \"  \'$HOME\' \"\'\"";
-//    char input[100] = "ls -al | cat << END >a";
-//
-//    chunks = new_token(0, NULL);
-//    make_chunk_lst(input, chunks);
-//
-//}

@@ -9,8 +9,20 @@
  * lst 생성 및 추가
  * 청크 리스트를 토큰 리스트에 깊은 복사 하면서 cmd 인지 cmd에 딸린 옵션인지.. 확인하고 type 바꿔주기
  */
+static void	free_all(char **ret)
+{
+    size_t	i;
 
-char	**ft_strjoin1to2(char **dest, char *src)
+    i = 0;
+    while (ret[i] != 0)
+    {
+        free(ret[i]);
+        i++;
+    }
+    free(ret);
+}
+
+char	**ft_strjoin_1to2(char **dest, char *src)
 {
 	unsigned int	word_num;
 	long			i;
@@ -28,14 +40,6 @@ char	**ft_strjoin1to2(char **dest, char *src)
 		res[i] = ft_strdup(dest[i]);
 	res[word_num + 1] = ft_strdup(src);
 	res[word_num + 2] = 0;
-
-	i = 0;
-	while (dest[i] != 0)
-	{
-		free(dest[i]);
-		i++;
-	}
-	free(dest);
-
+    free_all(dest);
 	return (res);
 }

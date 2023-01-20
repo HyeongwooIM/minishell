@@ -4,7 +4,7 @@
 #include "../minishell.h"
 #include "./parse.h"
 
-/*
+
 t_env *find_env(char *key)
 {
 	t_env *temp;
@@ -80,90 +80,124 @@ char	*join_pieces(char **pieces)
 
 
 
-void	free_all(char **ret)
+//void	free_all(char **ret)
+//{
+//	size_t	i;
+//
+//	i = 0;
+//	while (ret[i] != 0)
+//	{
+//		free(ret[i]);
+//		i++;
+//	}
+//	free(ret);
+//}
+//
+//void    put_str(char **ret, char **start, char **end, int size, int i)
+//{
+//	int	j;
+//
+//	*end = *start + size;
+//	ret[i] = malloc(sizeof(char) * (size + 1));
+//	if (ret[i] == 0)
+//	{
+//		free_all(ret);
+//		exit(1);
+//	}
+//	j = 0;
+//	while (j < *end - *start)
+//	{
+//		ret[i][j] = (*start)[j];
+//		(*start)++;
+//		j++;
+//	}
+//	ret[i][j] = '\0';
+//	*start = *end;
+//}
+//
+//int count_pieces_num(char *str)
+//{
+//	int size;
+//
+//	size = 0;
+//	while (*str)
+//	{
+//		if (*str == '$' && *(str + 1) && !is_space(*(str + 1)))
+//		{
+//			size++;
+//			while (*(str + 1) && *(str + 1) != '$')
+//			{
+//				if (*(str + 1) == '\'' || is_space(*(str + 1)))
+//				{
+//					size++;
+//					break ;
+//				}
+//				str++;
+//			}
+//		}
+//		str++;
+//	}
+//	return (size);
+//}
+//
+//
+//char **malloc_pieces(char *word, int *size)
+//{
+//	char **ret;
+//
+//	*size = count_pieces_num(word);
+//	ret = malloc(sizeof(char *) * (*(size + 1)));
+//	if (!ret)
+//		exit(1);
+//	return (ret);
+//}
+
+char    *cut_substr(char *start, char *end)
 {
-	size_t	i;
+    char *ret;
+    int size;
+    int i;
 
-	i = 0;
-	while (ret[i] != 0)
-	{
-		free(ret[i]);
-		i++;
-	}
-	free(ret);
-}
-
-void    put_str(char **ret, char **start, char **end, int size, int i)
-{
-	int	j;
-
-	*end = *start + size;
-	ret[i] = malloc(sizeof(char) * (size + 1));
-	if (ret[i] == 0)
-	{
-		free_all(ret);
-		exit(1);
-	}
-	j = 0;
-	while (j < *end - *start)
-	{
-		ret[i][j] = (*start)[j];
-		(*start)++;
-		j++;
-	}
-	ret[i][j] = '\0';
-	*start = *end;
-}
-
-int count_pieces_num(char *str)
-{
-	int size;
-
-	size = 0;
-	while (*str)
-	{
-		if (*str == '$' && *(str + 1) && !is_space(*(str + 1)))
-		{
-			size++;
-			while (*(str + 1) && *(str + 1) != '$')
-			{
-				if (*(str + 1) == '\'' || is_space(*(str + 1)))
-				{
-					size++;
-					break ;
-				}
-				str++;
-			}
-		}
-		str++;
-	}
-	return (size);
-}
-
-
-char **malloc_pieces(char *word, int *size)
-{
-	char **ret;
-
-	*size = count_pieces_num(word);
-	ret = malloc(sizeof(char *) * (*(size + 1)));
-	if (!ret)
-		return (0);
-	return (ret);
+    size = end - start;
+    ret = malloc(sizeof(char) * (size + 1));
+    if (!ret)
+        exit(1);
+    i = 0;
+    while(i < size)
+    {
+        ret[i] = start[i];
+        i++;
+    }
+    ret[size] = '\0';
+    return (ret);
 }
 
 char    **split_words(char *s, int *size)
 {
-	char    **ret;
+    char **ret;
+//	ret = malloc_pieces(s, size);
+    char *start;
+    char *tmp;
 
-	ret = malloc_pieces(s, size);
-	if (!ret)
-		exit(1);
-	while (*s)
-	{
+    start = s;
+    while (*s)
+    {
+        if (*s == '$')
+        {
+            tmp = cut_substr(start, s);
+            ret = ft_strjoin_1to2(ret, tmp);
+            start = s;
+        }
+        s++;
+    }
+    return (ret);
+}
 
-	}
-	return (ret);
+
+
+
+
+//	return (ret);
 }
 
 
@@ -173,7 +207,7 @@ char	*change_word(t_token *chunk)
 	int cnt;
 	char **pieces;
 
-	pieces = split_words(chunk->word, &cnt);
+	pieces = split_words(chunk->word++, &cnt);
 
 	// 확인용
 	i = 0;
@@ -195,7 +229,7 @@ char	*change_word(t_token *chunk)
 //    return (join_pieces(pieces));
 	return (NULL);
 }
-*/
+
 
 void	replace_chunk(t_token *chunks)
 {
@@ -215,7 +249,7 @@ void	replace_chunk(t_token *chunks)
 		(cur->type == D_QUOTE && ft_strchr(cur->word, '$')))
 			word = change_word(cur);
 		else if (cur->type == S_QUOTE)
-			word = cur->word++;
+			word = ft_strdup(cur->word++);
 		else
 		{
 			cur = cur->next;
@@ -225,4 +259,18 @@ void	replace_chunk(t_token *chunks)
 		cur->type = CHAR;
 		cur = cur->next;
 	}
+}
+
+int main()
+{
+    t_token	*chunks;
+
+    char input[100] = "\"  \'   \"  \'$HOME\' \"\'\""; //quote 잘 나누나?
+//    char input[100] = "\"  \' \" a \'"; //quote 에러 잘 뱉나?
+//    char input[50] = "<< END | > a";
+
+    chunks = init_token();
+    make_chunk_lst(input, chunks);
+
+    replace_chunk(chunks);
 }
