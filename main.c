@@ -113,37 +113,29 @@ int main(int argc, char *argv[], char *envp[])
 
 	// signal 정의
 
-	// 구조체 초기화
-
 	// envp 정보화
 	save_envs(envp);
 
-	/* lst 잘 만들어졌는지 확인 */
-	t_env *cur = g_info.env_lst;
-	int i = 0;
-	printf("========lst========\n");
-	while (cur != NULL)
+    while (1)
 	{
-		printf("lst %d: %s=%s\n", i++, cur->key, cur->value);
-		cur = cur->next;
-	}
+        //구조체 초기화
+        cmds = init_cmd();
+        // 파싱
+        parse(cmds);
+        // 실행
+    }
+    // free
 
 
-	/* lst_to_arr 함수 확인
-	char **arr = lst_to_arr(envs);
-	printf("========arr========\n");
-	int i = 0;
-	while (arr[i] != NULL)
-	{
-		printf("%s\n", arr[i]);
-		i++;
-	}
-	*/
 
-	while (1)
-	{
-		// parse
-		// execute
-	}
-	// free
+
+    /* lst 잘 만들어졌는지 확인 */
+    t_env *cur = g_info.env_lst;
+    int i = 0;
+    printf("========lst========\n");
+    while (cur != NULL)
+    {
+        printf("lst %d: %s=%s\n", i++, cur->key, cur->value);
+        cur = cur->next;
+    }
 }

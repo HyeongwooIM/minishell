@@ -6,16 +6,42 @@
 #define MINISHELL_H
 
 #include "libft/libft.h"
+#include "parse.h"
 #include <stdio.h>
 #include <stdlib.h>
 
+/* parse */
+typedef enum e_chunk_type
+{
+    NONE = -42,
+    CHAR,
+    S_QUOTE, // ' '
+    D_QUOTE, // " "
+    DOLLAR, // $
+    REDIRECT,
+    PIPE
+}	t_chunk_type;
+
+typedef enum e_token_type
+{
+    CMD = -24,
+    OPTION
+}	t_token_type;
+
 typedef enum e_rdir_type
 {
-	RDIR, //
-	R_RDIR, // <
-	D_RDIR, // >>
-	HEREDOC // <<
+    RDIR, //
+    R_RDIR, // <
+    D_RDIR, // >>
+    HEREDOC // <<
 }	t_rdir_type;
+
+typedef struct s_token
+{
+    int type;
+    char *word;
+    struct s_token *next;
+}   t_token;
 
 typedef struct s_rdir
 {
@@ -49,5 +75,7 @@ typedef struct s_info
 }	t_info;
 
 extern t_info g_info;
+
+void    parse(t_cmd *cmds);
 
 #endif

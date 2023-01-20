@@ -37,7 +37,7 @@ void	add_content(t_token *token, t_cmd *cmds)
 		(cmds->content)[1] = 0;
 	}
 	else
-		cmds->content = ft_strjoin1to2(cmds->content, token->word);
+		cmds->content = ft_strjoin_1to2(cmds->content, token->word);
 }
 
 void	add_rdir(t_token *token, t_cmd *cmds)

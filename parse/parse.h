@@ -7,30 +7,11 @@
 
 #include <readline/readline.h>
 #include <readline/history.h>
+#include "minishell.h"
 
-typedef enum e_chunk_type
-{
-	NONE = -42,
-	CHAR,
-	S_QUOTE, // ' '
-	D_QUOTE, // " "
-	DOLLAR, // $
-	REDIRECT,
-	PIPE
-}	t_chunk_type;
-
-typedef enum e_token_type
-{
-	CMD = -24,
-	OPTION
-}	t_token_type;
-
-typedef struct s_token
-{
-	int type;
-	char *word;
-	struct s_token *next;
-}	t_token;
+typedef struct s_token t_token;
+typedef struct s_rdir t_rdir;
+typedef struct s_cmd t_cmd;
 
 /* utils.c */
 int is_space(char c);
@@ -44,7 +25,7 @@ t_cmd	*init_cmd();
 void	add_rdir_node(int type, char *with, t_rdir *rdir);
 
 /* utils2.c */
-char	**ft_strjoin1to2(char **dest, char *src);
+char	**ft_strjoin_1to2(char **dest, char *src);
 
 /* chunks.c */
 void	make_chunk_lst(char *input, t_token *chunks);
