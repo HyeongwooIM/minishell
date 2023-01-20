@@ -47,8 +47,7 @@ char *find_path(char *cmd, t_env *env, int *is_path)
 	int	i;
 	
 	*is_path = 0;
-	while (env && ft_strcmp(env->key, "PATH"))
-		env = env->next;
+	env = find_env("PATH");
 	if(!env)
 		return (no_path(cmd));
 	else
