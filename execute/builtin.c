@@ -3,17 +3,17 @@
 int	single_builtin(t_cmd *cmd, t_env env)
 {
 	if (ft_strcmp(cmd->name, "echo"))
-		ft_echo(cmd, env);
+		ft_echo(cmd);
 	else if (ft_strcmp(cmd->name, "cd"))
-		ft_cd(cmd, env);
+		ft_cd(cmd);
 	else if (ft_strcmp(cmd->name, "pwd"))
 		ft_pwd();
 	else if (ft_strcmp(cmd->name, "export"))
 		ft_export(cmd);
 	else if (ft_strcmp(cmd->name, "unset"))
-		ft_unset(cmd, env);
+		ft_unset(cmd);
 	else if (ft_strcmp(cmd->name, "env"))
-		ft_env(cmd, env);
+		ft_env(cmd);
 	else if (ft_strcmp(cmd->name, "exit"))
 		ft_exit(cmd);
 	return (0);

@@ -1,6 +1,14 @@
 #ifndef EXECUTE_H
 #define EXECUTE_H
 
+#include "minishell.h"
+
+typedef struct s_token t_token;
+typedef struct s_rdir t_rdir;
+typedef struct s_cmd t_cmd;
+
+
+typedef struct s_env t_env;
 
 void execute(t_cmd *cmd);
 int pipe_count(t_cmd *cmd);
