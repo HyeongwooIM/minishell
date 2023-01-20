@@ -6,7 +6,7 @@
 // input token화
 // token으로 실행부로 옮길 구조체 완성하기
 
-#include "minishell.h"
+#include "../minishell.h"
 #include "parse.h"
 
 t_info g_info;

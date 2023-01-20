@@ -5,9 +5,7 @@
 #ifndef PARSE_H
 #define PARSE_H
 
-#include <readline/readline.h>
-#include <readline/history.h>
-#include "minishell.h"
+#include "../minishell.h"
 
 typedef struct s_token t_token;
 typedef struct s_rdir t_rdir;

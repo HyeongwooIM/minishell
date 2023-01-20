@@ -2,7 +2,7 @@
 // Created by jiyun on 2023/01/17.
 //
 
-#include "../minishell.h"
+#include "minishell.h"
 #include "./parse.h"
 
 t_token	*last_node(t_token *lst)

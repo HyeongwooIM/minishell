@@ -2,7 +2,7 @@
 // Created by jiyun on 2023/01/17.
 //
 
-#include "../minishell.h"
+#include "minishell.h"
 #include "parse.h"
 
 int is_space(char c)
@@ -13,17 +13,17 @@ int is_space(char c)
 	return (0);
 }
 
-int	ft_strcmp(const char *str1, const char *str2)
-{
-	while (*str1 || *str2)
-	{
-		if (*str1 != *str2)
-			return (*str1 - *str2);
-		str1++;
-		str2++;
-	}
-	return (*str1 - *str2);
-}
+//int	ft_strcmp(const char *str1, const char *str2)
+//{
+//	while (*str1 || *str2)
+//	{
+//		if (*str1 != *str2)
+//			return (*str1 - *str2);
+//		str1++;
+//		str2++;
+//	}
+//	return (*str1 - *str2);
+//}
 
 t_token	*init_token()
 {

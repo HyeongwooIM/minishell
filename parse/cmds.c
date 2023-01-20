@@ -2,7 +2,7 @@
 // Created by jiyun on 2023/01/19.
 //
 
-#include "../minishell.h"
+#include "minishell.h"
 #include "./parse.h"
 
 t_cmd	*last_cmd(t_cmd *cmds)

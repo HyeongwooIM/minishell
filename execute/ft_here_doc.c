@@ -118,6 +118,6 @@ void	check_heredoc(t_cmd	*cmd)
 		cmd = cmd->next;
 	}
 	if (!cmd)
-		return (0);
-	return (0);
+		return ;
+	return ;
 }
