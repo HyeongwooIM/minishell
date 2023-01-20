@@ -44,7 +44,7 @@ void    parse(t_cmd *cmds)
 	t_token *tokens;
 //	t_cmd *cmds; //나중에 parse 인자로 받을 것
 
-	while (1)
+//	while (1)
 	{
 		input = readline("minishell$ ");
 
