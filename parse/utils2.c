@@ -28,18 +28,28 @@ char	**ft_strjoin_1to2(char **dest, char *src)
 	long			i;
 	char	**res;
 
-	word_num = 0;
-	while (dest[word_num])
-		++word_num;
-	res = (char **)malloc(sizeof(char *) * (word_num + 2));
-	if (!res)
-		return (0); //error
-	res[word_num + 1] = ft_strdup(src);
-	i = -1;
-	while (++i < word_num)
-		res[i] = ft_strdup(dest[i]);
-	res[word_num + 1] = ft_strdup(src);
-	res[word_num + 2] = 0;
-    free_all(dest);
-	return (res);
+    word_num = 0;
+    if (!dest || !*dest)
+    {
+        res = malloc(sizeof(char *) * 2);
+        if (!res)
+            exit (1);
+        res[0] = ft_strdup(src);
+        res[1] = 0;
+    }
+    else
+    {
+        while (dest[word_num])
+            ++word_num;
+        res = malloc(sizeof(char *) * (word_num + 2));
+        if (!res)
+            exit (1); //error
+        i = -1;
+        while (++i < word_num)
+            res[i] = ft_strdup(dest[i]);
+        res[word_num + 1] = ft_strdup(src);
+        res[word_num + 2] = 0;
+        free_all(dest);
+    }
+    return (res);
 }
