@@ -25,7 +25,12 @@ void ft_fork(int pipe_cnt, t_cmd *cmd)
 			if (i != 0)
 				dup2(pipes[i - 1][0], STDIN_FILENO);
 			pipe_close(pipes, i);
-			ft_exe(cmd);
+			ft_rdir(cmd->rdir);
+			if (check_builtin(cmd->name))
+				single_builtin(cmd);
+			else
+				ft_exe(cmd);
+			exit(0);
 		}
 		cmd = cmd->next;
 	}

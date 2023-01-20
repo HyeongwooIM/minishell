@@ -48,20 +48,12 @@ void execute2(t_cmd *cmd)
 	int	pipe_cnt;
 	t_env *env;
 
-	env = g_info.env_list;
+	env = g_info.env_lst;
 	pipe_cnt = pipe_count(cmd);
 	check_heredoc(cmd); // create_heredoc ok
 	if (cmd->next == 0 && check_builtin(cmd->name))
 		single_builtin(cmd, env);
 	else
 		ft_fork(pipe_cnt, cmd);
-	// while (cmd)
-	// {
-	// 	while ()
-	// 	{
-			
-	// 	}
-	// 	cmd = cmd->next;
-	// }
 	exit (0);
 }
