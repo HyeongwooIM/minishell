@@ -91,6 +91,7 @@ void make_here_doc(t_rdir *rdir)
 		close(fd[1]);
 		exit(0);
 	}
+	wait(1);
 	rdir->here_doc_fd = fd[0];
 }
 

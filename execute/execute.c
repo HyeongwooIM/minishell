@@ -43,7 +43,7 @@ int pipe_count(t_cmd *cmd)
 	return (count);
 }
 
-void execute2(t_cmd *cmd)
+void execute(t_cmd *cmd)
 {
 	int	pipe_cnt;
 	t_env *env;
