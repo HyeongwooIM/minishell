@@ -3,16 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiyun <jiyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 18:18:37 by jiyun             #+#    #+#             */
-/*   Updated: 2022/04/03 15:24:51 by jiyun            ###   ########.fr       */
+/*   Updated: 2023/01/16 19:11:01 by woohyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 static int	ft_isspace(char c)
 {
+	if (!c)
+		return (0);
 	if (c == ' ' || c == '\t' || c == '\v' || \
 			c == '\n' || c == '\f' || c == '\r')
 		return (1);
