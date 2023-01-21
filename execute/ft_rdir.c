@@ -16,7 +16,7 @@ void ft_rdir(t_rdir *rdir)
 	int out_fd;
 
 	in_fd = 0;
-	out_fd = 0;
+	out_fd = 1;
 	while (rdir)
 	{
 		if (rdir->type == RDIR || rdir->type == D_RDIR)  // > or >>
@@ -39,8 +39,10 @@ void ft_rdir(t_rdir *rdir)
 		}
 		rdir = rdir->next;
 	}
-	dup2(in_fd, STDIN_FILENO);
-	dup2(out_fd,STDOUT_FILENO);
+    if (in_fd != 0)
+        dup2(in_fd, STDIN_FILENO);
+    if (out_fd != 1)
+        dup2(out_fd, STDOUT_FILENO);
 	return ;
 }
 

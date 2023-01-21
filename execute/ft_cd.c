@@ -39,7 +39,7 @@ void	edit_pwd(char *cwd)
 
 void	ft_cd(t_cmd *cmd)
 {
-	char get_cwd[PATH_MAX];
+	char get_cwd[1024];
 	char *cd_path;
 	char *path;
 
@@ -48,9 +48,9 @@ void	ft_cd(t_cmd *cmd)
 	path = *cmd->content;
 	if (cmd && cmd->content == 0)
 		exit(1); // error
-	if (!chdir(path))
+	if (chdir(path))
 		exit(1); // error
-	if (!getcwd(get_cwd, PATH_MAX))
+	if (!getcwd(get_cwd, 1024))
 		exit(1); // error
 	edit_pwd(get_cwd);
 }

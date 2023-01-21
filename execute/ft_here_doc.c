@@ -79,19 +79,20 @@ void make_here_doc(t_rdir *rdir)
 		while (1)
 		{
 			buff = readline("> ");
-			temp = buff;
-            printf("%s", buff);
-			if (!strcmp(buff, rdir->with))
+			if (ft_strcmp(buff, rdir->with) == 0)
+            {
+                write(fd[1], "\0", 1);
 				break ;
-			while(buff++)
-				write(fd[1], buff, 1);
+            }
+			write(fd[1], buff, ft_strlen(buff));
 			write(fd[1], "\n", 1);
-			free(temp);
+			free(buff);
 		}
-		free(temp);
+		free(buff);
 		close(fd[1]);
 		exit(0);
 	}
+	close(fd[1]);
 	wait(0);
 	rdir->here_doc_fd = fd[0];
 }
@@ -113,12 +114,12 @@ void	check_heredoc(t_cmd	*cmd)
 {
 	int		heredoc_cnt;
 
+    if (!cmd)
+        return ;
 	while (cmd) {
 		if (cmd->is_heredoc)
 			ft_heredoc(cmd);
 		cmd = cmd->next;
 	}
-	if (!cmd)
-		return ;
 	return  ;
 }
