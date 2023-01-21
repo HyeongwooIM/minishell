@@ -21,7 +21,7 @@ char **find_key_value(char *key_value)
 	return (res);
 }
 
-void epxort_null_print()
+void export_null_print()
 {
 	t_env *env;
 
@@ -30,9 +30,21 @@ void epxort_null_print()
 	{
 		printf("declare -x %s", env->key);
 		if (env->value)
-			printf("=\"%s\"\n", env->value);
+			printf("=\"%s\"", env->value);
+        printf("\n");
 		env = env->next;
 	}
+}
+
+void free_env_arr(char **str)
+{
+	unsigned int i;
+
+	i = -1;
+
+	while (str && str[++i])
+		free(str[i]);
+	free(str);
 }
 
 void ft_export(t_cmd *cmd)
@@ -43,26 +55,23 @@ void ft_export(t_cmd *cmd)
 	char 	**str;
 
 	str = cmd->content;
+    if (!str)
+    {
+		export_null_print();
+		return ;
+    }
 	while (*str)
 	{
-	key_value = *cmd->content;
-	if (!*key_value)
-	{
-//		export_null_print();
-		return ;
-	}
-	env_arr = find_key_value(key_value);
-	temp = find_env_add(env_arr[0]);
-	if (env_arr[1])
-		temp->value = ft_strdup(env_arr[1]); //env_arr free gogo
-	while (*env_arr)
-	{
-		free(*env_arr);
-		*env_arr++;
-	}
-	free(*env_arr);
-	free(env_arr);
-	str++;
+	    key_value = *str;
+		env_arr = find_key_value(key_value);
+		temp = find_env_add(env_arr[0]);
+		if (env_arr[1])
+		{
+			free(temp->value);
+			temp->value = ft_strdup(env_arr[1]); //env_arr free gogo
+		}
+		free_env_arr(env_arr);
+		str++;
 	}
 	// key_value++;
 	// if (!key_value)

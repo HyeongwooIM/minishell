@@ -70,7 +70,7 @@ void make_here_doc(t_rdir *rdir)
 	char *buff;
 	char *temp;
 
-	if (!pipe(fd) || !rdir->with)
+	if (pipe(fd) == -1 || !rdir->with)
 		exit(1);
 	pid = fork();
 	if (pid == 0)
@@ -80,6 +80,7 @@ void make_here_doc(t_rdir *rdir)
 		{
 			buff = readline("> ");
 			temp = buff;
+            printf("%s", buff);
 			if (!strcmp(buff, rdir->with))
 				break ;
 			while(buff++)
@@ -91,7 +92,7 @@ void make_here_doc(t_rdir *rdir)
 		close(fd[1]);
 		exit(0);
 	}
-	wait(1);
+	wait(0);
 	rdir->here_doc_fd = fd[0];
 }
 
@@ -119,5 +120,5 @@ void	check_heredoc(t_cmd	*cmd)
 	}
 	if (!cmd)
 		return ;
-	return ;
+	return  ;
 }

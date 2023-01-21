@@ -7,7 +7,7 @@ char **ft_strjoin2(char *str, char **arr)
 	char	**res;
 
 	word_num = 0;
-	while (arr[word_num])
+	while (arr && arr[word_num])
 		++word_num;
 	res = (char **)malloc(sizeof(char *) * (word_num + 2));
 	res[word_num + 1] = 0;

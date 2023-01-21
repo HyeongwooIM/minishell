@@ -55,5 +55,5 @@ void execute(t_cmd *cmd)
 		single_builtin(cmd, env);
 	else
 		ft_fork(pipe_cnt, cmd);
-	exit (0);
+	return ;
 }

@@ -44,13 +44,11 @@ void    parse(t_cmd *cmds)
 	t_token *tokens;
 //	t_cmd *cmds; //나중에 parse 인자로 받을 것
 
-//	while (1)
-	{
-		input = readline("minishell$ ");
 
-//		cmds = init_cmd(); // 나중에 main문에서 할 것
-		tokens = init_token();
-		input_tokenize(input, tokens); // error를 받아서 여기서 free하기?
+        input = readline("minishell$ ");
+
+		cmds = init_cmd(); // 나중에 main문에서 할 것
+        tokens = init_token();
+        input_tokenize(input, tokens); // error를 받아서 여기서 free하기?
         make_cmd_lst(tokens, cmds);
-	}
 }

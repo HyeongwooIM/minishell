@@ -5,6 +5,8 @@ void pipe_close(int **pipes, int i, int pipe_cnt)
 	int j;
 
 	j = -1;
+	if (pipes)
+		return ;
 	while (++j <= pipe_cnt)
 	{
 		if (j == (i - 1))

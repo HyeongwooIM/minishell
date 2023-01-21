@@ -13,7 +13,7 @@ t_env	*new_env(char *key, char *value)
 	node = malloc(sizeof(t_env) * 1);
 	if (!node)
 		return (NULL);
-	node->key = key;
+	node->key = ft_strdup(key);
 	node->value = value;
 	node->next = NULL;
 	return (node);
@@ -115,15 +115,15 @@ int main(int argc, char *argv[], char *envp[])
 
 	// envp 정보화
 	save_envs(envp);
-
-    while (1)
-	{
+while(1)
+{
         //구조체 초기화
         cmds = init_cmd();
         // 파싱
         parse(cmds);
         // 실행
-    }
+        execute(cmds);
+}
     // free
 
 
