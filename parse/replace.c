@@ -4,7 +4,6 @@
 #include "minishell.h"
 #include "./parse.h"
 
-
 //t_env *find_env(char *key)
 //{
 //	t_env *temp;
@@ -189,16 +188,39 @@ char    **split_words(char *s, int *size)
     {
         if (*s == '$')
         {
-            if (*(s + 1) && (s - start != 0))
+//            if (*(s + 1) && (s - start != 0) && is_space(*(s + 1))) // $ 포함 안된 문자열, 뒤에 공백
+//			{
+//				s++;
+//				continue ;
+//			}
+			if (*(s + 1) == '?')
+			{
+				s++;
+				tmp = cut_substr(start, ++s);
+			}
+			else if (*(s + 1) && (s - start != 0) && !is_space(*(s + 1))) // $ 포함 안된 문자열, 뒤에 공백 아닐
                 tmp = cut_substr(start, s);
-            else if (*(s + 1) && (s - start == 0))
+//			else if (*(s + 1) && (s - start == 0) && is_space(*(s + 1))) // $포함, 뒤에 공백
+//			{
+//				s++;
+//				continue ;
+//			}
+			else if (*(s + 1) && (s - start == 0) && !is_space(*(s + 1))) // $포함, 뒤에 문자(a-z, _, ?)
             {
-                while (*(s + 1) && *(s + 1) != '$' || *(s + 1) != '\'' || !is_space(*(s + 1)))
+				if (!ft_isalpha(*(s + 1)) && *(s + 1) != '_')
+				{
+					s++;
+					continue ;
+				}
+                while (*(s + 1) && *(s + 1) != '$' && *(s + 1) != '\'' && !is_space(*(s + 1)))
                     s++;
-                tmp = cut_substr(start, s++);
+                tmp = cut_substr(start, ++s);
             }
-            else
-                tmp =  "$";
+			else
+			{
+				s++;
+				continue;
+			}
             ret = ft_strjoin_1to2(ret, tmp);
             (*size)++;
             start = s;
@@ -206,9 +228,9 @@ char    **split_words(char *s, int *size)
         }
         s++;
     }
-    if (*size == 0)
+    if (*size == 0 || s - start != 0)
     {
-        ft_strjoin_1to2(ret, s);
+        ret = ft_strjoin_1to2(ret, start);
         *size = 1;
     }
     return (ret);
@@ -216,7 +238,7 @@ char    **split_words(char *s, int *size)
 
 int main()
 {
-    char input[100] = "   '$HOME' $ "; //quote 잘 나누나?
+    char input[100] = "$?ere $  $"; //quote 잘 나누나?
 //    char input[100] = "\"  \' \" a \'"; //quote 에러 잘 뱉나?
 //    char input[50] = "<< END | > a";
     char **ret;
@@ -228,6 +250,7 @@ int main()
     while (i < size)
     {
         printf("%s\n", ret[i]);
+		i++;
     }
 }
 
