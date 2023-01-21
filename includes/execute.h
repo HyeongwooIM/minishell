@@ -1,7 +1,7 @@
 #ifndef EXECUTE_H
 #define EXECUTE_H
 
-#include "../minishell.h"
+#include "minishell.h"
 
 typedef struct s_token t_token;
 typedef struct s_rdir t_rdir;

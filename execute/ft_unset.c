@@ -19,7 +19,7 @@ void ft_unset(t_cmd *cmd)
 		}
 		else
 		{
-		while (env_temp->next && ft_strcmp(env_temp->next->key, *cmd->content))
+		while (env_temp->next && ft_strcmp(env_temp->next->key, *str))
 			env_temp = env_temp->next;
 		}
 		if (!env_temp->next)

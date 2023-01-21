@@ -1,11 +1,23 @@
 #include "../minishell.h"
 
+void close_all_pipe(int **pipes)
+{
+    int i;
+
+    i = -1;
+    while (pipes[++i])
+    {
+        close(pipes[i][0]);
+        close(pipes[i][1]);
+    }
+}
+
 void pipe_close(int **pipes, int i, int pipe_cnt)
 {
 	int j;
 
 	j = -1;
-	if (pipes)
+	if (!*pipes)
 		return ;
 	while (++j <= pipe_cnt)
 	{

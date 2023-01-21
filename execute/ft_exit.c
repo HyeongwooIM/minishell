@@ -6,7 +6,7 @@ int check_content(char *str)
 		str++;
 	while (*str)
 	{
-		if (!ft_isdigit(*str))
+		if (*str < '0' || *str > '9')
 			return (0);
 		str++;
 	}
@@ -23,11 +23,9 @@ void ft_exit(t_cmd *cmd)
 	len = 0;
 	if (!str)
 		exit(0);
-	while (*str && len++ >= 0)
-		str++;
-	if (len > 1)
-		return ; //error 1
-	if (!check_content(*(cmd->content)));
+	if (str[1] != 0 && str[2] != 0)
+		exit (1); //error 1
+	if (check_content(*(cmd->content)) != 1)
 		exit(1); //error
 	exit_num = ft_atoi(*(cmd->content));
 	exit(exit_num);
