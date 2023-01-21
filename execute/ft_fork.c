@@ -17,10 +17,10 @@ void ft_fork(int pipe_cnt, t_cmd *cmd)
 	i = -1;
 	while (++i <= pipe_cnt)
 	{
-		pid = fork();
-		if (pid == 0)
-		{
-			if (i != pipe_cnt)
+		 pid = fork();
+		 if (pid == 0)
+		 {
+			if (pipe_cnt && i != pipe_cnt)
 				dup2(pipes[i][1],STDOUT_FILENO);
 			if (i != 0)
 				dup2(pipes[i - 1][0], STDIN_FILENO);
@@ -31,11 +31,11 @@ void ft_fork(int pipe_cnt, t_cmd *cmd)
 			else
 				ft_exe(cmd, g_info.env_lst);
 			exit(0);
-		}
+		 }
 		cmd = cmd->next;
 	}
 	i = -1;
 	while (++i <= pipe_cnt)
-		wait(1);
+		wait(0);
 	return ;
 }

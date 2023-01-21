@@ -2,9 +2,9 @@
 
 void ft_pwd()
 {
-	char	get_cwd[PATH_MAX];
+	char	get_cwd[1024];
 
-	if (!getcwd(get_cwd,sizeof(PATH_MAX)))
+	if (!getcwd(get_cwd,4096))
 	{
 		ft_putstr_fd("pwd error", 1);
 		exit (1);
