@@ -3,7 +3,7 @@
 //
 
 #include "minishell.h"
-#include "./parse.h"
+#include "parse.h"
 
 t_cmd	*last_cmd(t_cmd *cmds)
 {
@@ -17,11 +17,8 @@ t_cmd	*last_cmd(t_cmd *cmds)
 
 void	add_name(t_token *token, t_cmd *cmds)
 {
-	int len;
-
 	if (cmds->name == NULL)
-
-	cmds->name = ft_strdup(token->word);
+		cmds->name = ft_strdup(token->word);
 	if (!cmds->name)
 		exit(1);
 }
@@ -49,7 +46,10 @@ void	add_rdir(t_token *token, t_cmd *cmds)
 	else if (ft_strcmp(token->word, ">>") == 0)
 		token->type = D_RDIR;
 	else
+	{
 		token->type = HEREDOC;
+		cmds->is_heredoc = 1;
+	}
 	if (cmds->rdir == NULL)
 		cmds->rdir = new_rdir(token->type, token->next->word);
 	else

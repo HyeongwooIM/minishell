@@ -2,14 +2,27 @@
 // Created by jiyun on 2023/01/17.
 //
 
-#include "../minishell.h"
-#include "./parse.h"
+#include "minishell.h"
+#include "parse.h"
 
 /* parse error 검사
  * lst 생성 및 추가
  * 청크 리스트를 토큰 리스트에 깊은 복사 하면서 cmd 인지 cmd에 딸린 옵션인지.. 확인하고 type 바꿔주기
  */
-static void	free_all(char **ret)
+
+void	free_token_lst(t_token *lst)
+{
+	t_token *tmp;
+
+	while (lst)
+	{
+		tmp = lst;
+		lst = lst->next;
+		free(tmp);
+	}
+}
+
+void	free_arr2(char **ret)
 {
     size_t	i;
 
@@ -45,6 +58,6 @@ char	**ft_strjoin_1to2(char **dest, char *src)
 	res[word_num] = ft_strdup(src);
 	res[word_num + 1] = 0;
 	if (dest)
-		free_all(dest);
+		free_arr2(dest);
 	return (res);
 }
