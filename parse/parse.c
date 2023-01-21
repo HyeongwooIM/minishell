@@ -47,7 +47,7 @@ void    parse(t_cmd *cmds)
 
         input = readline("minishell$ ");
 
-		cmds = init_cmd(); // 나중에 main문에서 할 것
+		// cmds = init_cmd(); // 나중에 main문에서 할 것
         tokens = init_token();
         input_tokenize(input, tokens); // error를 받아서 여기서 free하기?
         make_cmd_lst(tokens, cmds);
