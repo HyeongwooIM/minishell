@@ -1,11 +1,11 @@
-#include "../minishell.h"
+#include "minishell.h"
 
 void ft_env(t_cmd *cmd)
 {
 	t_env *env;
 
 	if (cmd->content)
-		exit(1);
+		return ;
 	env = g_info.env_lst;
 	while (env)
 	{

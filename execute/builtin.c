@@ -1,7 +1,12 @@
-#include "../minishell.h"
+#include "minishell.h"
 
-int	single_builtin(t_cmd *cmd, t_env *env)
+int	single_builtin(t_cmd *cmd)
 {
+	int	origin_stdin;
+	int	origin_stdout;
+
+	origin_stdin = dup(STDIN_FILENO);
+	origin_stdout = dup(STDOUT_FILENO);
 	if (ft_strcmp(cmd->name, "echo") == 0)
 		ft_echo(cmd);
 	else if (ft_strcmp(cmd->name, "cd") == 0)

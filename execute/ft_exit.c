@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "minishell.h"
 
 int check_content(char *str)
 {
@@ -24,9 +24,12 @@ void ft_exit(t_cmd *cmd)
 	if (!str)
 		exit(0);
 	if (str[1] != 0 && str[2] != 0)
-		exit (1); //error 1
+	{
+		ft_putstr_fd("exit : too many arguments", 1);
+		return ;
+	}
 	if (check_content(*(cmd->content)) != 1)
-		exit(1); //error
+		ft_error_exit("exit : numeric argument required",255);
 	exit_num = ft_atoi(*(cmd->content));
 	exit(exit_num);
 }

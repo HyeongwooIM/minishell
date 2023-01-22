@@ -79,7 +79,9 @@ typedef struct s_env
 typedef struct s_info
 {
 	struct s_env *env_lst;
-	int last_error;
+    int     in_fd;
+    int     out_fd;
+    int     last_exit_num;
 }	t_info;
 
 extern t_info g_info;
