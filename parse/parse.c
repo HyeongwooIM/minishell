@@ -27,7 +27,7 @@ void	input_tokenize(char *input, t_token *tokens)
 	make_chunk_lst(input, chunks);
 
 	/* "$" 치환 맟 '' 제거 */
-//	replace_chunk(chunks);
+	replace_chunk(chunks);
 
 	/* while
 	 * token_lst 만들기

@@ -48,7 +48,7 @@ t_cmd	*init_cmd()
 	ret->name = NULL;
 	ret->content = NULL;
 	ret->rdir = NULL;
-	ret->is_heredoc = NONE;
+	ret->is_heredoc = 0;
 	ret->next = NULL;
 	return (ret);
 }
@@ -64,6 +64,27 @@ t_token	*new_token(int type, char *word)
 	node->word = ft_strdup(word);
 	node->next = NULL;
 	return (node);
+}
+
+void	delete_token(t_token *token, int idx)
+{
+	int i;
+	t_token *cur;
+	t_token *tmp;
+
+	if (idx == 0)
+	{
+		tmp = token;
+		token = token->next;
+		free(tmp);
+	}
+	i = 0;
+	cur = token;
+	while (++i < idx)
+		cur = cur->next;
+	tmp = cur->next;
+	cur->next = tmp->next;
+	free(tmp);
 }
 
 t_rdir	*new_rdir(int type, char *with)

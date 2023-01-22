@@ -14,7 +14,7 @@ t_env	*new_env(char *key, char *value)
 	if (!node)
 		return (NULL);
 	node->key = ft_strdup(key);
-	node->value = value;
+	node->value = ft_strdup(value);
 	node->next = NULL;
 	return (node);
 }
@@ -30,6 +30,7 @@ void	save_envs(char *envp[])
 	path = ft_split(envp[0], '=');
 	cur = new_env(path[0], path[1]);
 	head = cur;
+	free_arr2(path);
 	i = 1;
 	while (envp[i] != NULL)
 	{
@@ -38,6 +39,7 @@ void	save_envs(char *envp[])
 		cur->next = tmp;
 		cur = cur-> next;
 		i++;
+		free_arr2(path);
 	}
 	g_info.env_lst = head;
 }

@@ -95,7 +95,12 @@ void	make_chunk_lst(char *input, t_token *chunks)
 				chunk_size++;
 			}
 		}
-		make_chunk(chunk_str, chunk_size, chunks);
-		input = input + chunk_size;
+		if (chunk_size != 0)
+		{
+			make_chunk(chunk_str, chunk_size, chunks);
+			input += chunk_size;
+		}
+		else
+			input++;
 	}
 }
