@@ -29,7 +29,7 @@ void	free_arr2(char **ret);
 char	**ft_strjoin_1to2(char **dest, char *src);
 
 /* chunks.c */
-int 	make_chunk_lst(char *input, t_token *chunks);
+void	make_chunk_lst(char *input, t_token *chunks);
 
 /* replace.c */
 void	replace_chunk(t_token *chunks);
