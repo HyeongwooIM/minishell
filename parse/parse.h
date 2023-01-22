@@ -11,8 +11,6 @@ typedef struct s_token t_token;
 typedef struct s_rdir t_rdir;
 typedef struct s_cmd t_cmd;
 
-#define NO_ENV_VALUE -1
-
 /* utils.c */
 int is_space(char c);
 int	ft_strcmp(const char *str1, const char *str2);

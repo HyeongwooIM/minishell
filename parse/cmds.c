@@ -31,6 +31,8 @@ void	add_content(t_token *token, t_cmd *cmds)
 		if(!cmds->content)
 			exit(1);
 		(cmds->content)[0] = ft_strdup(token->word);
+		if (!(cmds->content)[0])
+			exit(1);
 		(cmds->content)[1] = 0;
 	}
 	else

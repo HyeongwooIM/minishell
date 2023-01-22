@@ -231,8 +231,12 @@ void	replace_chunk(t_token *chunks)
 		if ((cur->type == DOLLAR) || \
 		(cur->type == D_QUOTE && ft_strchr(cur->word, '$')))
 			word = change_word(cur);
-		else if (cur->type == S_QUOTE)
-			word = ft_strdup(cur->word++);
+		else if (cur->type == S_QUOTE || \
+		(cur->type == D_QUOTE && !ft_strchr(cur->word, '$')))
+		{
+			cur->word[ft_strlen(cur->word) - 1] = '\0';
+			word = ft_strdup(++cur->word);
+		}
 		else
 		{
 			cur = cur->next;
