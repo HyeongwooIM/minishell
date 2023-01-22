@@ -22,6 +22,7 @@ SRCS_FILES = parse/parse.c \
              parse/cmds.c \
              parse/utils.c \
              parse/utils2.c \
+             parse/replace.c \
              main.c \
              execute/builtin.c \
              execute/execute.c \

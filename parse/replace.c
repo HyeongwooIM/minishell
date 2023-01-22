@@ -15,7 +15,7 @@ char	*add_str(char *dest, char *src)
 	src_len = ft_strlen(src);
 	ret = malloc(sizeof(char) * (dest_len + src_len + 1));
 	if (!ret)
-		exit(1);
+		ft_error_exit("malloc error", 1);;
 	i = -1;
 	while (++i < dest_len)
 		ret[i] = dest[i];
@@ -45,8 +45,6 @@ char	*env_value(char *str)
 	if (!env)
 		return (0);
 	ret = ft_strdup(env->value);
-	if (!ret)
-		exit (1);
 	return (ret);
 }
 
@@ -70,7 +68,7 @@ char *replace_dollar(t_token *pieces)
 	{
 		tmp = ft_itoa(g_info.last_error);
 		if (!tmp)
-			exit (1);
+			ft_error_exit("malloc error", 1);;
 	}
 	return (tmp);
 }
@@ -91,7 +89,7 @@ char	*join_pieces(t_token *pieces)
 	}
 	ret = malloc(sizeof(char) * (len + 1));
 	if (!ret)
-		exit(1);
+		ft_error_exit("malloc error", 1);;
 	i = -1;
 	tmp = pieces;
 	while (tmp)
@@ -114,7 +112,7 @@ char    *cut_substr(const char *start, const char *end)
     size = end - start;
     ret = malloc(sizeof(char) * (size + 1));
     if (!ret)
-        exit(1);
+        ft_error_exit("malloc error", 1);;
     i = 0;
     while(i < size)
     {

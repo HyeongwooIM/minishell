@@ -19,8 +19,6 @@ void	add_name(t_token *token, t_cmd *cmds)
 {
 	if (cmds->name == NULL)
 		cmds->name = ft_strdup(token->word);
-	if (!cmds->name)
-		exit(1);
 }
 
 void	add_content(t_token *token, t_cmd *cmds)
@@ -29,10 +27,8 @@ void	add_content(t_token *token, t_cmd *cmds)
 	{
 		cmds->content = malloc(sizeof(char *) * 2);
 		if(!cmds->content)
-			exit(1);
+			ft_error_exit("malloc error", 1);;
 		(cmds->content)[0] = ft_strdup(token->word);
-		if (!(cmds->content)[0])
-			exit(1);
 		(cmds->content)[1] = 0;
 	}
 	else
