@@ -31,7 +31,7 @@ t_token	*init_token()
 
 	ret = malloc(sizeof(t_token) * 1);
 	if (!ret)
-		exit(1);
+		ft_error_exit("malloc error", 1);;
 	ret->type = NONE;
 	ret->word = NULL;
 	ret->next = NULL;
@@ -44,7 +44,7 @@ t_cmd	*init_cmd()
 
 	ret = malloc(sizeof(t_cmd) * 1);
 	if (!ret)
-		exit(1);
+		ft_error_exit("malloc error", 1);;
 	ret->name = NULL;
 	ret->content = NULL;
 	ret->rdir = NULL;
@@ -59,7 +59,7 @@ t_token	*new_token(int type, char *word)
 
 	node = malloc(sizeof(t_token) * 1);
 	if (!node)
-		exit(1);
+		ft_error_exit("malloc error", 1);;
 	node->type = type;
 	node->word = ft_strdup(word);
 	node->next = NULL;
@@ -93,7 +93,7 @@ t_rdir	*new_rdir(int type, char *with)
 
 	node = malloc(sizeof(t_token) * 1);
 	if (!node)
-		exit(1);
+		ft_error_exit("malloc error", 1);;
 	node->type = type;
 	node->here_doc_fd = 0;
 	node->with = ft_strdup(with);

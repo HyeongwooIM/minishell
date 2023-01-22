@@ -22,7 +22,7 @@ int quote_size(const char *str, char quote)
 		i++;
 	}
     if (quote_close == 0)
-        exit(1);
+        ft_error_exit("malloc error", 1);;
 	return (i);
 }
 

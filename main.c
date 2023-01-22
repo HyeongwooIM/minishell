@@ -12,7 +12,7 @@ t_env	*new_env(char *key, char *value)
 
 	node = malloc(sizeof(t_env) * 1);
 	if (!node)
-		return (NULL);
+		ft_error_exit("malloc error", 1);
 	node->key = ft_strdup(key);
 	node->value = ft_strdup(value);
 	node->next = NULL;
@@ -44,25 +44,6 @@ void	save_envs(char *envp[])
 	g_info.env_lst = head;
 }
 
-/* 추후 refactoring에 필요
-int	cpy_str(char *dest, const char *src, size_t dstsize)
-{
-	int	i;
-	int	src_len;
-
-	i = 0;
-	src_len = ft_strlen(src);
-	if (dstsize == 0)
-		return (src_len);
-	while (src[i] != '\0' && i + 1 < dstsize)
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	return (src_len);
-}
-*/
-
 char	*join_three(char *start, char *end, char *middle)
 {
 	char *join_two;
@@ -70,6 +51,7 @@ char	*join_three(char *start, char *end, char *middle)
 
 	join_two = ft_strjoin(start, middle);
 	ret = ft_strjoin(join_two, end);
+	free(join_two);
 	return (ret);
 }
 
@@ -97,7 +79,7 @@ char	**lst_to_arr(t_env *envs)
 	size = get_size(envs);
 	arr = malloc(sizeof(char *) * size + 1);
 	if (!arr)
-		return (NULL);
+		ft_error_exit("malloc error", 1);;
 	i = 0;
 	while (i < size && envs != NULL)
 	{
@@ -113,31 +95,18 @@ int main(int argc, char *argv[], char *envp[])
 {
 	t_cmd	*cmds;
 
-	// signal 정의
-
 	// envp 정보화
 	save_envs(envp);
-while(1)
-{
+	while(1)
+	{
         //구조체 초기화
         cmds = init_cmd();
+		// signal 정의
+//		define_signal();
         // 파싱
         parse(cmds);
         // 실행
         execute(cmds);
-}
+	}
     // free
-
-
-
-
-    /* lst 잘 만들어졌는지 확인 */
-    t_env *cur = g_info.env_lst;
-    int i = 0;
-    printf("========lst========\n");
-    while (cur != NULL)
-    {
-        printf("lst %d: %s=%s\n", i++, cur->key, cur->value);
-        cur = cur->next;
-    }
 }
