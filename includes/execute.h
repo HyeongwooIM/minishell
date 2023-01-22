@@ -33,6 +33,7 @@ char **ft_strjoin2(char *str, char **arr);
 void close_all_pipe(int **pipes);
 void	ft_error_exit(char *str, int error_no);
 void	ft_error_return(char *str, int error_no);
+int 	is_builtin(t_cmd *cmd);
 
 #endif
 

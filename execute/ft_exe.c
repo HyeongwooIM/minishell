@@ -59,7 +59,7 @@ char *find_path(char *cmd, t_env *env, int *is_path)
 		return (no_path(cmd));
 	else
 	{
-		is_path = 1;
+		*is_path = 1;
 		return (yes_path(cmd, env));
 	}
 	return (0); //error?
@@ -82,7 +82,7 @@ void ft_exe(t_cmd *cmd, t_env *env)
 			envp = lst_to_arr(env);
 			if (execve(path, content, envp) == -1)
 			{
-				ft_putstr_fd(cmd, 2);
+				ft_putstr_fd(cmd->name, 2);
 				ft_error_exit("No such file or directory", 1);
 			}
 		}

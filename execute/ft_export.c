@@ -77,7 +77,6 @@ void ft_export(t_cmd *cmd)
 			temp->value = ft_strdup(env_arr[1]);
 		}
 		free_env_arr(env_arr);
-		free(env_arr);
 		str++;
 	}
 	return ;
