@@ -30,10 +30,16 @@ void ft_rdir(t_rdir *rdir)
 		rdir = rdir->next;
 	}
     if (in_fd != 0)
+	{
         dup2(in_fd, STDIN_FILENO);
+		close(in_fd);
+	}
     if (out_fd != 1)
+	{
         dup2(out_fd, STDOUT_FILENO);
-	close(out_fd);
-	close(in_fd);
+		close(out_fd);
+	}
+	
+	
 	return ;
 }
