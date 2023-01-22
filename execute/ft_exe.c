@@ -1,5 +1,4 @@
-#include "../minishell.h"
-#include <sys/stat.h>
+#include "minishell.h"
 
 char *no_path(char *cmd)
 {
@@ -8,11 +7,11 @@ char *no_path(char *cmd)
 	if (stat(cmd, &buf) == 0) //succes = 0 fail, error = -1
 	{
 		if ((buf.st_mode & S_IFMT) == S_IFDIR)
-			ft_putstr_fd("is a directory", 1);
+			ft_error_exit("is a directory", 1);
 		return (cmd);
 	}
-	ft_putstr_fd("No such file or directory",1); // error;
-	exit(1); // error
+	ft_putstr_fd(cmd, 1);
+	ft_error_exit("No such file or directory",1);
 }
 
 char *yes_path(char *cmd, t_env *env)
@@ -28,18 +27,26 @@ char *yes_path(char *cmd, t_env *env)
 	while (paths[++i])
 	{
 		part_path = ft_strjoin(paths[i], "/");
+		if (!part_path)
+			ft_error_exit("malloc error", 1);
 		path = ft_strjoin(part_path, cmd);
+		if (!path)
+			ft_error_exit("malloc error", 1);
 		free(part_path);
 		if (stat(path, &buf) == 0)
 		{
 			if ((buf.st_mode & S_IFMT) == S_IFDIR)
+			{
+				ft_putstr_fd(path, 2);
 				ft_putstr_fd("is a directory", 1);
+			}
 			return (path);
 		}
 		free(path);
 	}
-	ft_putstr_fd("Command not found",1); // error;
-	exit(1); // error
+	return (0);
+	// ft_putstr_fd(cmd, 2);
+	// ft_error_exit("Command not found", 127);
 }
 
 char *find_path(char *cmd, t_env *env, int *is_path)
@@ -62,7 +69,6 @@ void ft_exe(t_cmd *cmd, t_env *env)
 {
 	char	**content;
 	char	*path;
-	int		i;
 	char	**envp;
 	int		is_path;
 
@@ -75,13 +81,14 @@ void ft_exe(t_cmd *cmd, t_env *env)
 			content = ft_strjoin2(path, cmd->content);
 			envp = lst_to_arr(env);
 			if (execve(path, content, envp) == -1)
-				printf("No such file or directory");
+			{
+				ft_putstr_fd(cmd, 2);
+				ft_error_exit("No such file or directory", 1);
+			}
 		}
 	}
 	content = ft_strjoin2(path, cmd->content);
 	envp = lst_to_arr(env);
 	(execve(path, content, envp) == -1);
-	ft_putstr_fd("Command not found",1);
+		ft_error_exit("Command not found", 127);
 }
-
-// 폴더인지확인

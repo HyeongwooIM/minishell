@@ -1,23 +1,4 @@
-#include "../minishell.h"
-
-// t_env *init_env(char *str)
-// {
-// 	t_env	*env;
-	
-// 	env = g_info->env_list;
-// 	while (env && env->next)
-// 		env = env->next;
-// 	env->next = malloc(sizeof(t_env));
-// 	if (!env->next)
-// 		exit(1);
-// 	env = env->next;
-// 	env->key = ft_strdup(str);
-// 	if (!env->key)
-// 		exit(1);
-// 	env->value = 0;
-// 	env->next = 0;
-// 	return (env);
-// }
+#include "minishell.h"
 
 void	edit_pwd(char *cwd)
 {
@@ -27,8 +8,6 @@ void	edit_pwd(char *cwd)
 
 	env_pwd = find_env_add("PWD");
 	env_oldpwd = find_env_add("OLDPWD");
-	if (!env_pwd || !env_oldpwd)
-		exit(1);
 	if (env_oldpwd->value)
 		free(env_oldpwd->value);
 	env_oldpwd->value = env_pwd->value;

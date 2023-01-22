@@ -24,6 +24,7 @@ t_cmd	*init_cmd();
 void	add_rdir_node(int type, char *with, t_rdir *rdir);
 
 /* utils2.c */
+
 void	free_token_lst(t_token *lst);
 void	free_arr2(char **ret);
 char	**ft_strjoin_1to2(char **dest, char *src);
@@ -39,5 +40,6 @@ void    make_token_lst(t_token *chunks, t_token *tokens);
 
 /* cmds.c */
 void make_cmd_lst(t_token *tokens, t_cmd *cmds);
+
 
 #endif

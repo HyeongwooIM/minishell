@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "minishell.h"
 
 t_env *find_env_add(char *key)
 {
@@ -18,7 +18,5 @@ t_env *find_env_add(char *key)
 		temp->next = new_env(key, 0);
 		temp = temp->next;
 	}
-	if (!temp)
-		exit(1);
 	return (temp);
 }

@@ -3,13 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiyun <jiyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 20:01:45 by jiyun             #+#    #+#             */
-/*   Updated: 2022/03/23 20:25:45 by jiyun            ###   ########.fr       */
+/*   Updated: 2023/01/22 18:24:43 by woohyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
+
+static void ft_error_exit(char *str, int error_no)
+{
+	write(2, str, ft_strlen(str));
+	exit(error_no);
+}
 
 char	*ft_strdup(const char *s1)
 {
