@@ -1,12 +1,7 @@
 #include "minishell.h"
 
-int	single_builtin(t_cmd *cmd)
+int is_builtin(t_cmd *cmd)
 {
-	int	origin_stdin;
-	int	origin_stdout;
-
-	origin_stdin = dup(STDIN_FILENO);
-	origin_stdout = dup(STDOUT_FILENO);
 	if (ft_strcmp(cmd->name, "echo") == 0)
 		ft_echo(cmd);
 	else if (ft_strcmp(cmd->name, "cd") == 0)
@@ -24,8 +19,16 @@ int	single_builtin(t_cmd *cmd)
 	return (0);
 }
 
+void	single_builtin(t_cmd *cmd)
+{
+    ft_rdir(cmd->rdir);
+    is_builtin(cmd);
+}
+
 int	check_builtin(char *cmd_name)
 {
+    if (cmd_name)
+        return (0);
 	if (ft_strcmp(cmd_name, "echo") == 0)
 		return (1);
 	else if (ft_strcmp(cmd_name, "cd") == 0)

@@ -6,7 +6,7 @@
 #    By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/25 12:25:30 by him               #+#    #+#              #
-#    Updated: 2023/01/10 13:42:45 by woohyeong        ###   ########.fr        #
+#    Updated: 2023/01/22 18:14:15 by woohyeong        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,10 +34,10 @@ SRCS_FILES = parse/parse.c \
              execute/ft_export.c \
              execute/ft_fork.c \
              execute/ft_here_doc.c \
-             execute/ft_pipe.c \
              execute/ft_unset.c \
              execute/ft_rdir.c \
              execute/ft_pwd.c \
+             util/ft_error_exit.c \
              util/find_env.c \
              util/find_env_add.c \
              util/ft_strcmp.c \

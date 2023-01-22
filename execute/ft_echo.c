@@ -21,16 +21,17 @@ void	ft_echo(t_cmd	*cmd)
 	char **str;
 	
 	str = cmd->content;
-	n = check_n(*str);
-	if (n)
-		str++;
-	while (*str)
-	{
-		ft_putstr_fd(*str, 1);
-		str++;
-		if(*str)
-			write(1, " ", 1);
-	}
+    if (str) {
+        n = check_n(*str);
+        if (n)
+            str++;
+        while (*str) {
+            ft_putstr_fd(*str, 1);
+            str++;
+            if (*str)
+                write(1, " ", 1);
+        }
+    }
 	if (!n)
 		write(1, "\n", 1);
 	return ;

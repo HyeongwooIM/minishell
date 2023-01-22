@@ -15,7 +15,7 @@ void execute(t_cmd *cmd);
 int pipe_count(t_cmd *cmd);
 void	check_heredoc(t_cmd	*cmd);
 int	check_builtin(char *cmd_name);
-int	single_builtin(t_cmd *cmd);
+void	single_builtin(t_cmd *cmd);
 void	ft_echo(t_cmd	*cmd);
 void	ft_cd(t_cmd *cmd);
 void ft_pwd();
@@ -33,6 +33,7 @@ char **ft_strjoin2(char *str, char **arr);
 void close_all_pipe(int **pipes);
 void	ft_error_exit(char *str, int error_no);
 void	ft_error_return(char *str, int error_no);
+int 	is_builtin(t_cmd *cmd);
 
 #endif
 
