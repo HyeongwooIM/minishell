@@ -19,7 +19,7 @@ void	single_builtin(t_cmd *cmd);
 void	ft_echo(t_cmd	*cmd);
 void	ft_cd(t_cmd *cmd);
 void ft_pwd();
-void ft_export(t_cmd *cmd);
+void ft_export(char **str);
 void ft_unset(t_cmd *cmd);
 void ft_env(t_cmd *cmd);
 void ft_exit(t_cmd *cmd);

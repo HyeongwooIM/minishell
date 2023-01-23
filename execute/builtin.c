@@ -6,7 +6,7 @@
 /*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:51:33 by woohyeong         #+#    #+#             */
-/*   Updated: 2023/01/23 17:53:01 by woohyeong        ###   ########.fr       */
+/*   Updated: 2023/01/23 21:29:41 by woohyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	is_builtin(t_cmd *cmd)
 	else if (ft_strcmp(cmd->name, "pwd") == 0)
 		ft_pwd();
 	else if (ft_strcmp(cmd->name, "export") == 0)
-		ft_export(cmd);
+		ft_export(cmd->content);
 	else if (ft_strcmp(cmd->name, "unset") == 0)
 		ft_unset(cmd);
 	else if (ft_strcmp(cmd->name, "env") == 0)

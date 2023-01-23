@@ -6,11 +6,27 @@
 /*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 18:03:27 by woohyeong         #+#    #+#             */
-/*   Updated: 2023/01/23 18:06:05 by woohyeong        ###   ########.fr       */
+/*   Updated: 2023/01/23 21:43:46 by woohyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	name_check(char *str)
+{
+	if (!str || (*str == '_' && !ft_isalpha(*str)))
+		return (0);
+	str++;
+	while (*str)
+	{
+		if ((!ft_isalpha(*str) && !ft_isdigit(*str) && *str != '_'))
+			return (0);
+		str++;
+	}
+	ft_putstr_fd("not a valid identifier\n", 2);
+	g_info.last_exit_num = 1;
+	return (1);
+}
 
 char	**find_key_value(char	*key_value)
 {
@@ -64,14 +80,12 @@ void	free_env_arr(char	**str)
 	free(str);
 }
 
-void	ft_export(t_cmd	*cmd)
+void	ft_export(char **str)
 {
 	t_env	*temp;
 	char	**env_arr;
 	char	*key_value;
-	char	**str;
 
-	str = cmd->content;
 	if (!str)
 	{
 		export_null_print();
@@ -81,14 +95,16 @@ void	ft_export(t_cmd	*cmd)
 	{
 		key_value = *str;
 		env_arr = find_key_value(key_value);
-		temp = find_env_add(env_arr[0]);
-		if (env_arr[1])
+		if (name_check(env_arr[0]))
 		{
-			free(temp->value);
-			temp->value = ft_strdup(env_arr[1]);
+			temp = find_env_add(env_arr[0]);
+			if (env_arr[1])
+			{
+				free(temp->value);
+				temp->value = ft_strdup(env_arr[1]);
+			}
 		}
 		free_env_arr(env_arr);
 		str++;
 	}
-	return ;
 }
