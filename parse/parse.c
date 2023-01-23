@@ -11,44 +11,45 @@
 
 t_info g_info;
 
-void	input_tokenize(char *input, t_token *tokens)
+int	input_tokenize(t_parse *info)
 {
-	t_token	*chunks;
-
-	/* token 할당 */
-
-	chunks = init_token();
-	//null 가드
-
-	/* while
-	 * chunk_lst 만들기
-	 	* size 재기(일단 white space 기준으로)
-	*/
-	make_chunk_lst(input, chunks);
-
-	/* "$" 치환 맟 '' 제거 */
-	replace_chunk(chunks);
-
-	/* while
-	 * token_lst 만들기
-	 	* parse error 검사
-	 	* lst 생성 및 추가
-	 	* 청크 리스트를 토큰 리스트에 깊은 복사 하면서 cmd 인지 cmd에 딸린 옵션인지.. 확인하고 type 바꿔주기
-	*/
-	make_token_lst(chunks, tokens);
+	if (make_chunk_lst(info) != SUCCESS)
+		return (FAIL);
+	replace_chunk(info);
+	if (make_token_lst(info) != SUCCESS)
+		return (FAIL);
+	return (SUCCESS);
 }
 
-void    parse(t_cmd *cmds)
+void	init_parse_info(t_parse *info)
 {
-	char *input;
-	t_token *tokens;
-//	t_cmd *cmds; //나중에 parse 인자로 받을 것
+	info->chunks = NULL;
+	info->tokens = NULL;
+}
 
+void    parse(t_cmd **cmds)
+{
+	t_parse info;
 
-        input = readline("minishell$ ");
+	// 1. 공백만 파싱 선에서 다시 실행
+	// 2. 토큰화 실패(malloc 외, 공백문자만 있다던지..)도 파싱 선에서 다시 실행
+	// 3. 넘겨줄 데이터 구조체 채우기 실패까지 파싱 선에서 다시 실행
+	info.input = readline("minishell$ ");
+	if (!info.input)
+	{
+		ft_putendl_fd("exit", STDOUT_FILENO);
+		exit(g_info.last_exit_num);
+	}
+	if (!*(info.input))
+		add_history(info.input);
+	init_parse_info(&info);
+	if (input_tokenize(&info) == FAIL) {
 
-		// cmds = init_cmd(); // 나중에 main문에서 할 것
-        tokens = init_token();
-        input_tokenize(input, tokens); // error를 받아서 여기서 free하기?
-        make_cmd_lst(tokens, cmds);
+		free(info.input);
+		free_token_lst(info.chunks);
+		free_token_lst(info.tokens);
+		ft_putstr_fd("syntax error\n", STDOUT_FILENO);
+		return ;
+	}
+	make_cmd_lst(&info, cmds);
 }

@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
+#include <termios.h>
 #include <signal.h>
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -69,6 +70,13 @@ typedef struct s_cmd
 	struct s_cmd *next;
 }	t_cmd;
 
+typedef struct s_parse
+{
+	char *input;
+	struct s_token *chunks;
+	struct s_token *tokens;
+}	t_parse;
+
 typedef struct s_env
 {
 	char *key;
@@ -84,8 +92,10 @@ typedef struct s_info
 
 extern t_info g_info;
 
-void    parse(t_cmd *cmds);
+void    parse(t_cmd **cmds);
 char	**lst_to_arr(t_env *envs);
 t_env	*new_env(char *key, char *value);
+
+void	define_signal();
 
 #endif

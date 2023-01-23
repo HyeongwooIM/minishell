@@ -18,11 +18,13 @@ INCLUDES = -I./includes
 SRCS = ${SRCS_FILES}
 SRCS_FILES = parse/parse.c \
 			 parse/chunks.c \
+             parse/replace.c \
              parse/tokens.c \
              parse/cmds.c \
+             parse/node.c \
              parse/utils.c \
              parse/utils2.c \
-             parse/replace.c \
+             parse/utils3.c \
              main.c \
              execute/builtin.c \
              execute/execute.c \
