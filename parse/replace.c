@@ -174,7 +174,7 @@ char	*change_quote(t_token *chunk)
 	{
 		if (before[i][0] == '$')
 		{
-			tmp = get_word(before[i]);
+			tmp = get_word(&(before[i][1]));
 			after = ft_strjoin_1to2(after, tmp);
 			free(tmp);
 		}
