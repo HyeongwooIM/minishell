@@ -6,7 +6,7 @@
 /*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:30:00 by woohyeong         #+#    #+#             */
-/*   Updated: 2023/01/23 17:47:39 by woohyeong        ###   ########.fr       */
+/*   Updated: 2023/01/23 21:03:45 by woohyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ char	*no_path(char *cmd)
 	}
 	ft_putstr_fd(cmd, 1);
 	ft_error_exit("No such file or directory", 1);
+	return (0);
 }
 
 char	*yes_path(char *cmd, t_env *env)
