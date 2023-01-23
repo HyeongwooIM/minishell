@@ -189,7 +189,7 @@ char	*change_quote(t_token *chunk)
     return (ret);
 }
 
-int	replace_chunk(t_parse *info)
+void	replace_chunk(t_parse *info)
 {
 	t_token	*cur;
 	char *word;

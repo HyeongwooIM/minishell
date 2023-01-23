@@ -80,23 +80,20 @@ int	make_chunk_lst(t_parse *info)
 
 	input = info->input;
 	if (just_white_space(input))
-		return (RESTART);
+		return (FAIL);
 	while (*input)
 	{
 		while (is_space(*input))
 			input++;
-		chunk_size = 0;
+		if (!*input)
+			break ;
+		chunk_size = -1;
 		if (*input == '\'' || *input == '\"' || *input == '>' || *input == '<')
 			chunk_size = count_chunk_size(input, *input);
 		else
-		{
-			while (input[chunk_size])
-			{
+			while (input[++chunk_size])
 				if (is_space(input[chunk_size]))
 					break ;
-				chunk_size++;
-			}
-		}
 		make_chunk(input, chunk_size, info);
 		input += chunk_size;
 	}

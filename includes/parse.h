@@ -16,7 +16,6 @@ typedef enum e_error
 {
 	FAIL,
 	SUCCESS,
-	RESTART
 }	t_error;
 
 /* utils.c */
@@ -45,7 +44,7 @@ char *dequote(char *str);
 int	make_chunk_lst(t_parse *info);
 
 /* replace.c */
-int	replace_chunk(t_parse *info);
+void	replace_chunk(t_parse *info);
 
 /* tokens.c */
 int	make_token_lst(t_parse *info);
