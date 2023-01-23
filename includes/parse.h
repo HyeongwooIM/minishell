@@ -6,7 +6,6 @@
 #define PARSE_H
 
 #include "minishell.h"
-#include "parse.h"
 
 typedef struct s_token t_token;
 typedef struct s_rdir t_rdir;
@@ -53,5 +52,6 @@ int	make_token_lst(t_parse *info);
 
 /* cmds.c */
 void make_cmd_lst(t_parse *info, t_cmd **cmds);
+
 
 #endif

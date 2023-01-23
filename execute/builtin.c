@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/23 17:51:33 by woohyeong         #+#    #+#             */
+/*   Updated: 2023/01/23 17:53:01 by woohyeong        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int is_builtin(t_cmd *cmd)
+int	is_builtin(t_cmd *cmd)
 {
 	if (ft_strcmp(cmd->name, "echo") == 0)
 		ft_echo(cmd);
@@ -21,14 +33,15 @@ int is_builtin(t_cmd *cmd)
 
 void	single_builtin(t_cmd *cmd)
 {
-    ft_rdir(cmd->rdir);
-    is_builtin(cmd);
+	if (ft_rdir(cmd->rdir))
+		return ;
+	is_builtin(cmd);
 }
 
 int	check_builtin(char *cmd_name)
 {
-    if (cmd_name)
-        return (0);
+	if (!cmd_name)
+		return (0);
 	if (ft_strcmp(cmd_name, "echo") == 0)
 		return (1);
 	else if (ft_strcmp(cmd_name, "cd") == 0)

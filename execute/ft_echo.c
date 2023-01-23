@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/23 17:59:35 by woohyeong         #+#    #+#             */
+/*   Updated: 2023/01/23 18:01:12 by woohyeong        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int	check_n(char *content)
+int	check_n(char	*content)
 {
 	if (!content)
 		return (0);
-	if(*content == '-')
+	if (*content == '-')
 		content++;
 	else
 		return (0);
@@ -17,21 +29,23 @@ int	check_n(char *content)
 
 void	ft_echo(t_cmd	*cmd)
 {
-	int	n;
-	char **str;
+	int		n;
+	char	**str;
 	
 	str = cmd->content;
-    if (str) {
+    if (str)
+	{
         n = check_n(*str);
-        if (n)
-            str++;
-        while (*str) {
-            ft_putstr_fd(*str, 1);
-            str++;
-            if (*str)
-                write(1, " ", 1);
-        }
-    }
+		if (n)
+			str++;
+		while (*str)
+		{
+			ft_putstr_fd(*str, 1);
+			str++;
+			if (*str)
+				write(1, " ", 1);
+		}
+	}
 	if (!n)
 		write(1, "\n", 1);
 	return ;

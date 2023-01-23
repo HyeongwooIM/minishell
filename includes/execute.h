@@ -24,7 +24,7 @@ void ft_unset(t_cmd *cmd);
 void ft_env(t_cmd *cmd);
 void ft_exit(t_cmd *cmd);
 void ft_fork(int pipe_cnt, t_cmd *cmd);
-void ft_rdir(t_rdir *rdir);
+int	ft_rdir(t_rdir *rdir);
 void ft_exe(t_cmd *cmd, t_env *env);
 t_env *find_env_add(char *key);
 t_env *find_env(char *key);

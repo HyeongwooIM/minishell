@@ -6,7 +6,7 @@
 #    By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/25 12:25:30 by him               #+#    #+#              #
-#    Updated: 2023/01/22 18:14:15 by woohyeong        ###   ########.fr        #
+#    Updated: 2023/01/23 20:38:21 by woohyeong        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRCS_FILES = parse/parse.c \
              parse/utils.c \
              parse/utils2.c \
              parse/utils3.c \
+             parse/signal.c \
              main.c \
              execute/builtin.c \
              execute/execute.c \
@@ -48,7 +49,7 @@ OBJS = $(SRCS:.c=.o)
 NAME = minishell
 TOTAL_OBJS = $(OBJS)
 LIBFT = -Llibft -lft
-READLINE = -L/opt/homebrew/opt/readline/lib -lreadline -I/opt/homebrew/opt/readline/include
+READLINE = -L/opt/homebrew/opt/readline/lib -I/opt/homebrew/opt/readline/include 
 all : $(NAME)
 
 %.o : %.c
@@ -56,7 +57,7 @@ all : $(NAME)
 
 $(NAME) : $(TOTAL_OBJS)
 	make re -C ./libft
-	$(CC) $(CFLAGS) $(TOTAL_OBJS) $(INCLUDES) $(READLINE) $(LIBFT) -o ${NAME}
+	$(CC) $(CFLAGS) $(TOTAL_OBJS) $(INCLUDES) $(READLINE) $(LIBFT) -o ${NAME} -lreadline
 
 clean :
 	make fclean -C ./libft

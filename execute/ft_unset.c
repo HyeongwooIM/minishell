@@ -23,7 +23,10 @@ void ft_unset(t_cmd *cmd)
 			env_temp = env_temp->next;
 		}
 		if (!env_temp->next)
-			return ; // not a valid identifier
+		{
+			ft_putstr_fd("not a valid identifier", 2);
+			return ;
+		}
 		if (env_temp->next->next == 0)
 		{
 			del_temp = env_temp->next;

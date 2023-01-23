@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/23 18:02:18 by woohyeong         #+#    #+#             */
+/*   Updated: 2023/01/23 18:03:18 by woohyeong        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int check_content(char *str)
+int	check_content(char	*str)
 {
 	if (*str && (*str == '-' || *str == '+'))
 		str++;
@@ -13,23 +25,23 @@ int check_content(char *str)
 	return (1);
 }
 
-void ft_exit(t_cmd *cmd)
+void	ft_exit(t_cmd	*cmd)
 {
-	int	exit_num;
-	unsigned int len;
-	char **str;
+	int				exit_num;
+	unsigned int	len;
+	char			**str;
 
 	str = cmd->content;
 	len = 0;
 	if (!str)
-		exit(0);
+		exit (0);
 	if (str[1] != 0 && str[2] != 0)
 	{
 		ft_putstr_fd("exit : too many arguments", 1);
 		return ;
 	}
 	if (check_content(*(cmd->content)) != 1)
-		ft_error_exit("exit : numeric argument required",255);
+		ft_error_exit("exit : numeric argument required", 255);
 	exit_num = ft_atoi(*(cmd->content));
 	exit(exit_num);
 }

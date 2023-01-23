@@ -1,12 +1,46 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_here_doc.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/23 18:32:35 by woohyeong         #+#    #+#             */
+/*   Updated: 2023/01/23 18:37:46 by woohyeong        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-void make_here_doc(t_rdir *rdir)
+void	read_doc(int *fd, char *with)
 {
-	pid_t pid;
-	int fd[2];
-	char *buff;
-	char *temp;
-	int status;
+	char	*buff;
+
+	close(fd[0]);
+	while (1)
+	{
+		buff = readline("heredoc> ");
+		if (ft_strcmp(buff, with) == 0)
+		{
+			write(fd[1], "\0", 1);
+			break ;
+		}
+		write(fd[1], buff, ft_strlen(buff));
+		write(fd[1], "\n", 1);
+		free(buff);
+	}
+	free(buff);
+	close(fd[1]);
+	exit(0);
+}
+
+void	make_here_doc(t_rdir *rdir)
+{
+	pid_t	pid;
+	int		fd[2];
+	char	*buff;
+	char	*temp;
+	int		status;
 
 	if (pipe(fd) == -1 || !rdir->with)
 		ft_error_exit("create pipe faile", 1);
@@ -14,24 +48,7 @@ void make_here_doc(t_rdir *rdir)
 	if (pid == -1)
 		ft_error_exit("fork error", 1);
 	if (pid == 0)
-	{
-		close(fd[0]);
-		while (1)
-		{
-			buff = readline("> ");
-			if (ft_strcmp(buff, rdir->with) == 0)
-            {
-                write(fd[1], "\0", 1);
-				break ;
-            }
-			write(fd[1], buff, ft_strlen(buff));
-			write(fd[1], "\n", 1);
-			free(buff);
-		}
-		free(buff);
-		close(fd[1]);
-		exit(0);
-	}
+		read_doc(fd, rdir->with);
 	close(fd[1]);
 	wait(&status);
 	status = status >> 8;
@@ -39,9 +56,9 @@ void make_here_doc(t_rdir *rdir)
 	rdir->here_doc_fd = fd[0];
 }
 
-void ft_heredoc(t_cmd *cmd)
+void	ft_heredoc(t_cmd *cmd)
 {
-	t_rdir *tmp;
+	t_rdir	*tmp;
 
 	tmp = cmd->rdir;
 	while (tmp)
@@ -52,16 +69,17 @@ void ft_heredoc(t_cmd *cmd)
 	}
 }
 
-void	check_heredoc(t_cmd	*cmd)
+void	check_heredoc(t_cmd *cmd)
 {
-	int		heredoc_cnt;
+	int	heredoc_cnt;
 
-    if (!cmd)
-        return ;
-	while (cmd) {
+	if (!cmd)
+		return ;
+	while (cmd)
+	{
 		if (cmd->is_heredoc)
 			ft_heredoc(cmd);
 		cmd = cmd->next;
 	}
-	return  ;
+	return ;
 }
