@@ -26,7 +26,7 @@ void	free_token_lst(t_token *lst)
 
 void free_rdir_lst(t_rdir *lst)
 {
-	t_token *tmp;
+	t_rdir *tmp;
 
 	if (!lst)
 		return ;
@@ -48,6 +48,8 @@ void	free_arr2(char **ret)
     size_t	i;
 
     i = 0;
+	if (!ret)
+		return ;
     while (ret[i] != 0)
     {
         free(ret[i]);
