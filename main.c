@@ -91,22 +91,28 @@ char	**lst_to_arr(t_env *envs)
 	return (arr);
 }
 
+void	free_cmds(t_cmd *cmds)
+{
+	while (cmds)
+	{
+		free_arr2(cmds->content);
+		free_rdir_lst(cmds->rdir);
+		cmds = cmds->next;
+	}
+	free(cmds);
+}
+
 int main(int argc, char *argv[], char *envp[])
 {
 	t_cmd	*cmds;
 
-	// envp 정보화
 	save_envs(envp);
 	while(1)
 	{
-        //구조체 초기화
-        cmds = init_cmd();
-		// signal 정의
-//		define_signal();
-        // 파싱
-        parse(cmds);
-        // 실행
-        execute(cmds);
+		cmds = NULL;
+		define_signal();
+		parse(&cmds);
+		execute(cmds);
+		free_cmds(cmds);
 	}
-    // free
 }

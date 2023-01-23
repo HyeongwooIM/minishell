@@ -22,7 +22,7 @@ int quote_size(const char *str, char quote)
 		i++;
 	}
     if (quote_close == 0)
-        ft_error_exit("malloc error", 1);;
+        ft_error_exit("syntax error", 258);
 	return (i);
 }
 
@@ -48,7 +48,7 @@ int count_chunk_size(const char *str, char sign)
 	return (size);
 }
 
-void	make_chunk(const char *chunk, int chunk_size, t_token *chunks)
+void	make_chunk(const char *chunk, int chunk_size, t_parse *info)
 {
 	int		type;
 	char	*word;
@@ -68,21 +68,23 @@ void	make_chunk(const char *chunk, int chunk_size, t_token *chunks)
 		type = CHAR;
 	word = malloc(sizeof(char) * (chunk_size + 1));
 	if (!word)
-		return ;
+		ft_error_exit("malloc error",1);
 	ft_strlcpy(word, chunk, chunk_size + 1);
-	add_token_node(type, word, chunks);
+	add_token_node(type, word, &info->chunks);
 }
 
-void	make_chunk_lst(char *input, t_token *chunks)
+int	make_chunk_lst(t_parse *info)
 {
-	char *chunk_str;
+	char *input;
 	int chunk_size;
 
+	input = info->input;
+	if (just_white_space(input))
+		return (RESTART);
 	while (*input)
 	{
 		while (is_space(*input))
 			input++;
-		chunk_str = input;
 		chunk_size = 0;
 		if (*input == '\'' || *input == '\"' || *input == '>' || *input == '<')
 			chunk_size = count_chunk_size(input, *input);
@@ -95,12 +97,8 @@ void	make_chunk_lst(char *input, t_token *chunks)
 				chunk_size++;
 			}
 		}
-		if (chunk_size != 0)
-		{
-			make_chunk(chunk_str, chunk_size, chunks);
-			input += chunk_size;
-		}
-		else
-			input++;
+		make_chunk(input, chunk_size, info);
+		input += chunk_size;
 	}
+	return (SUCCESS);
 }

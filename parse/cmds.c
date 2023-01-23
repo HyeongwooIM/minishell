@@ -15,28 +15,33 @@ t_cmd	*last_cmd(t_cmd *cmds)
 	return (cmds);
 }
 
-void	add_name(t_token *token, t_cmd *cmds)
+void	add_name(t_token *token, t_cmd **cmds)
 {
-	if (cmds->name == NULL)
-		cmds->name = ft_strdup(token->word);
+	if (!*cmds)
+		*cmds = init_cmd();
+	(*cmds)->name = token->word;
 }
 
-void	add_content(t_token *token, t_cmd *cmds)
+void	add_content(t_token *token, t_cmd **cmds)
 {
-	if (cmds->content == NULL)
+	if (!*cmds)
+		*cmds = init_cmd();
+	if (!(*cmds)->content)
 	{
-		cmds->content = malloc(sizeof(char *) * 2);
-		if(!cmds->content)
-			ft_error_exit("malloc error", 1);;
-		(cmds->content)[0] = ft_strdup(token->word);
-		(cmds->content)[1] = 0;
+		(*cmds)->content = malloc(sizeof(char *) * 2);
+		if(!(*cmds)->content)
+			ft_error_exit("malloc error", 1);
+		((*cmds)->content)[0] = ft_strdup(token->word);
+		((*cmds)->content)[1] = 0;
 	}
 	else
-		cmds->content = ft_strjoin_1to2(cmds->content, token->word);
+		(*cmds)->content = ft_strjoin_1to2((*cmds)->content, token->word);
 }
 
-void	add_rdir(t_token *token, t_cmd *cmds)
+void	add_rdir(t_token *token, t_cmd **cmds)
 {
+	if (!*cmds)
+		*cmds = init_cmd();
 	if (ft_strcmp(token->word, ">") == 0)
 		token->type = RDIR;
 	else if (ft_strcmp(token->word, "<") == 0)
@@ -46,20 +51,20 @@ void	add_rdir(t_token *token, t_cmd *cmds)
 	else
 	{
 		token->type = HEREDOC;
-		cmds->is_heredoc = 1;
+		(*cmds)->is_heredoc = 1;
 	}
-	if (cmds->rdir == NULL)
-		cmds->rdir = new_rdir(token->type, token->next->word);
+	if ((*cmds)->rdir == NULL)
+		(*cmds)->rdir = new_rdir(token->type, token->next->word);
 	else
-		add_rdir_node(token->type, token->next->word, cmds->rdir);
+		add_rdir_node(token->type, token->next->word, (*cmds)->rdir);
 }
 
-void make_cmd_lst(t_token *tokens, t_cmd *cmds)
+void make_cmd_lst(t_parse *info, t_cmd **cmds)
 {
 	t_token *tmp_t;
-	t_cmd *tmp_c;
+	t_cmd **tmp_c;
 
-	tmp_t = tokens;
+	tmp_t = info->tokens;
 	tmp_c = cmds;
 	while (tmp_t)
 	{
@@ -74,8 +79,8 @@ void make_cmd_lst(t_token *tokens, t_cmd *cmds)
 		}
 		else if (tmp_t->type == PIPE)
 		{
-			tmp_c->next = init_cmd();
-			tmp_c = tmp_c->next;
+			(*tmp_c)->next = init_cmd();
+			*tmp_c = (*tmp_c)->next;
 		}
 		tmp_t = tmp_t->next;
 	}
