@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiyun <jiyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 19:57:57 by jiyun             #+#    #+#             */
-/*   Updated: 2022/04/09 16:28:13 by jiyun            ###   ########.fr       */
+/*   Updated: 2023/01/22 22:09:01 by woohyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 size_t	ft_strlcpy(char *dest, const char *src, size_t dstsize)
@@ -17,6 +18,8 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t dstsize)
 	size_t	src_len;
 
 	i = 0;
+	if (!dest || !src)
+		return (0);
 	src_len = ft_strlen(src);
 	if (dstsize == 0)
 		return (src_len);

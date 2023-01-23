@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_export.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/23 18:03:27 by woohyeong         #+#    #+#             */
+/*   Updated: 2023/01/23 18:06:05 by woohyeong        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-char **find_key_value(char *key_value)
+char	**find_key_value(char	*key_value)
 {
-	char **res;
-	unsigned int len;
+	char			**res;
+	unsigned int	len;
 
 	if (!ft_strchr(key_value, '='))
 	{
@@ -27,9 +39,9 @@ char **find_key_value(char *key_value)
 	return (res);
 }
 
-void export_null_print()
+void	export_null_print(void)
 {
-	t_env *env;
+	t_env	*env;
 
 	env = g_info.env_lst;
 	while (env)
@@ -37,38 +49,37 @@ void export_null_print()
 		printf("declare -x %s", env->key);
 		if (env->value)
 			printf("=\"%s\"", env->value);
-        printf("\n");
+		printf("\n");
 		env = env->next;
 	}
 }
 
-void free_env_arr(char **str)
+void	free_env_arr(char	**str)
 {
-	unsigned int i;
+	unsigned int	i;
 
 	i = -1;
-
 	while (str && str[++i])
 		free(str[i]);
 	free(str);
 }
 
-void ft_export(t_cmd *cmd)
+void	ft_export(t_cmd	*cmd)
 {
 	t_env	*temp;
 	char	**env_arr;
 	char	*key_value;
-	char 	**str;
+	char	**str;
 
 	str = cmd->content;
-    if (!str)
-    {
+	if (!str)
+	{
 		export_null_print();
 		return ;
-    }
+	}
 	while (*str)
 	{
-	    key_value = *str;
+		key_value = *str;
 		env_arr = find_key_value(key_value);
 		temp = find_env_add(env_arr[0]);
 		if (env_arr[1])

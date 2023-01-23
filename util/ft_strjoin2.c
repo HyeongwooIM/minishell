@@ -14,7 +14,7 @@ char **ft_strjoin2(char *str, char **arr)
 		ft_error_exit("malloc error", 1);
 	res[word_num + 1] = 0;
 	if (!res)
-		return (0); //error
+		return (0);
 	res[0] = ft_strdup(str);
 	if (!res[0])
 		ft_error_exit("malloc error", 1);
