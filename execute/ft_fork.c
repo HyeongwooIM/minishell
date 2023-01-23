@@ -6,7 +6,7 @@
 /*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 18:06:20 by woohyeong         #+#    #+#             */
-/*   Updated: 2023/01/23 18:29:48 by woohyeong        ###   ########.fr       */
+/*   Updated: 2023/01/23 21:02:02 by woohyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	wait_child(int pipe_cnt)
 	g_info.last_exit_num = status;
 }
 
-void	child_pro(int **pipes, int pipe_cnt, int i, t_cmd *cmd)
+void	child_pro(int pipes[2][2], int pipe_cnt, int i, t_cmd *cmd)
 {
 	close(pipes[0][0]);
 	if (pipe_cnt && i != pipe_cnt)

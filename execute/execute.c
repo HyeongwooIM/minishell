@@ -49,6 +49,8 @@ void	execute(t_cmd	*cmd)
 	int		pipe_cnt;
 	t_env	*env;
 
+    if (!cmd)
+        return ;
 	env = g_info.env_lst;
 	pipe_cnt = pipe_count(cmd);
 	check_heredoc(cmd);
