@@ -10,11 +10,18 @@ void	free_token_lst(t_token *lst)
 
 	if (!lst)
 		return ;
+//	while (lst)
+//	{
+//		tmp = lst;
+//		lst = lst->next;
+//		free(tmp);
+//	}
 	while (lst)
 	{
-		tmp = lst;
-		lst = lst->next;
-		free(tmp);
+		tmp = lst->next;
+		free(lst->word);
+		free(lst);
+		lst = tmp;
 	}
 }
 

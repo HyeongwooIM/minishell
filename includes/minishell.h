@@ -26,7 +26,6 @@ typedef enum e_chunk_type
     CHAR,
     S_QUOTE, // ' '
     D_QUOTE, // " "
-    DOLLAR, // $
     REDIRECT,
     PIPE
 }	t_chunk_type;

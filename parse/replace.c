@@ -102,10 +102,10 @@ char	**find_env_values(char *s, int *origin_len)
                 i = 0;
                 while (s[++i] != '\0')
                 {
-                    if (ft_isalnum(s[i]))
+                    if (ft_isdigit(s[i]))
                         num_on = !num_on;
                     if (s[i] == '\"' || s[i] == '$'|| is_space(s[i]) || \
-                    (ft_isalnum(s[i]) && num_on == TRUE))
+                    (ft_isdigit(s[i]) && num_on == TRUE))
                         break ;
                 }
                 *origin_len = i - 1;
@@ -120,39 +120,55 @@ char	**find_env_values(char *s, int *origin_len)
     return (ret);
 }
 
+char *change_word(t_token *cur)
+{
+	char **envs;
+	char *ret;
+	int origin_len;
+	int i;
+
+	envs = find_env_values(cur->word, &origin_len);
+	i = -1;
+	while (*cur->word)
+	{
+		if (*cur->word == '$')
+		{
+			if (envs)
+				ret = ft_strjoin_1to1(ret, envs[++i]);
+			cur->word += origin_len + 1;
+		}
+		else
+		{
+			ret  = ft_charjoin(ret, *cur->word);
+			cur->word++;
+		}
+	}
+	free_arr2(envs);
+	return (ret);
+}
+
 void	replace_chunk(t_parse *info)
 {
     t_token	*cur;
-    char **envs;
     char *word;
-    int origin_len;
-    int i;
 
 	cur = info->chunks;
-	while (cur != NULL)
+	while (cur)
 	{
         word = NULL;
 		if (cur->type == CHAR)
-        {
-            envs = find_env_values(cur->word, &origin_len);
-            i = -1;
-            while (*cur->word)
-            {
-                if (*cur->word == '$')
-                {
-                    word = ft_strjoin_1to1(word, envs[++i]);
-                    cur->word += origin_len;
-                }
-                else
-                {
-                    word  = ft_charjoin(word, *cur->word);
-                    cur->word++;
-                }
-            }
-        }
-        free_arr2(envs);
-        if (word)
-            free(word);
+		{
+			if (strchr(cur->word, '$'))
+			{
+				word = change_word(cur);
+				cur->word = ft_strdup(word);
+				free(word);
+			}
+			if (strchr(cur->word, '\''))
+				cur->word = dequote(cur->word, S_QUOTE);
+			if (strchr(cur->word, '\"'))
+				cur->word = dequote(cur->word, D_QUOTE);
+		}
         cur = cur->next;
 	}
 }

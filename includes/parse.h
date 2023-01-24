@@ -17,9 +17,11 @@ typedef struct s_parse t_parse;
 
 typedef enum e_error
 {
-	FAIL,
 	SUCCESS,
-	RESTART
+	FAIL,
+	RESTART,
+	SYNTAX_Q,
+	SYNTAX_E
 }	t_error;
 
 /* utils.c */
@@ -43,8 +45,7 @@ char	*ft_strjoin_1to1(char const *s1, char const *s2);
 char	**ft_strjoin_1to2(char **dest, char *src);
 
 /* utils3.c */
-char *dequote(char *str);
-char *dequote_h(char *str, int type);
+char *dequote(char *str, int type);
 
 /* chunks.c */
 int	make_chunk_lst(t_parse *info);

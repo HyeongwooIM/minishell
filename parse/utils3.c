@@ -3,18 +3,6 @@
 //
 #include "includes/minishell.h"
 
-char *dequote(char *str)
-{
-	char *ret;
-
-	str[ft_strlen(str) - 1] = '\0';
-	ret = ft_strdup(str + 1);
-	free(str);
-	if (*ret == '\0')
-		return (0);
-	return (ret);
-}
-
 void remove_delim(char *str, char delim) {
     int i;
 
@@ -29,15 +17,15 @@ void remove_delim(char *str, char delim) {
     str[i] = '\0';
 }
 
-char *dequote_h(char *str, int type)
+char *dequote(char *str, int type)
 {
 	char	*ret;
 	char	delim;
 
-	if (type == S_QUOTE)
-		delim = '\'';
-	else
+	if (type == D_QUOTE)
 		delim = '\"';
+	else
+		delim = '\'';
     remove_delim(str, delim);
     remove_delim(str, delim);
 	ret = ft_strdup(str);

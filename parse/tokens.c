@@ -6,15 +6,15 @@
 
 int	is_syntax_error(t_token *tokens)
 {
+	if (tokens->type == PIPE)
+		return (1);
 	while (tokens)
 	{
-		if (tokens->type == NONE && tokens->next->type == PIPE)
+		if (tokens->type == REDIRECT && tokens->next->type != CHAR)
 			return (1);
 		else if (tokens->type == PIPE && tokens->next == NULL)
 			return (1);
 		else if (tokens->type == PIPE && tokens->next->type == PIPE)
-			return (1);
-		else if (tokens->type == REDIRECT && tokens->next->type != CHAR)
 			return (1);
 		tokens = tokens->next;
 	}
@@ -23,7 +23,6 @@ int	is_syntax_error(t_token *tokens)
 
 int	make_token_lst(t_parse *info)
 {
-	//chunks -> CHAR CHAR PIPE ..
 	t_token *chunks;
 	int cmd_flag;
 	int rdir_flag;
@@ -32,7 +31,7 @@ int	make_token_lst(t_parse *info)
 	cmd_flag = 0;
 	rdir_flag = 0;
 	if (is_syntax_error(info->chunks))
-		return (FAIL);
+		return (SYNTAX_E);
     while(chunks)
     {
 		if (chunks->type == CHAR)

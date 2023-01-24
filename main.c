@@ -93,13 +93,17 @@ char	**lst_to_arr(t_env *envs)
 
 void	free_cmds(t_cmd *cmds)
 {
+	t_cmd *tmp;
+
 	while (cmds)
 	{
+		tmp = cmds->next;
+		free(cmds->name);
 		free_arr2(cmds->content);
 		free_rdir_lst(cmds->rdir);
-		cmds = cmds->next;
+		free(cmds);
+		cmds = tmp;
 	}
-	free(cmds);
 }
 
 void debug_print_redirs(t_rdir* rdir, int i) {
