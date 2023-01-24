@@ -2,8 +2,7 @@
 // Created by jiyun on 2023/01/19.
 //
 
-#include "minishell.h"
-#include "parse.h"
+#include "includes/minishell.h"
 
 void	add_name(t_token *token, t_cmd *cmds)
 {

@@ -5,7 +5,7 @@
 #ifndef PARSE_H
 #define PARSE_H
 
-#include "minishell.h"
+#include "includes/minishell.h"
 
 #define FALSE 0
 #define TRUE 1
@@ -19,8 +19,7 @@ typedef enum e_error
 {
 	FAIL,
 	SUCCESS,
-	RESTART,
-
+	RESTART
 }	t_error;
 
 /* utils.c */
@@ -39,6 +38,8 @@ void	add_rdir_node(int type, char *with, t_rdir *rdir);
 void	free_token_lst(t_token *lst);
 void	free_rdir_lst(t_rdir *lst);
 void	free_arr2(char **ret);
+char    *ft_charjoin(char *str, char c);
+char	*ft_strjoin_1to1(char const *s1, char const *s2);
 char	**ft_strjoin_1to2(char **dest, char *src);
 
 /* utils3.c */

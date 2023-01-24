@@ -2,8 +2,7 @@
 // Created by jiyun on 2023/01/17.
 //
 
-#include "minishell.h"
-#include "parse.h"
+#include "includes/minishell.h"
 
 void	free_token_lst(t_token *lst)
 {
@@ -51,6 +50,55 @@ void	free_arr2(char **ret)
         i++;
     }
     free(ret);
+}
+
+char *ft_charjoin(char *str, char c)
+{
+    char *ret;
+    int i;
+
+    if (!str)
+    {
+        ret = malloc(sizeof(char) * 2);
+        if (!ret)
+            ft_error_exit("malloc error\n", 1);
+        ret[0] = c;
+        ret[1] = '\0';
+        return (ret);
+    }
+    ret = malloc(sizeof(char) * (ft_strlen(str) + 2));
+    if (!ret)
+        ft_error_exit("malloc error\n", 1);
+    i = -1;
+    while (str[++i])
+        ret[i] = str[i];
+    ret[i] = c;
+    ret[++i] = '\0';
+    return (ret);
+}
+
+char	*ft_strjoin_1to1(char const *s1, char const *s2)
+{
+    size_t	s1_len;
+    size_t	s2_len;
+    char	*new;
+
+    if (!s1 && (!s2 ||!*s2))
+        return (0);
+    if (!s1)
+        return (ft_strdup(s2));
+    if (!s2)
+        return (ft_strdup(s1));
+    s1_len = ft_strlen(s1);
+    s2_len = ft_strlen(s2);
+    if (!s1_len && !s2_len)
+        return (ft_strdup(""));
+    new = malloc(sizeof(char) * (s1_len + s2_len + 1));
+    if (!new)
+        return (0);
+    ft_strlcpy(new, s1, s1_len + 1);
+    ft_strlcpy(new + s1_len, s2, s2_len + 1);
+    return (new);
 }
 
 char	**ft_strjoin_1to2(char **dest, char *src)

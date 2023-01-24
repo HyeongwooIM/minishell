@@ -1,7 +1,7 @@
 //
 // Created by jiyun on 2023/01/22.
 //
-#include "minishell.h"
+#include "includes/minishell.h"
 
 void	signal_handler(int signo)
 {

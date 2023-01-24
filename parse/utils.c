@@ -2,8 +2,7 @@
 // Created by jiyun on 2023/01/17.
 //
 
-#include "minishell.h"
-#include "parse.h"
+#include "includes/minishell.h"
 
 int is_space(char c)
 {

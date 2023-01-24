@@ -1,31 +1,7 @@
 //
 // Created by jiyun on 2023/01/19.
 //
-#include "minishell.h"
-#include "parse.h"
-
-char	*add_str(char *dest, char *src)
-{
-	char *ret;
-	int dest_len;
-	int src_len;
-	int i;
-
-	dest_len = ft_strlen(dest);
-	src_len = ft_strlen(src);
-	ret = malloc(sizeof(char) * (dest_len + src_len + 1));
-	if (!ret)
-		ft_error_exit("malloc error", 1);;
-	i = -1;
-	while (++i < dest_len)
-		ret[i] = dest[i];
-	i = -1;
-	while (++i < src_len)
-		ret[dest_len + i] = src[i];
-	ret[dest_len + i] = '\0';
-	free(dest);
-	return (ret);
-}
+#include "includes/minishell.h"
 
 char	*env_value(char *str)
 {
@@ -43,6 +19,11 @@ char *get_word(char *key)
 {
 	char *ret;
 
+    if (!*key)
+    {
+        free(key);
+        return (strdup(""));
+    }
 	if (*key == '?')
 	{
 		ret = ft_itoa(g_info.last_exit_num);
@@ -54,165 +35,124 @@ char *get_word(char *key)
 	return (ret);
 }
 
-char	*join_pieces(char **strs)
-{
-	int i;
-	int len;
-	char *ret;
+//char	*join_pieces(char **strs)
+//{
+//	int i;
+//	int len;
+//	char *ret;
+//
+//	i = -1;
+//	len = 0;
+//	if (!strs || !*strs)
+//		return (0);
+//	while (strs[++i])
+//		len += ft_strlen(strs[i]);
+//	ret = malloc(sizeof(char) * (len + 1));
+//	if (!ret)
+//		ft_error_exit("malloc error", 1);
+//	i = -1;
+//	while (strs[++i])
+//		ret = ft_strjoin_1to1(ret, strs[i]);
+//	return (ret);
+//}
+//
+//char    *cut_substr(const char *start, const char *end)
+//{
+//    char *ret;
+//    int size;
+//    int i;
+//
+//    size = end - start;
+//    ret = malloc(sizeof(char) * (size + 1));
+//    if (!ret)
+//        ft_error_exit("malloc error", 1);;
+//    i = 0;
+//    while(i < size)
+//    {
+//        ret[i] = start[i];
+//        i++;
+//    }
+//    ret[size] = '\0';
+//    return (ret);
+//}
 
-	i = -1;
-	len = 0;
-	if (!strs || !*strs)
-		return (0);
-	while (strs[++i])
-		len += ft_strlen(strs[i]);
-	ret = malloc(sizeof(char) * (len + 1));
-	if (!ret)
-		ft_error_exit("malloc error", 1);
-	i = -1;
-	while (strs[++i])
-		ret = add_str(ret, strs[i]);
-	return (ret);
-}
-
-char    *cut_substr(const char *start, const char *end)
-{
-    char *ret;
-    int size;
-    int i;
-
-    size = end - start;
-    ret = malloc(sizeof(char) * (size + 1));
-    if (!ret)
-        ft_error_exit("malloc error", 1);;
-    i = 0;
-    while(i < size)
-    {
-        ret[i] = start[i];
-        i++;
-    }
-    ret[size] = '\0';
-    return (ret);
-}
-
-char	**split_words(char *s)
+char	**find_env_values(char *s, int *origin_len)
 {
     char **ret;
-    char *start;
-    char *tmp;
-	int size;
+    char *word;
+    int d_quote_on;
+    int s_quote_on;
+    int num_on;
+    int i;
 
     ret = NULL;
-    start = s;
-	size = 0;
+    d_quote_on = FALSE;
+    s_quote_on = FALSE;
+    num_on = FALSE;
     while (*s)
     {
-        if (*s == '$')
+        if (*s == '\"')
+            d_quote_on = !d_quote_on;
+        else if (*s == '\'')
+            s_quote_on = !s_quote_on;
+        else if (*s == '$')
         {
-//			$ 포함 안된 문자열, 뒤에 공백
-			if (*(s + 1) == '?')
-			{
-				s++;
-				tmp = cut_substr(start, ++s);
-			}
-			else if (*(s + 1) && (s - start != 0) && !is_space(*(s + 1))) // $ 포함 안된 문자열, 뒤에 공백 아닐
-                tmp = cut_substr(start, s);
-//			$ 포함, 뒤에 공백
-			else if (*(s + 1) && (s - start == 0) && !is_space(*(s + 1))) // $포함, 뒤에 문자(a-z, _, ?)
+            if (d_quote_on == TRUE)
             {
-				if (!ft_isalpha(*(s + 1)) && *(s + 1) != '_')
-				{
-					s++;
-					continue ;
-				}
-                while (*(s + 1) && *(s + 1) != '$' && *(s + 1) != '\'' && !is_space(*(s + 1)))
-                    s++;
-                tmp = cut_substr(start, ++s);
+                i = 0;
+                while (s[++i] != '\0')
+                {
+                    if (ft_isalnum(s[i]))
+                        num_on = !num_on;
+                    if (s[i] == '\"' || s[i] == '$'|| is_space(s[i]) || \
+                    (ft_isalnum(s[i]) && num_on == TRUE))
+                        break ;
+                }
+                *origin_len = i - 1;
+                word = get_word(ft_substr(s, 1, *origin_len)); //$ 뒤 문자만 갖다가 치환
+                ret = ft_strjoin_1to2(ret, word); // word에도 ret에도 "" 들어갈 수 있음!
+                free(word);
+                s += *origin_len;
             }
-			else
-			{
-				s++;
-				continue;
-			}
-            ret = ft_strjoin_1to2(ret, tmp);
-			size++;
-            start = s;
-            s--;
         }
         s++;
     }
-    if (size == 0 || s - start != 0)
-    {
-        ret = ft_strjoin_1to2(ret, start);
-		size += 1;
-    }
-    return (ret);
-}
-
-char	*change_dollar(t_token *chunk)
-{
-	char *ret;
-
-	ret = get_word(chunk->word + 1);
-	if (!ret)
-		return (0);
-	return (ret);
-}
-
-char	*change_quote(t_token *chunk)
-{
-	char **after;
-	char **before;
-	char *tmp;
-	char *ret;
-	int i;
-
-	after = NULL;
-	before = split_words(dequote(chunk->word)); //" " 떼고 넣기
-	i = -1;
-	while (before[++i])
-	{
-		if (before[i][0] == '$')
-		{
-			tmp = get_word(&(before[i][1]));
-			after = ft_strjoin_1to2(after, tmp);
-			free(tmp);
-		}
-		else
-			after = ft_strjoin_1to2(after, before[i]);
-	}
-	if (!after)
-		return (0);
-	ret = join_pieces(after);
-	free_arr2(before);
-	free_arr2(after);
     return (ret);
 }
 
 void	replace_chunk(t_parse *info)
 {
-	t_token	*cur;
-	char *word;
+    t_token	*cur;
+    char **envs;
+    char *word;
+    int origin_len;
+    int i;
 
 	cur = info->chunks;
 	while (cur != NULL)
 	{
-		if (cur->type == DOLLAR)
-			word = change_dollar(cur);
-		else if ((cur->type == D_QUOTE && ft_strchr(cur->word, '$')))
-			word = change_quote(cur);
-		else if (cur->type == S_QUOTE || \
-		(cur->type == D_QUOTE && !ft_strchr(cur->word, '$')))
-			word = dequote_h(cur->word, cur->type); //냅다 자르지 않기
-		else
-		{
-			cur = cur->next;
-			continue ;
-		}
-		if (!word)
-			word = ft_strdup("");
-		cur->word = word;
-		cur->type = CHAR;
-		cur = cur->next;
+        word = NULL;
+		if (cur->type == CHAR)
+        {
+            envs = find_env_values(cur->word, &origin_len);
+            i = -1;
+            while (*cur->word)
+            {
+                if (*cur->word == '$')
+                {
+                    word = ft_strjoin_1to1(word, envs[++i]);
+                    cur->word += origin_len;
+                }
+                else
+                {
+                    word  = ft_charjoin(word, *cur->word);
+                    cur->word++;
+                }
+            }
+        }
+        free_arr2(envs);
+        if (word)
+            free(word);
+        cur = cur->next;
 	}
 }

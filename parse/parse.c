@@ -1,22 +1,20 @@
 //
 // Created by jiyun on 2023/01/07.
 //
-#include "minishell.h"
-#include "parse.h"
+#include "includes/minishell.h"
 
 t_info g_info;
 
 int	input_tokenize(t_parse *info)
 {
-	int error;
-
 	if (just_white_space(info->input))
 		return (RESTART);
 	make_chunk_lst(info);
 	replace_chunk(info);
-	error = make_token_lst(info);
+	if (make_token_lst(info))
+        return (RESTART);
 	free_token_lst(info->chunks);
-	return (error);
+	return (SUCCESS);
 }
 
 void	init_parse_info(t_parse *info)
