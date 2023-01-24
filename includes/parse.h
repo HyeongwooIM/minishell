@@ -7,6 +7,9 @@
 
 #include "minishell.h"
 
+#define FALSE 0
+#define TRUE 1
+
 typedef struct s_token t_token;
 typedef struct s_rdir t_rdir;
 typedef struct s_cmd t_cmd;
@@ -23,6 +26,7 @@ typedef enum e_error
 /* utils.c */
 int is_space(char c);
 int just_white_space(char *str);
+t_token	*init_token();
 t_cmd	*init_cmd();
 
 /* node.c */

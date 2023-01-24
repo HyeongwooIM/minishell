@@ -12,11 +12,7 @@ int	input_tokenize(t_parse *info)
 
 	if (just_white_space(info->input))
 		return (RESTART);
-	error = make_chunk_lst(info);
-	if (error)
-	{
-
-	}
+	make_chunk_lst(info);
 	replace_chunk(info);
 	error = make_token_lst(info);
 	free_token_lst(info->chunks);
@@ -43,10 +39,10 @@ void    parse(t_cmd **cmds)
 	if (*(info.input))
 		add_history(info.input);
 	init_parse_info(&info);
-	error = input_tokenize(&info)
+	error = input_tokenize(&info);
 	if (error)
 	{
-		error_handle(error);
+//		error_handle(error);
 		free(info.input);
 		free_token_lst(info.chunks);
 		free_token_lst(info.tokens);

@@ -24,6 +24,20 @@ int just_white_space(char *str)
 	return (1);
 }
 
+t_token	*init_token()
+{
+	t_token *ret;
+
+	ret = malloc(sizeof(t_token) * 1);
+	if (!ret)
+		ft_error_exit("malloc error", 1);
+	ret->type = NONE;
+	ret->word = NULL;
+	ret->next = NULL;
+	return (ret);
+}
+
+
 t_cmd	*init_cmd()
 {
 	t_cmd *ret;
