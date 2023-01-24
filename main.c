@@ -102,6 +102,31 @@ void	free_cmds(t_cmd *cmds)
 	free(cmds);
 }
 
+void debug_print_redirs(t_rdir* rdir, int i) {
+	if (rdir == NULL)
+		return ;
+	printf("  redir%d: type=%d here_doc_fd=%d with=%s\n", i, rdir->type, rdir->here_doc_fd, rdir->with);
+	debug_print_redirs(rdir->next, ++i);
+}
+
+void debug_print_cmds(t_cmd* cmd, int i) {
+	if (cmd == NULL)
+		return ;
+	printf("name%d: %s\n", i, cmd->name);
+	if (cmd->content != NULL) {
+		for (int i = 0; cmd->content[i] != NULL; i++) {
+			printf("  content%d: %s\n", i, cmd->content[i]);
+		}
+	} else {
+		printf("  content is empty\n");
+	}
+	if (cmd->rdir == NULL)
+		printf("  rdir is empty\n");
+	debug_print_redirs(cmd->rdir, 0);
+	printf("  is_heredoc = %s", cmd->is_heredoc == 0 ? "false\n" : "true\n");
+	debug_print_cmds(cmd->next, ++i);
+}
+
 int main(int argc, char *argv[], char *envp[])
 {
 	t_cmd	*cmds;
@@ -112,6 +137,7 @@ int main(int argc, char *argv[], char *envp[])
 		cmds = NULL;
 		define_signal();
 		parse(&cmds);
+		debug_print_cmds(cmds, 0);
 		execute(cmds);
 		free_cmds(cmds);
 	}

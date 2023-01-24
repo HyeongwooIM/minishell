@@ -8,6 +8,7 @@ void	signal_handler(int signo)
 	if (signo == SIGINT)
 	{
 		rl_replace_line("", 0);
+		ft_putstr_fd("\n", STDOUT_FILENO);
 		rl_on_new_line();
 		rl_redisplay();
 		g_info.last_exit_num = 1;

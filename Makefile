@@ -49,15 +49,16 @@ OBJS = $(SRCS:.c=.o)
 NAME = minishell
 TOTAL_OBJS = $(OBJS)
 LIBFT = -Llibft -lft
-READLINE = -L/opt/homebrew/opt/readline/lib -I/opt/homebrew/opt/readline/include 
+READLINE_HDR = -I/usr/local/opt/readline/include
+READLINE_LIB = -L/usr/local/opt/readline/lib -lreadline
 all : $(NAME)
 
 %.o : %.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c -o $@ $^
+	$(CC) $(CFLAGS) $(INCLUDES) $(READLINE_HDR) -c -o $@ $^
 
 $(NAME) : $(TOTAL_OBJS)
-	make re -C ./libft
-	$(CC) $(CFLAGS) $(TOTAL_OBJS) $(INCLUDES) $(READLINE) $(LIBFT) -o ${NAME} -lreadline
+	make -C ./libft
+	$(CC) $(CFLAGS) $(TOTAL_OBJS) $(INCLUDES) $(READLINE_HDR) $(READLINE_LIB) $(LIBFT) -o ${NAME}
 
 clean :
 	make fclean -C ./libft

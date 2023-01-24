@@ -8,15 +8,19 @@ t_info g_info;
 
 int	input_tokenize(t_parse *info)
 {
-	if (make_chunk_lst(info) == RESTART)
-		return (FAIL);
-	replace_chunk(info);
-	if (make_token_lst(info) != SUCCESS)
+	int error;
+
+	if (just_white_space(info->input))
+		return (RESTART);
+	error = make_chunk_lst(info);
+	if (error)
 	{
-		ft_putstr_fd("syntax error\n", STDOUT_FILENO);
-		return (FAIL);
+
 	}
-	return (SUCCESS);
+	replace_chunk(info);
+	error = make_token_lst(info);
+	free_token_lst(info->chunks);
+	return (error);
 }
 
 void	init_parse_info(t_parse *info)
@@ -28,6 +32,7 @@ void	init_parse_info(t_parse *info)
 void    parse(t_cmd **cmds)
 {
 	t_parse info;
+	int error;
 
 	info.input = readline("minishell$ ");
 	if (!info.input)
@@ -38,8 +43,10 @@ void    parse(t_cmd **cmds)
 	if (*(info.input))
 		add_history(info.input);
 	init_parse_info(&info);
-	if (input_tokenize(&info) == FAIL) {
-
+	error = input_tokenize(&info)
+	if (error)
+	{
+		error_handle(error);
 		free(info.input);
 		free_token_lst(info.chunks);
 		free_token_lst(info.tokens);

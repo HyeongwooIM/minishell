@@ -16,12 +16,13 @@ typedef enum e_error
 {
 	FAIL,
 	SUCCESS,
+	RESTART,
+
 }	t_error;
 
 /* utils.c */
 int is_space(char c);
 int just_white_space(char *str);
-t_token *init_token();
 t_cmd	*init_cmd();
 
 /* node.c */
@@ -29,7 +30,6 @@ t_token	*new_token(int type, char *word);
 t_rdir	*new_rdir(int type, char *with);
 void	add_token_node(int type, char *word, t_token **tokens);
 void	add_rdir_node(int type, char *with, t_rdir *rdir);
-t_token	*last_node(t_token *lst);
 
 /* utils2.c */
 void	free_token_lst(t_token *lst);
@@ -39,6 +39,7 @@ char	**ft_strjoin_1to2(char **dest, char *src);
 
 /* utils3.c */
 char *dequote(char *str);
+char *dequote_h(char *str, int type);
 
 /* chunks.c */
 int	make_chunk_lst(t_parse *info);

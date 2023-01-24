@@ -203,7 +203,7 @@ void	replace_chunk(t_parse *info)
 			word = change_quote(cur);
 		else if (cur->type == S_QUOTE || \
 		(cur->type == D_QUOTE && !ft_strchr(cur->word, '$')))
-			word = dequote(cur->word);
+			word = dequote_h(cur->word, cur->type); //냅다 자르지 않기
 		else
 		{
 			cur = cur->next;

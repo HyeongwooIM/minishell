@@ -22,7 +22,9 @@ int quote_size(const char *str, char quote)
 		i++;
 	}
     if (quote_close == 0)
-        ft_error_exit("syntax error", 258);
+        return (-1); // TODO 고쳐야함
+	while (!is_space(str[i]) && str[i] != '|' && str[i] != '>' && str[i] != '<' && str[i] != '\0')
+		i++;
 	return (i);
 }
 
@@ -36,16 +38,21 @@ int rdir_size(const char *str, char rdir)
 	return (i);
 }
 
-int count_chunk_size(const char *str, char sign)
+int count_size_1(char *str)
 {
 	int size;
 
 	size = 0;
-	if (sign == '\'' || sign == '\"')
-		size = quote_size(str, sign);
-	else if (sign == '>' || sign == '<')
-		size = rdir_size(str, sign);
+	if (*str == '>' || *str == '<')
+		size = rdir_size(str, *str);
+	if (*str == '|')
+		size = 1;
 	return (size);
+}
+
+int	count_size_2(char *str)
+{
+
 }
 
 void	make_chunk(const char *chunk, int chunk_size, t_parse *info)
@@ -76,26 +83,26 @@ void	make_chunk(const char *chunk, int chunk_size, t_parse *info)
 int	make_chunk_lst(t_parse *info)
 {
 	char *input;
-	int chunk_size;
+	int size;
 
 	input = info->input;
-	if (just_white_space(input))
-		return (FAIL);
 	while (*input)
 	{
 		while (is_space(*input))
 			input++;
 		if (!*input)
 			break ;
-		chunk_size = -1;
-		if (*input == '\'' || *input == '\"' || *input == '>' || *input == '<')
-			chunk_size = count_chunk_size(input, *input);
-		else
-			while (input[++chunk_size])
-				if (is_space(input[chunk_size]))
-					break ;
-		make_chunk(input, chunk_size, info);
-		input += chunk_size;
+		if ( *input == '<' || *input == '>' || *input == '|')
+			size = count_small_size(input);
+		else if (*input == '\'' || *input == '\"')
+			size = count_size_2(input);
+			while (*input)
+			{
+				if (*input == '\'' || *input == '\"')
+					check_unquoted();
+				if (is_space(*input) || *input == '<' || *input == '>' || *input == '|')
+
+			}
 	}
-	return (SUCCESS);
+	return (0);
 }
