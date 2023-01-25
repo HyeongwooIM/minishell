@@ -1,7 +1,7 @@
 //
 // Created by jiyun on 2023/01/19.
 //
-#include "includes/minishell.h"
+#include "minishell.h"
 
 char	*env_value(char *str)
 {

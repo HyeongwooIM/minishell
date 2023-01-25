@@ -5,7 +5,7 @@
 #ifndef PARSE_H
 #define PARSE_H
 
-#include "includes/minishell.h"
+#include "minishell.h"
 
 #define FALSE 0
 #define TRUE 1

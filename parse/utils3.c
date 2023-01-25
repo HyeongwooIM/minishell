@@ -1,7 +1,7 @@
 //
 // Created by jiyun on 2023/01/23.
 //
-#include "includes/minishell.h"
+#include "minishell.h"
 
 void remove_delim(char *str, char delim) {
     int i;

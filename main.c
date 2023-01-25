@@ -2,7 +2,7 @@
 // Created by jiyun on 2023/01/07.
 //
 
-#include "includes/minishell.h"
+#include "minishell.h"
 
 t_info g_info;
 
@@ -104,6 +104,15 @@ void	free_cmds(t_cmd *cmds)
 		free(cmds);
 		cmds = tmp;
 	}
+}
+
+void	handle_terminal()
+{
+	struct termios	term;
+
+	tcgetattr(STDIN_FILENO, &term);
+	term.c_lflag &= ~(ECHOCTL);
+	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
 
 void debug_print_redirs(t_rdir* rdir, int i) {
