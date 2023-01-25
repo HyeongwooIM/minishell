@@ -144,10 +144,16 @@ int main(int argc, char *argv[], char *envp[])
 {
 	t_cmd	*cmds;
 
+	if (argc != 1)
+	{
+		ft_putendl_fd("too many arguments", STDERR_FILENO);
+		exit(FAIL);
+	}
 	save_envs(envp);
 	while(1)
 	{
 		cmds = NULL;
+		handle_terminal();
 		define_signal();
 		parse(&cmds);
 		debug_print_cmds(cmds, 0);
