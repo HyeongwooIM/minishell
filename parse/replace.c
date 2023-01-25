@@ -3,6 +3,8 @@
 //
 #include "minishell.h"
 
+void debug_print_replced_chunks(t_token *chunks, int i);
+
 char	*env_value(char *str)
 {
 	t_env *env;
@@ -76,99 +78,137 @@ char *get_word(char *key)
 //    return (ret);
 //}
 
-char	**find_env_values(char *s, int *origin_len)
+char	*change_word(char *s, int *origin_len)
 {
-    char **ret;
-    char *word;
-    int d_quote_on;
-    int s_quote_on;
-    int num_on;
-    int i;
-
-    ret = NULL;
-    d_quote_on = FALSE;
-    s_quote_on = FALSE;
-    num_on = FALSE;
-    while (*s)
-    {
-        if (*s == '\"')
-            d_quote_on = !d_quote_on;
-        else if (*s == '\'')
-            s_quote_on = !s_quote_on;
-        else if (*s == '$')
-        {
-            if (s_quote_on == FALSE)
-            {
-                i = 0;
-                while (s[++i] != '\0')
-                {
-                    if (ft_isdigit(s[i]))
-                        num_on = !num_on;
-                    if (s[i] == '\"' || s[i] == '$'|| is_space(s[i]) || \
-                    (ft_isdigit(s[i]) && num_on == TRUE))
-                        break ;
-                }
-                *origin_len = i - 1;
-                word = get_word(ft_substr(s, 1, *origin_len)); //$ 뒤 문자만 갖다가 치환
-                ret = ft_strjoin_1to2(ret, word); // word에도 ret에도 "" 들어갈 수 있음!
-                free(word);
-                s += *origin_len;
-            }
-        }
-        s++;
-    }
-    return (ret);
-}
-
-char *change_word(t_token *cur)
-{
-	char **envs;
-	char *ret;
-	int origin_len;
+	char *tmp = ft_strdup("");
+	char **ret;
+	char *word;
+	int d_quote_on;
+	int s_quote_on;
+	int num_on;
 	int i;
 
-	envs = find_env_values(cur->word, &origin_len);
-	i = -1;
-	while (*cur->word)
+	ret = NULL;
+	d_quote_on = FALSE;
+	s_quote_on = FALSE;
+	num_on = FALSE;
+	while (*s)
 	{
-		if (*cur->word == '$')
+		if (*s == '\"' && s_quote_on == FALSE)
+			d_quote_on = !d_quote_on;
+		else if (*s == '\'' && d_quote_on == FALSE)
+			s_quote_on = !s_quote_on;
+		else if (*s == '$' && s_quote_on == FALSE)
 		{
-			if (envs)
-				ret = ft_strjoin_1to1(ret, envs[++i]);
-			cur->word += origin_len + 1;
+			i = 1;
+				while (s[i] != '\0')
+				{
+					if (ft_isdigit(s[i]))
+						num_on = !num_on;
+					if (!isalpha(s[i]) || s[i] == '\"' || s[i] == '$'|| is_space(s[i]) || \
+                    (ft_isdigit(s[i]) && num_on == TRUE))
+						break ;
+					i++;
+				}
+				*origin_len = i - 1;
+				word = get_word(ft_substr(s, 1, *origin_len)); //$ 뒤 문자만 갖다가 치환
+				tmp = ft_strjoin_1to1(tmp, word);
+				ret = ft_strjoin_1to2(ret, word); // word에도 ret에도 "" 들어갈 수 있음!
+				free(word);
+				s += *origin_len;
 		}
 		else
 		{
-			ret  = ft_charjoin(ret, *cur->word);
-			cur->word++;
+			tmp = ft_strjoin_1to1(tmp, ft_substr(s, 0, 1));
 		}
+		s++;
 	}
-	free_arr2(envs);
-	return (ret);
+	printf("here~~~~~~~~~~~~ %s\n", tmp);
+	return (tmp);
 }
+
+//char *change_word(t_token *cur)
+//{
+//	char **envs;
+//	char *ret;
+//	int origin_len;
+//	int i;
+//
+//	envs = find_env_values(cur->word, &origin_len);
+//	i = -1;
+//	while (*cur->word)
+//	{
+//		if (*cur->word == '$')
+//		{
+//			if (envs)
+//				ret = ft_strjoin_1to1(ret, envs[++i]);
+//			cur->word += origin_len + 1;
+//		}
+//		else
+//		{
+//			ret  = ft_charjoin(ret, *cur->word);
+//			cur->word++;
+//		}
+//	}
+//	free_arr2(envs);
+//	return (ret);
+//}
+
 
 void	replace_chunk(t_parse *info)
 {
     t_token	*cur;
     char *word;
+	int origin_len;
 
 	cur = info->chunks;
-	while (cur)
+	while (cur && cur->word && *cur->word)
 	{
         word = NULL;
 		if (cur->type == CHAR)
 		{
-			if (strchr(cur->word, '$'))
-			{
-				word = change_word(cur);
+
+				word = change_word(cur->word, &origin_len);
 				cur->word = ft_strdup(word);
 				free(word);
-			}
-			if (strchr(cur->word, '\''))
-				cur->word = dequote(cur->word, S_QUOTE);
-			if (strchr(cur->word, '\"'))
-				cur->word = dequote(cur->word, D_QUOTE);
+//			if (strchr(cur->word, '\'') || strchr(cur->word, '\"'))
+//				cur->word = dequote(cur->word);
 		}
         cur = cur->next;
 	}
+	debug_print_replced_chunks(info->chunks, 0);
+}
+
+//void	replace_chunk(t_parse *info)
+//{
+//	t_token	*cur;
+//	char *word;
+//	int d_q;
+//	int s_q;
+//
+//	d_q = 0;
+//	s_q = 0;
+//	cur = info->chunks;
+//	word = cur->word;
+//	if(cur->type == CHAR)
+//	{
+//		while (cur && word && *word)
+//		{
+//			if (*word == '\"' && s_q == 0 )
+//				d_q = 1;
+//			else if (*word == '\'' && d_q == 0 )
+//				s_q = 1;
+//			if (*word)
+//
+//
+//		}
+//	}
+//	debug_print_replced_chunks(info->chunks, 0);
+//}
+
+void debug_print_replced_chunks(t_token *chunks, int i) {
+	if (chunks == NULL)
+		return ;
+	printf("   REPLACED chunks %d: type=%d word=%s\n", i, chunks->type, chunks->word);
+	debug_print_replced_chunks(chunks->next, ++i);
 }

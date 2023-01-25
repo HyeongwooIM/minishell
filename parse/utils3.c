@@ -44,3 +44,16 @@ char	*dequote(char *str)
 		return (0);
 	return (ret);
 }
+
+char	*dequote_any(char *str, char delim)
+{
+	char	*ret;
+
+	remove_delim(str, delim);
+	remove_delim(str, delim);
+	ret = ft_strdup(str);
+	free(str);
+	if (*ret == '\0')
+		return (0);
+	return (ret);
+}
