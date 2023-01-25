@@ -6,7 +6,7 @@
 
 void	add_name(t_token *token, t_cmd *cmds)
 {
-	cmds->name = token->word;
+	cmds->name = strdup(token->word);
 }
 
 void	add_content(t_token *token, t_cmd *cmds)
