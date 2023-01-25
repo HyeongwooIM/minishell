@@ -6,7 +6,7 @@
 /*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 18:32:35 by woohyeong         #+#    #+#             */
-/*   Updated: 2023/01/23 18:37:46 by woohyeong        ###   ########.fr       */
+/*   Updated: 2023/01/25 11:02:42 by woohyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	read_doc(int *fd, char *with)
 	char	*buff;
 
 	close(fd[0]);
+	signal(SIGINT, heredoc_sigint_handler);
 	while (1)
 	{
 		buff = readline("heredoc> ");
@@ -44,6 +45,7 @@ void	make_here_doc(t_rdir *rdir)
 
 	if (pipe(fd) == -1 || !rdir->with)
 		ft_error_exit("create pipe faile", 1);
+	ignore_signal();
 	pid = fork();
 	if (pid == -1)
 		ft_error_exit("fork error", 1);

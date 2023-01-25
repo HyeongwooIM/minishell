@@ -6,7 +6,7 @@
 /*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 18:38:50 by woohyeong         #+#    #+#             */
-/*   Updated: 2023/01/23 19:56:52 by woohyeong        ###   ########.fr       */
+/*   Updated: 2023/01/25 09:30:19 by woohyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	fd_out(int *out_fd, t_rdir *rdir)
 		*out_fd = open(rdir->with, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (*out_fd == -1)
 	{
-		ft_putstr_fd("file open error", 2);
+		ft_putstr_fd("file open error\n", 2);
 		return (1);
 	}
 	return (0);
@@ -45,7 +45,7 @@ int	fd_in(int *in_fd, t_rdir *rdir)
 		*in_fd = rdir->here_doc_fd;
 	if (*in_fd == -1)
 	{
-		ft_putstr_fd("file open error", 2);
+		ft_putstr_fd("file open erro\nr", 2);
 		return (1);
 	}
 	return (0);

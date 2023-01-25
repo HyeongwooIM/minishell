@@ -6,7 +6,7 @@
 /*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:54:05 by woohyeong         #+#    #+#             */
-/*   Updated: 2023/01/23 17:54:26 by woohyeong        ###   ########.fr       */
+/*   Updated: 2023/01/25 08:58:11 by woohyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,13 @@ void	single_command(t_cmd	*cmd)
 		if (cmd->rdir)
 			ft_rdir(cmd->rdir);
 		single_builtin(cmd);
-		dup2(p_in, STDIN_FILENO);
-		dup2(p_out, STDOUT_FILENO);
 	}
 	else if (cmd->name)
 		ft_fork(0, cmd);
+	else if (!cmd->name)
+		ft_rdir(cmd->rdir);
+	dup2(p_in, STDIN_FILENO);
+	dup2(p_out, STDOUT_FILENO);
 }
 
 int	pipe_count(t_cmd	*cmd)

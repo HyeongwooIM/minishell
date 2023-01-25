@@ -34,6 +34,8 @@ void close_all_pipe(int **pipes);
 void	ft_error_exit(char *str, int error_no);
 void	ft_error_return(char *str, int error_no);
 int 	is_builtin(t_cmd *cmd);
+void	heredoc_sigint_handler(int signo);
+void	ignore_signal(void);
 
 #endif
 

@@ -6,7 +6,7 @@
 /*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 18:37:51 by woohyeong         #+#    #+#             */
-/*   Updated: 2023/01/23 18:38:40 by woohyeong        ###   ########.fr       */
+/*   Updated: 2023/01/25 09:30:01 by woohyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_pwd(void)
 
 	if (!getcwd(get_cwd, PATH_MAX))
 	{
-		ft_putstr_fd("pwd error", 1);
+		ft_putstr_fd("pwd error\n", 1);
 		exit (1);
 	}
 	printf("%s\n", get_cwd);
