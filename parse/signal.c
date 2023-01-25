@@ -1,7 +1,14 @@
 //
 // Created by jiyun on 2023/01/22.
 //
-#include "includes/minishell.h"
+
+#include "minishell.h"
+
+void	heredoc_sigint_handler(int signo)
+{
+	ft_putendl_fd("", STDOUT_FILENO);
+	exit(1);
+}
 
 void	signal_handler(int signo)
 {
@@ -29,9 +36,14 @@ void	handle_terminal()
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
 
+void	ignore_signal(void)
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+}
+
 void	define_signal()
 {
-	handle_terminal();
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, signal_handler);
 }

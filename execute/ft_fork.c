@@ -6,7 +6,7 @@
 /*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 18:06:20 by woohyeong         #+#    #+#             */
-/*   Updated: 2023/01/23 21:02:02 by woohyeong        ###   ########.fr       */
+/*   Updated: 2023/01/25 11:08:34 by woohyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,11 @@ void	ft_fork(int pipe_cnt, t_cmd *cmd)
 	{
 		if (pipe(pipes[0]) == -1)
 			ft_error_exit("pipe error", 1);
+		if (!pipe_cnt)
+			close(pipes[0][1]);
+		ignore_signal();
 		pid = fork();
+		define_signal();
 		if (pid == -1)
 			ft_error_exit("fork error", 1);
 		if (pid == 0)

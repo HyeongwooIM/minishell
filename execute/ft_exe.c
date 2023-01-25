@@ -6,7 +6,7 @@
 /*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:30:00 by woohyeong         #+#    #+#             */
-/*   Updated: 2023/01/23 21:03:45 by woohyeong        ###   ########.fr       */
+/*   Updated: 2023/01/25 09:32:39 by woohyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*yes_path(char *cmd, t_env *env)
 			if ((buf.st_mode & S_IFMT) == S_IFDIR)
 			{
 				ft_putstr_fd(path, 2);
-				ft_putstr_fd("is a directory", 1);
+				ft_putstr_fd("is a directory\n", 2);
 			}
 			return (path);
 		}
