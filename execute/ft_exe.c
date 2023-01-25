@@ -6,7 +6,7 @@
 /*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:30:00 by woohyeong         #+#    #+#             */
-/*   Updated: 2023/01/25 09:32:39 by woohyeong        ###   ########.fr       */
+/*   Updated: 2023/01/25 13:02:12 by woohyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,5 +109,5 @@ void	ft_exe(t_cmd *cmd, t_env *env)
 	content = ft_strjoin2(path, cmd->content);
 	envp = lst_to_arr(env);
 	if (execve(path, content, envp) == -1)
-		ft_error_exit("Command not found", 127);
+		ft_command_error(cmd->name);
 }
