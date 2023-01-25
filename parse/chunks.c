@@ -67,6 +67,7 @@ t_token	*make_raw_chunk_lst(char *input)
 		if (!word)
 			ft_error_exit("malloc error\n", 1);
 		add_token_node(NONE, word,&lst);
+		free(word);
 		input += size;
 		while (is_space(*input))
 			input++;
@@ -98,6 +99,7 @@ int	make_chunk_lst(t_parse *info)
 		type = get_chunk_type(*tmp->word);
 		word = ft_strdup(tmp->word);
 		add_token_node(type, word, &info->chunks);
+		free(word);
 		tmp = tmp->next;
 	}
 	free_token_lst(raw);

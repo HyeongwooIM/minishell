@@ -97,7 +97,7 @@ char	**find_env_values(char *s, int *origin_len)
             s_quote_on = !s_quote_on;
         else if (*s == '$')
         {
-            if (d_quote_on == TRUE)
+            if (s_quote_on == FALSE)
             {
                 i = 0;
                 while (s[++i] != '\0')
