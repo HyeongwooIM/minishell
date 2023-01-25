@@ -26,7 +26,6 @@ typedef enum e_chunk_type
     CHAR,
     S_QUOTE, // ' '
     D_QUOTE, // " "
-    DOLLAR, // $
     REDIRECT,
     PIPE
 }	t_chunk_type;
@@ -34,7 +33,8 @@ typedef enum e_chunk_type
 typedef enum e_token_type
 {
     CMD = -24,
-    OPTION
+    OPTION,
+	WITH
 }	t_token_type;
 
 typedef enum e_rdir_type

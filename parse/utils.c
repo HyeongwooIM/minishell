@@ -2,8 +2,7 @@
 // Created by jiyun on 2023/01/17.
 //
 
-#include "minishell.h"
-#include "parse.h"
+#include "includes/minishell.h"
 
 int is_space(char c)
 {
@@ -30,12 +29,13 @@ t_token	*init_token()
 
 	ret = malloc(sizeof(t_token) * 1);
 	if (!ret)
-		ft_error_exit("malloc error", 1);;
+		ft_error_exit("malloc error", 1);
 	ret->type = NONE;
 	ret->word = NULL;
 	ret->next = NULL;
 	return (ret);
 }
+
 
 t_cmd	*init_cmd()
 {
