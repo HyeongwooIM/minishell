@@ -1,7 +1,7 @@
 //
 // Created by jiyun on 2023/01/23.
 //
-#include "includes/minishell.h"
+#include "minishell.h"
 
 t_token	*new_token(int type, char *word)
 {

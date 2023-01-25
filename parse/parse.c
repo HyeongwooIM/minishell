@@ -1,7 +1,7 @@
 //
 // Created by jiyun on 2023/01/07.
 //
-#include "includes/minishell.h"
+#include "minishell.h"
 
 t_info g_info;
 
@@ -48,9 +48,9 @@ void	init_parse_info(t_parse *info)
 void	error_handle(int error)
 {
 	if (error == SYNTAX_E)
-		ft_putendl_fd("syntax error near unexpected token\n", 258);
+		ft_putendl_fd("syntax error near unexpected token", STDOUT_FILENO);
 	else if (error == SYNTAX_Q)
-		ft_putendl_fd("syntax error near unclosed quote\n", 257);
+		ft_putendl_fd("syntax error near unclosed quote", STDOUT_FILENO);
 }
 
 void    parse(t_cmd **cmds)

@@ -1,7 +1,7 @@
 //
 // Created by jiyun on 2023/01/17.
 //
-#include "includes/minishell.h"
+#include "minishell.h"
 
 int get_sign_size(const char *sign)
 {
