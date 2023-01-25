@@ -7,23 +7,44 @@ t_info g_info;
 
 int quote_closed(char *s)
 {
-	int d_quote_on;
-	int s_quote_on;
-
-	d_quote_on = FALSE;
-	s_quote_on = FALSE;
 	while (*s)
 	{
 		if (*s == '\"')
-			d_quote_on = !d_quote_on;
+		{
+			s += 1;
+			while (*s != '\"')
+			{
+				if (*s == '\0')
+					return (SYNTAX_Q);
+				s++;
+			}
+			s--;
+		}
 		else if (*s == '\'')
-			s_quote_on = !s_quote_on;
+		{
+			s += 1;
+			while (*s != '\'')
+			{
+				if (*s == '\0')
+					return (SYNTAX_Q);
+				s++;
+			}
+			s--;
+		}
 		s++;
 	}
-	if (d_quote_on == TRUE || s_quote_on == TRUE)
-		return (SYNTAX_Q);
 	return (SUCCESS);
 }
+
+	/*
+	 * while (*s != '\0') {
+	 * 	if (d_quote) {
+	 * 		while (!d_quote)
+	 * 			if (*s == '\0') return (error);
+	 * 	// same for small quote
+	 * 	  s++
+	 * 	}
+	 * }*/
 
 int	input_tokenize(t_parse *info)
 {
