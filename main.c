@@ -125,7 +125,10 @@ void debug_print_redirs(t_rdir* rdir, int i) {
 void debug_print_cmds(t_cmd* cmd, int i) {
 	if (cmd == NULL)
 		return ;
-	printf("name%d: %s\n", i, cmd->name);
+	if (cmd->name != NULL)
+		printf("name%d: %s\n", i, cmd->name);
+	else
+		printf("  name is empty\n");
 	if (cmd->content != NULL) {
 		for (int i = 0; cmd->content[i] != NULL; i++) {
 			printf("  content%d: %s\n", i, cmd->content[i]);
