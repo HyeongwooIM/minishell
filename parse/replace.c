@@ -30,10 +30,10 @@ char *get_word(char *key)
 	{
 		ret = ft_itoa(g_info.last_exit_num);
 		if (!ret)
-			ft_error_exit("malloc error", 1);;
+			ft_error_exit("malloc error", 1);
 	}
-	if (ft_isalpha(*key) || *key == '_')
-		ret = env_value(key);
+    else
+        ret = env_value(key);
 	return (ret);
 }
 
@@ -43,24 +43,33 @@ char	*change_word(char *s)
 	char *word;
 	int d_quote_on;
 	int s_quote_on;
+    int num_on;
 	int i;
 
 	tmp = NULL;
 	d_quote_on = FALSE;
 	s_quote_on = FALSE;
+    num_on = FALSE;
 	while (*s)
 	{
 		if (*s == '\"' && s_quote_on == FALSE)
 			d_quote_on = !d_quote_on;
 		else if (*s == '\'' && d_quote_on == FALSE)
 			s_quote_on = !s_quote_on;
-		else if (*s == '$' && s_quote_on == FALSE) //is_env() 함수로 한번 더 거르고?
+		else if (*s == '$' && s_quote_on == FALSE && is_env(*(s + 1))) //is_env() 함수로 한번 더 거르고?
 		{
 			i = 1;
 				while (s[i] != '\0')
 				{
-					if (!ft_isalpha_underbar(s[i]) || s[i] == '\"' || \
-					s[i] == '$'|| is_space(s[i]))
+                    if (s[i] == '?')
+                    {
+                        i++;
+                        break ;
+                    }
+                    if (ft_isdigit(s[i++]))
+                        num_on = !num_on;
+					if (!ft_isalnum_underbar(s[i]) || s[i] == '\"' || \
+					s[i] == '$'|| is_space(s[i]) || (ft_isdigit(s[i]) && num_on == TRUE))
 						break ;
 					i++;
 				}

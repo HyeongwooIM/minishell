@@ -84,7 +84,7 @@ char *ft_charjoin(char *str, char c)
     return (ret);
 }
 
-char	*ft_strjoin_1to1(char const *s1, char const *s2)
+char	*ft_strjoin_1to1(char *s1, char *s2)
 {
     size_t	s1_len;
     size_t	s2_len;
@@ -105,6 +105,7 @@ char	*ft_strjoin_1to1(char const *s1, char const *s2)
         return (0);
     ft_strlcpy(new, s1, s1_len + 1);
     ft_strlcpy(new + s1_len, s2, s2_len + 1);
+    free(s1);
     return (new);
 }
 
