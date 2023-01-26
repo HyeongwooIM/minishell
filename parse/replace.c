@@ -66,8 +66,11 @@ char	*change_word(char *s)
                         i++;
                         break ;
                     }
-                    if (ft_isdigit(s[i++]))
+                    if (ft_isdigit(s[i]))
+                    {
                         num_on = !num_on;
+                        i++;
+                    }
 					if (!ft_isalnum_underbar(s[i]) || s[i] == '\"' || \
 					s[i] == '$'|| is_space(s[i]) || (ft_isdigit(s[i]) && num_on == TRUE))
 						break ;
@@ -109,7 +112,7 @@ void	replace_chunk(t_parse *info)
 		}
         cur = cur->next;
 	}
-	debug_print_replced_chunks(info->chunks, 0);
+//	debug_print_replced_chunks(info->chunks, 0);
 }
 
 void debug_print_replced_chunks(t_token *chunks, int i) {
