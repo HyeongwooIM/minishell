@@ -3,8 +3,6 @@
 //
 #include "minishell.h"
 
-void debug_print_chunks(t_token *chunks, int i);
-
 int get_sign_size(const char *sign)
 {
 	int size;
@@ -103,13 +101,5 @@ int	make_chunk_lst(t_parse *info)
 		tmp = tmp->next;
 	}
 	free_token_lst(raw);
-//	debug_print_chunks(info->chunks, 0);
 	return (0);
-}
-
-void debug_print_chunks(t_token *chunks, int i) {
-	if (chunks == NULL)
-		return ;
-	printf("   ORIGIN chunks %d: type=%d word=%s\n", i, chunks->type, chunks->word);
-	debug_print_chunks(chunks->next, ++i);
 }

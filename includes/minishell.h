@@ -18,14 +18,11 @@
 #include "execute.h"
 #include "parse.h"
 
-
 /* parse */
 typedef enum e_chunk_type
 {
     NONE = -42,
     CHAR,
-    S_QUOTE, // ' '
-    D_QUOTE, // " "
     REDIRECT,
     PIPE
 }	t_chunk_type;
@@ -39,10 +36,10 @@ typedef enum e_token_type
 
 typedef enum e_rdir_type
 {
-    RDIR, //
-    R_RDIR, // <
-    D_RDIR, // >>
-    HEREDOC // <<
+    RDIR,
+    R_RDIR,
+    D_RDIR,
+    HEREDOC
 }	t_rdir_type;
 
 typedef struct s_token
@@ -56,17 +53,17 @@ typedef struct s_rdir
 {
 	int type;
 	int here_doc_fd;
-	char *with; //filename or endpoint(heredoc)
+	char *with;
 	struct s_rdir *next;
 }	t_rdir;
 
 typedef struct s_cmd
 {
-	// input: cat (null) > a > b < c < d (no option)
-	char *name; // ex : "cat"
-	char **content; // ex : NULL
-	struct s_rdir *rdir; // rdir->type: RDIR(>), rdir->file: "a", rdir->next->type: RDIR(>), rdir->next->file: "b" ...
-	int is_heredoc; // heredoc 여부
+
+	char *name;
+	char **content;
+	struct s_rdir *rdir;
+	int is_heredoc;
 	struct s_cmd *next;
 }	t_cmd;
 
@@ -95,6 +92,7 @@ extern t_info g_info;
 void    parse(t_cmd **cmds);
 char	**lst_to_arr(t_env *envs);
 t_env	*new_env(char *key, char *value);
+void	save_envs(char *envp[]);
 
 void	define_signal();
 
