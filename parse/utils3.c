@@ -51,6 +51,8 @@ int is_env(char c)
         return (0);
     if (is_space(c))
         return (0);
+    if (c == '$')
+        return (0);
     return (1);
 }
 

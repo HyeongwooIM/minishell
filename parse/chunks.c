@@ -103,7 +103,7 @@ int	make_chunk_lst(t_parse *info)
 		tmp = tmp->next;
 	}
 	free_token_lst(raw);
-	debug_print_chunks(info->chunks, 0);
+//	debug_print_chunks(info->chunks, 0);
 	return (0);
 }
 
