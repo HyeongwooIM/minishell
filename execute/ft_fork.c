@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_fork.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
+/*   By: him <him@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 18:06:20 by woohyeong         #+#    #+#             */
-/*   Updated: 2023/01/25 13:59:10 by woohyeong        ###   ########.fr       */
+/*   Updated: 2023/01/26 14:39:30 by him              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,7 @@ void	child_pro(int pipes[2][2], int pipe_cnt, int i, t_cmd *cmd)
 	exit(0);
 }
 
-
-
-void	ft_fork(int pipe_cnt, t_cmd *cmd)
+void	ft_fork(int	pipe_cnt, t_cmd	*cmd)
 {
 	int		pipes[2][2];
 	int		i;

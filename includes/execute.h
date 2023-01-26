@@ -13,7 +13,7 @@ typedef struct s_env t_env;
 
 void execute(t_cmd *cmd);
 int pipe_count(t_cmd *cmd);
-void	check_heredoc(t_cmd	*cmd);
+int		check_heredoc(t_cmd	*cmd);
 int	check_builtin(char *cmd_name);
 void	single_builtin(t_cmd *cmd);
 void	ft_echo(t_cmd	*cmd);
