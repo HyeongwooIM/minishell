@@ -122,6 +122,7 @@ void debug_print_redirs(t_rdir* rdir, int i) {
 	debug_print_redirs(rdir->next, ++i);
 }
 
+
 void debug_print_cmds(t_cmd* cmd, int i) {
 	if (cmd == NULL)
 		return ;

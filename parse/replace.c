@@ -64,7 +64,7 @@ char	*change_word(char *s)
 						break ;
 					i++;
 				}
-				word = get_word(ft_substr(s, 1, i - 1));
+				word = get_word(ft_substr(s, 1, i - 1)); //word는 null
 				tmp = ft_strjoin_1to1(tmp, word);
 				free(word);
 				s += i - 1;
@@ -92,10 +92,10 @@ void	replace_chunk(t_parse *info)
 		if (cur->type == CHAR)
 		{
 			word = change_word(cur->word);
-			if (!word)
-				cur->word = NULL;
-			else
-				cur->word = ft_strdup(word);
+            if (word == NULL)
+                cur->word = ft_strdup("");
+            else
+                cur->word = ft_strdup(word);
 			free(word);
 		}
         cur = cur->next;

@@ -49,8 +49,14 @@ OBJS = $(SRCS:.c=.o)
 NAME = minishell
 TOTAL_OBJS = $(OBJS)
 LIBFT = -Llibft -lft
-READLINE_HDR = -I/usr/local/opt/readline/include
-READLINE_LIB = -L/usr/local/opt/readline/lib -lreadline
+
+#READLINE_HDR = -I/usr/local/opt/readline/include
+#READLINE_HDR = him's
+READLINE_HDR = -I/goinfre/jiyun/.brew/opt/readline/include
+#READLINE_LIB = -L/usr/local/opt/readline/lib -lreadline
+#READLINE_LIB = him's
+READLINE_LIB = -L/goinfre/jiyun/.brew/opt/readline/lib -lreadline
+
 all : $(NAME)
 
 %.o : %.c
