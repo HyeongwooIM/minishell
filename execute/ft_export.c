@@ -6,7 +6,7 @@
 /*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 18:03:27 by woohyeong         #+#    #+#             */
-/*   Updated: 2023/01/23 21:43:46 by woohyeong        ###   ########.fr       */
+/*   Updated: 2023/01/25 17:21:30 by woohyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,13 @@ int	name_check(char *str)
 	while (*str)
 	{
 		if ((!ft_isalpha(*str) && !ft_isdigit(*str) && *str != '_'))
+		{
+			ft_putstr_fd("not a valid identifier\n", 2);
+			g_info.last_exit_num = 1;
 			return (0);
+		}
 		str++;
 	}
-	ft_putstr_fd("not a valid identifier\n", 2);
-	g_info.last_exit_num = 1;
 	return (1);
 }
 

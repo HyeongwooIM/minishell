@@ -6,7 +6,7 @@
 /*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:30:00 by woohyeong         #+#    #+#             */
-/*   Updated: 2023/01/25 13:02:12 by woohyeong        ###   ########.fr       */
+/*   Updated: 2023/01/25 15:52:04 by woohyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ char	*yes_path(char *cmd, t_env *env)
 	struct stat	buf;
 	int			i;
 
+	if (*cmd == 0)
+		return (0);
 	paths = ft_split(env->value, ':');
 	i = -1;
 	while (paths[++i])

@@ -6,7 +6,7 @@
 /*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:54:05 by woohyeong         #+#    #+#             */
-/*   Updated: 2023/01/25 08:58:11 by woohyeong        ###   ########.fr       */
+/*   Updated: 2023/01/25 17:10:50 by woohyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	single_command(t_cmd	*cmd)
 int	pipe_count(t_cmd	*cmd)
 {
 	int	count;
-
+		
 	count = -1;
 	while (cmd)
 	{
