@@ -6,7 +6,7 @@
 
 void	add_name(t_token *token, t_cmd *cmds)
 {
-	if (!token->word)
+	if (token->word == NULL)
 		return ;
 	else
 		cmds->name = ft_strdup(token->word);
@@ -14,7 +14,7 @@ void	add_name(t_token *token, t_cmd *cmds)
 
 void	add_content(t_token *token, t_cmd *cmds)
 {
-	if (!token->word)
+	if (token->word == NULL)
 		return ;
 	if (!cmds->content)
 	{
