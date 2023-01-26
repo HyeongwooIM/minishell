@@ -6,13 +6,13 @@
 /*   By: him <him@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 18:06:20 by woohyeong         #+#    #+#             */
-/*   Updated: 2023/01/26 14:39:30 by him              ###   ########.fr       */
+/*   Updated: 2023/01/26 20:20:10 by him              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void  child_signal(void)
+static void	child_signal(void)
 {
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
@@ -56,14 +56,12 @@ void	child_pro(int pipes[2][2], int pipe_cnt, int i, t_cmd *cmd)
 	exit(0);
 }
 
-void	ft_fork(int	pipe_cnt, t_cmd	*cmd)
+void	connect_pipe(int pipe_cnt, int pipes[2][2], t_cmd *cmd)
 {
-	int		pipes[2][2];
 	int		i;
 	pid_t	pid;
 
 	i = -1;
-	ignore_signal();
 	while (++i <= pipe_cnt)
 	{
 		if (pipe(pipes[0]) == -1)
@@ -84,5 +82,13 @@ void	ft_fork(int	pipe_cnt, t_cmd	*cmd)
 		cmd = cmd->next;
 	}
 	wait_child(pipe_cnt);
+}
+
+void	ft_fork(int pipe_cnt, t_cmd *cmd)
+{
+	int		pipes[2][2];
+
+	ignore_signal();
+	connect_pipe(pipe_cnt, pipes, cmd);
 	return ;
 }

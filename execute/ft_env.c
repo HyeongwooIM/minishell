@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
+/*   By: him <him@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 18:01:29 by woohyeong         #+#    #+#             */
-/*   Updated: 2023/01/25 08:54:18 by woohyeong        ###   ########.fr       */
+/*   Updated: 2023/01/26 20:46:31 by him              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	ft_env(t_cmd	*cmd)
 
 	if (cmd->content)
 	{
-		ft_putstr_fd("No such file or diretoty\n", 2);
+		ft_putstr_fd(*cmd->content, 2);
+		ft_putstr_fd(": No such file or diretoty\n", 2);
 		g_info.last_exit_num = 127;
 		return ;
 	}
@@ -29,4 +30,5 @@ void	ft_env(t_cmd	*cmd)
 			printf("%s=%s\n", env->key, env->value);
 		env = env->next;
 	}
+	g_info.last_exit_num = 0;
 }

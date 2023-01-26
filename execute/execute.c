@@ -6,11 +6,23 @@
 /*   By: him <him@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:54:05 by woohyeong         #+#    #+#             */
-/*   Updated: 2023/01/26 16:32:30 by him              ###   ########.fr       */
+/*   Updated: 2023/01/26 20:15:40 by him              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// void	wait_child(int pipe_cnt)
+// {
+// 	int	i;
+// 	int	status;
+
+// 	i = -1;
+// 	while (++i <= pipe_cnt)
+// 		wait(&status);
+// 	status = status >> 8;
+// 	g_info.last_exit_num = status;
+// }
 
 void	single_command(t_cmd	*cmd)
 {
@@ -23,14 +35,6 @@ void	single_command(t_cmd	*cmd)
 	p_out = dup(STDOUT_FILENO);
 	if (check_builtin(cmd->name) && !cmd->next)
 	{
-		// if (cmd->rdir)
-		// 	flag = ft_rdir(cmd->rdir);
-		// if (flag)
-		// {
-		// 	dup2(p_in, STDIN_FILENO);
-		// 	dup2(p_out, STDOUT_FILENO);
-		// 	return ;
-		// }
 		single_builtin(cmd);
 	}
 	else if (cmd)

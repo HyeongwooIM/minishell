@@ -6,7 +6,7 @@
 /*   By: him <him@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 18:32:35 by woohyeong         #+#    #+#             */
-/*   Updated: 2023/01/26 16:08:21 by him              ###   ########.fr       */
+/*   Updated: 2023/01/26 20:14:57 by him              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,13 @@ void	read_doc(int *fd, char *with)
 	exit(0);
 }
 
+int	stop_here_doc(int fd, t_rdir *rdir)
+{
+	rdir->here_doc_fd = 0;
+	close(fd);
+	return (1);
+}
+
 int	make_here_doc(t_rdir *rdir)
 {
 	pid_t	pid;
@@ -56,31 +63,25 @@ int	make_here_doc(t_rdir *rdir)
 	status = status >> 8;
 	g_info.last_exit_num = status;
 	if (status == 1)
-	{
-		rdir->here_doc_fd = 0;
-		close(fd[0]);
-		return (1);
-	}
+		return (stop_here_doc(fd[0], rdir));
 	rdir->here_doc_fd = fd[0];
 	return (0);
 }
 
-int	ft_heredoc(t_cmd *cmd)
+int	ft_heredoc(t_cmd *cmd, int *flag)
 {
 	t_rdir	*tmp;
-	int		flag;
 
-	flag = 0;
 	tmp = cmd->rdir;
 	while (tmp)
 	{
 		if (tmp->type == HEREDOC)
-			flag = make_here_doc(tmp);
-		if (flag)
-			return (1);
+			*flag = make_here_doc(tmp);
+		if (*flag)
+			return (*flag);
 		tmp = tmp->next;
 	}
-	return (0);
+	return (*flag);
 }
 
 int	check_heredoc(t_cmd *cmd)
@@ -94,10 +95,10 @@ int	check_heredoc(t_cmd *cmd)
 	while (cmd)
 	{
 		if (cmd->is_heredoc)
-			flag = ft_heredoc(cmd);
+			flag = ft_heredoc(cmd, &flag);
 		if (flag)
-			return (1);
+			return (flag);
 		cmd = cmd->next;
 	}
-	return (0);
+	return (flag);
 }

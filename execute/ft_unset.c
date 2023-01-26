@@ -1,46 +1,72 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_unset.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: him <him@student.42seoul.kr>               +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/26 19:27:09 by him               #+#    #+#             */
+/*   Updated: 2023/01/26 20:22:27 by him              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-void ft_unset(t_cmd *cmd)
+static void	env_free(t_env *env)
+{	
+	t_env	*del_temp;
+
+	del_temp = env->next;
+	env->next = del_temp->next;
+	free(del_temp->key);
+	free(del_temp->value);
+	free(del_temp);
+}
+
+static void	last_env_free(t_env *env)
+{
+	t_env	*del_temp;
+
+	del_temp = env->next;
+	env->next = 0;
+	free(del_temp->key);
+	free(del_temp->value);
+	free(del_temp);
+}
+
+static void	first_env_free(t_env *env)
+{
+	g_info.env_lst = env->next;
+	free(env->key);
+	free(env->value);
+	free(env);
+}
+
+void	ft_unset(t_cmd *cmd)
 {
 	t_env	*env_temp;
-	t_env	*del_temp;
-	char 	**str;
+	char	**str;
 
 	str = cmd->content;
 	while (*str)
 	{
 		env_temp = g_info.env_lst;
 		if (env_temp && ft_strcmp(env_temp->key, *cmd->content) == 0)
-		{
-			g_info.env_lst = env_temp->next;
-			free(env_temp->key);
-			free(env_temp->value);
-			free(env_temp);
-		}
+			first_env_free(env_temp);
 		else
 		{
-		while (env_temp->next && ft_strcmp(env_temp->next->key, *str))
-			env_temp = env_temp->next;
+			while (env_temp->next && ft_strcmp(env_temp->next->key, *str))
+				env_temp = env_temp->next;
+			if (!env_temp->next)
+			{
+				ft_putstr_fd("not a valid identifier\n", 2);
+				return ;
+			}
+			else if (env_temp->next->next == 0)
+				last_env_free(env_temp);
+			else
+				env_free(env_temp);
 		}
-		if (!env_temp->next)
-		{
-			ft_putstr_fd("not a valid identifier\n", 2);
-			return ;
-		}
-		if (env_temp->next->next == 0)
-		{
-			del_temp = env_temp->next;
-			env_temp->next = 0;
-			free(del_temp->key);
-			free(del_temp->value);
-			free(del_temp);
-			return ;
-		}
-		del_temp = env_temp->next;
-		env_temp->next = del_temp->next;
-		free(del_temp->key);
-		free(del_temp->value);
-		free(del_temp);
 		str++;
 	}
 }

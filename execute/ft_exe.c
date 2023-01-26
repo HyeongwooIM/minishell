@@ -6,7 +6,7 @@
 /*   By: him <him@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:30:00 by woohyeong         #+#    #+#             */
-/*   Updated: 2023/01/26 15:12:43 by him              ###   ########.fr       */
+/*   Updated: 2023/01/26 17:23:49 by him              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ char	*no_path(char *cmd)
 	if (stat(cmd, &buf) == 0)
 	{
 		if ((buf.st_mode & S_IFMT) == S_IFDIR)
-			ft_error_exit("is a directory", 1);
+			ft_error_exit(" is a directory", 1);
 		return (cmd);
 	}
 	ft_putstr_fd(cmd, 1);
-	ft_error_exit("No such file or directory", 1);
+	ft_error_exit(" No such file or directory", 1);
 	return (0);
 }
 
