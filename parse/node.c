@@ -11,10 +11,7 @@ t_token	*new_token(int type, char *word)
 	if (!node)
 		ft_error_exit("malloc error", 1);;
 	node->type = type;
-	if (word == NULL)
-		node->word = NULL;
-	else
-		node->word = ft_strdup(word);
+	node->word = ft_strdup(word);
 	node->next = NULL;
 	return (node);
 }
