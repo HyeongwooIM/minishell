@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
+/*   By: him <him@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 18:02:18 by woohyeong         #+#    #+#             */
-/*   Updated: 2023/01/25 10:52:31 by woohyeong        ###   ########.fr       */
+/*   Updated: 2023/01/26 20:47:08 by him              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	ft_exit(t_cmd	*cmd)
 	if (str[1] != 0 && str[2] != 0)
 	{
 		ft_putstr_fd("exit : too many arguments\n", 1);
+		g_info.last_exit_num = 1;
 		return ;
 	}
 	if (check_content(*(cmd->content)) != 1)

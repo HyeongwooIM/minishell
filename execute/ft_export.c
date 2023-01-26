@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
+/*   By: him <him@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 18:03:27 by woohyeong         #+#    #+#             */
-/*   Updated: 2023/01/25 17:21:30 by woohyeong        ###   ########.fr       */
+/*   Updated: 2023/01/26 20:53:09 by him              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 
 int	name_check(char *str)
 {
+	if (!str || *str == 0)
+	{
+		ft_putstr_fd("not a valid identifier\n", 2);
+		g_info.last_exit_num = 1;
+		return (0);
+	}
 	if (!str || (*str == '_' && !ft_isalpha(*str)))
 		return (0);
 	str++;
@@ -70,6 +76,7 @@ void	export_null_print(void)
 		printf("\n");
 		env = env->next;
 	}
+	g_info.env_lst = 0;
 }
 
 void	free_env_arr(char	**str)
@@ -86,17 +93,17 @@ void	ft_export(char **str)
 {
 	t_env	*temp;
 	char	**env_arr;
-	char	*key_value;
+	size_t	i;
 
+	i = -1;
 	if (!str)
 	{
 		export_null_print();
 		return ;
 	}
-	while (*str)
+	while (str[++i])
 	{
-		key_value = *str;
-		env_arr = find_key_value(key_value);
+		env_arr = find_key_value(str[i]);
 		if (name_check(env_arr[0]))
 		{
 			temp = find_env_add(env_arr[0]);
@@ -107,6 +114,6 @@ void	ft_export(char **str)
 			}
 		}
 		free_env_arr(env_arr);
-		str++;
 	}
+	g_info.last_exit_num = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: him <him@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:55:18 by woohyeong         #+#    #+#             */
-/*   Updated: 2023/01/26 14:44:54 by him              ###   ########.fr       */
+/*   Updated: 2023/01/26 20:43:49 by him              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,12 @@ void	edit_pwd(char	*cwd)
 	if (env_oldpwd->value)
 		free(env_oldpwd->value);
 	env_oldpwd->value = env_pwd->value;
-	env_pwd->value = ft_strdup(cwd);
+	if (cwd)
+		env_pwd->value = ft_strdup(cwd);
+	else
+		env_pwd->value = ft_strdup("");
 	if (!env_pwd->value)
-		ft_error_exit("1-malloc error", 1);
+		ft_error_exit("malloc error", 1);
 }
 
 void	ft_cd(t_cmd	*cmd)
@@ -35,13 +38,20 @@ void	ft_cd(t_cmd	*cmd)
 	char	*path;
 
 	if (!cmd)
-		exit(1);
+		return ;
+	if (!cmd->content || *cmd->content == 0)
+	{
+		ft_putstr_fd("plese check argument\n", 2);
+		g_info.last_exit_num = 1;
+		return ;
+	}
 	path = *cmd->content;
-	if (cmd && cmd->content == 0)
-		exit(1);
-	if (chdir(path))
-		exit(1);
-	if (!getcwd(get_cwd, PATH_MAX))
-		exit(1);
+	if (chdir(path) || !getcwd(get_cwd, PATH_MAX))
+	{
+		ft_putstr_fd("fail diretory charnge\n", 2);
+		g_info.last_exit_num = 1;
+		return ;
+	}
 	edit_pwd(get_cwd);
+	g_info.last_exit_num = 0;
 }
