@@ -160,7 +160,7 @@ int main(int argc, char *argv[], char *envp[])
 		handle_terminal();
 		define_signal();
 		parse(&cmds);
-        debug_print_cmds(cmds, 0);
+//        debug_print_cmds(cmds, 0);
         printf("------------------------------\n");
 		execute(cmds);
 		free_cmds(cmds);
