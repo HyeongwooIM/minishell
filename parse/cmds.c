@@ -28,8 +28,9 @@ void	add_content(t_token *token, t_cmd *cmds)
 	}
 	else
     {
-        i = -1;
-        while (cmds->content[++i])
+        i = 0;
+        while ((cmds->content)[i])
+            i++;
         cmds->content = ft_strjoin_1to2(cmds->content, token->word, i);
     }
 }
