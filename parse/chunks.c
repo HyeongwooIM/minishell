@@ -3,9 +3,9 @@
 //
 #include "minishell.h"
 
-int get_sign_size(const char *sign)
+int	get_sign_size(const char *sign)
 {
-	int size;
+	int	size;
 
 	size = 1;
 	if (*sign == '<')
@@ -21,11 +21,11 @@ int get_sign_size(const char *sign)
 	return (size);
 }
 
-int get_chunk_size(char *str)
+int	get_chunk_size(char *str)
 {
-	int quote_on;
-	int size;
-	char delim;
+	int		quote_on;
+	int		size;
+	char	delim;
 
 	if (*str == '|' || *str == '<' || *str == '>')
 		return (get_sign_size(str));
@@ -50,9 +50,9 @@ int get_chunk_size(char *str)
 
 t_token	*make_raw_chunk_lst(char *input)
 {
-	t_token *lst;
-	char *word;
-	int size;
+	t_token	*lst;
+	char	*word;
+	int		size;
 
 	lst = NULL;
 	size = 0;
@@ -61,10 +61,10 @@ t_token	*make_raw_chunk_lst(char *input)
 	while (*input)
 	{
 		size = get_chunk_size(input);
-		word = ft_substr(input, 0,size);
+		word = ft_substr(input, 0, size);
 		if (!word)
 			ft_error_exit("malloc error\n", 1);
-		add_token_node(NONE, word,&lst);
+		add_token_node(NONE, word, &lst);
 		free(word);
 		input += size;
 		while (is_space(*input))
@@ -73,7 +73,7 @@ t_token	*make_raw_chunk_lst(char *input)
 	return (lst);
 }
 
-int get_chunk_type(char c)
+int	get_chunk_type(char c)
 {
 	if (c == '<' || c == '>')
 		return (REDIRECT);
@@ -85,10 +85,10 @@ int get_chunk_type(char c)
 
 int	make_chunk_lst(t_parse *info)
 {
-	t_token *raw;
-	t_token *tmp;
-	char *word;
-	int type;
+	t_token	*raw;
+	t_token	*tmp;
+	char	*word;
+	int		type;
 
 	raw = make_raw_chunk_lst(info->input);
 	tmp = raw;

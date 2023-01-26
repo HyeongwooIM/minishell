@@ -14,25 +14,25 @@ void	add_name(t_token *token, t_cmd *cmds)
 
 void	add_content(t_token *token, t_cmd *cmds)
 {
-    int i;
+	int	i;
 
 	if (token->word == NULL)
 		return ;
 	if (!cmds->content)
 	{
 		cmds->content = malloc(sizeof(char *) * 2);
-		if(!cmds->content)
+		if (!cmds->content)
 			ft_error_exit("malloc error\n", 1);
 		(cmds->content)[0] = ft_strdup(token->word);
 		(cmds->content)[1] = 0;
 	}
 	else
-    {
-        i = 0;
-        while ((cmds->content)[i])
-            i++;
-        cmds->content = ft_strjoin_1to2(cmds->content, token->word, i);
-    }
+	{
+		i = 0;
+		while ((cmds->content)[i])
+			i++;
+		cmds->content = ft_strjoin_1to2(cmds->content, token->word, i);
+	}
 }
 
 void	add_rdir(t_token *token, t_cmd *cmds)
@@ -54,10 +54,10 @@ void	add_rdir(t_token *token, t_cmd *cmds)
 		add_rdir_node(token->type, token->next->word, cmds->rdir);
 }
 
-void make_cmd_lst(t_parse *info, t_cmd **cmds)
+void	make_cmd_lst(t_parse *info, t_cmd **cmds)
 {
-	t_token *tmp_t;
-	t_cmd *tmp_c;
+	t_token	*tmp_t;
+	t_cmd	*tmp_c;
 
 	tmp_t = info->tokens;
 	*cmds = init_cmd();

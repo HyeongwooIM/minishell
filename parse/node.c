@@ -5,11 +5,11 @@
 
 t_token	*new_token(int type, char *word)
 {
-	t_token *node;
+	t_token	*node;
 
 	node = malloc(sizeof(t_token) * 1);
 	if (!node)
-		ft_error_exit("malloc error", 1);;
+		ft_error_exit("malloc error", 1);
 	node->type = type;
 	node->word = ft_strdup(word);
 	node->next = NULL;
@@ -18,11 +18,11 @@ t_token	*new_token(int type, char *word)
 
 t_rdir	*new_rdir(int type, char *with)
 {
-	t_rdir *node;
+	t_rdir	*node;
 
 	node = malloc(sizeof(t_token) * 1);
 	if (!node)
-		ft_error_exit("malloc error", 1);;
+		ft_error_exit("malloc error", 1);
 	node->type = type;
 	node->here_doc_fd = 0;
 	node->with = ft_strdup(with);
@@ -32,7 +32,7 @@ t_rdir	*new_rdir(int type, char *with)
 
 void	add_rdir_node(int type, char *with, t_rdir *rdir)
 {
-	t_rdir *tmp;
+	t_rdir	*tmp;
 
 	tmp = rdir;
 	while (tmp->next != NULL)
@@ -42,9 +42,9 @@ void	add_rdir_node(int type, char *with, t_rdir *rdir)
 
 void	add_token_node(int type, char *word, t_token **tokens)
 {
-	t_token *tmp;
+	t_token	*tmp;
 
-	if(!*tokens)
+	if (!*tokens)
 		*tokens = new_token(type, word);
 	else
 	{
