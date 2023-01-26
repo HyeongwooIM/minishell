@@ -110,6 +110,6 @@ int	make_chunk_lst(t_parse *info)
 void debug_print_chunks(t_token *chunks, int i) {
 	if (chunks == NULL)
 		return ;
-	printf("   chunks %d: type=%d word=%s\n", i, chunks->type, chunks->word);
+	printf("   ORIGIN chunks %d: type=%d word=%s\n", i, chunks->type, chunks->word);
 	debug_print_chunks(chunks->next, ++i);
 }

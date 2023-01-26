@@ -47,7 +47,8 @@ char	**ft_strjoin_1to2(char **dest, char *src);
 /* utils3.c */
 char	get_delim(char *str);
 char *dequote(char *str);
-int	is_possible(char *str);
+int	ft_isalpha_underbar(int c);
+
 /* chunks.c */
 int	make_chunk_lst(t_parse *info);
 

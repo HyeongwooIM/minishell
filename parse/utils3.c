@@ -45,15 +45,9 @@ char	*dequote(char *str)
 	return (ret);
 }
 
-char	*dequote_any(char *str, char delim)
+int	ft_isalpha_underbar(int c)
 {
-	char	*ret;
-
-	remove_delim(str, delim);
-	remove_delim(str, delim);
-	ret = ft_strdup(str);
-	free(str);
-	if (*ret == '\0')
-		return (0);
-	return (ret);
+	if (('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z') || c == '_')
+		return (1);
+	return (0);
 }
