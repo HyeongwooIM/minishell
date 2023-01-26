@@ -10,7 +10,7 @@ int	is_syntax_error(t_token *tokens)
 		return (1);
 	while (tokens)
 	{
-		if (tokens->type == REDIRECT && tokens->next->type != CHAR)
+		if (tokens->type == REDIRECT && (tokens->next == NULL || tokens->next->type != CHAR))
 			return (1);
 		else if (tokens->type == PIPE && tokens->next == NULL)
 			return (1);
