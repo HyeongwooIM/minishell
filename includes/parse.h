@@ -27,7 +27,6 @@ typedef enum e_error
 /* utils.c */
 int is_space(char c);
 int just_white_space(char *str);
-t_token	*init_token();
 t_cmd	*init_cmd();
 
 /* node.c */
@@ -40,13 +39,11 @@ void	add_rdir_node(int type, char *with, t_rdir *rdir);
 void	free_token_lst(t_token *lst);
 void	free_rdir_lst(t_rdir *lst);
 void	free_arr2(char **ret);
-char    *ft_charjoin(char *str, char c);
 char	*ft_strjoin_1to1(char *s1, char *s2);
-char	**ft_strjoin_1to2(char **dest, char *src);
+char	**ft_strjoin_1to2(char **dest, char *src, int size);
 
 /* utils3.c */
 char	get_delim(char *str);
-char *dequote(char *str);
 int	ft_isalnum_underbar(int c);
 int is_env(char c);
 

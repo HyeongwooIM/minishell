@@ -1,9 +1,4 @@
-//
-// Created by jiyun on 2023/01/19.
-//
 #include "minishell.h"
-
-void debug_print_replced_chunks(t_token *chunks, int i);
 
 char	*env_value(char *str)
 {
@@ -56,30 +51,30 @@ char	*change_word(char *s)
 			d_quote_on = !d_quote_on;
 		else if (*s == '\'' && d_quote_on == FALSE)
 			s_quote_on = !s_quote_on;
-		else if (*s == '$' && s_quote_on == FALSE && is_env(*(s + 1))) //is_env() 함수로 한번 더 거르고?
+		else if (*s == '$' && s_quote_on == FALSE && is_env(*(s + 1)))
 		{
 			i = 1;
-				while (s[i] != '\0')
-				{
-                    if (s[i] == '?')
-                    {
-                        i++;
-                        break ;
-                    }
-                    if (ft_isdigit(s[i]))
-                    {
-                        num_on = !num_on;
-                        i++;
-                    }
-					if (!ft_isalnum_underbar(s[i]) || s[i] == '\"' || \
-					s[i] == '$'|| is_space(s[i]) || (ft_isdigit(s[i]) && num_on == TRUE))
-						break ;
-					i++;
-				}
-				word = get_word(ft_substr(s, 1, i - 1)); //word는 null
-				tmp = ft_strjoin_1to1(tmp, word);
-				free(word);
-				s += i - 1;
+            while (s[i] != '\0')
+            {
+                if (s[i] == '?')
+                {
+                    i++;
+                    break ;
+                }
+                if (ft_isdigit(s[i]))
+                {
+                    num_on = !num_on;
+                    i++;
+                }
+                if (!ft_isalnum_underbar(s[i]) || s[i] == '\"' || \
+                s[i] == '$'|| is_space(s[i]) || (ft_isdigit(s[i]) && num_on == TRUE))
+                break ;
+                i++;
+            }
+            word = get_word(ft_substr(s, 1, i - 1)); //word는 null
+            tmp = ft_strjoin_1to1(tmp, word);
+            free(word);
+            s += i - 1;
 		}
 		else
 		{	word = ft_substr(s, 0, 1);
@@ -112,12 +107,4 @@ void	replace_chunk(t_parse *info)
 		}
         cur = cur->next;
 	}
-//	debug_print_replced_chunks(info->chunks, 0);
-}
-
-void debug_print_replced_chunks(t_token *chunks, int i) {
-	if (chunks == NULL)
-		return ;
-	printf("   REPLACED chunks %d: type=%d word=%s\n", i, chunks->type, chunks->word);
-	debug_print_replced_chunks(chunks->next, ++i);
 }
