@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
+/*   By: him <him@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:55:18 by woohyeong         #+#    #+#             */
-/*   Updated: 2023/01/23 17:57:49 by woohyeong        ###   ########.fr       */
+/*   Updated: 2023/01/26 14:44:54 by him              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	edit_pwd(char	*cwd)
 	env_oldpwd->value = env_pwd->value;
 	env_pwd->value = ft_strdup(cwd);
 	if (!env_pwd->value)
-		ft_error_exit("malloc error", 1);
+		ft_error_exit("1-malloc error", 1);
 }
 
 void	ft_cd(t_cmd	*cmd)

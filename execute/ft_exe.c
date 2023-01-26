@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exe.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
+/*   By: him <him@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:30:00 by woohyeong         #+#    #+#             */
-/*   Updated: 2023/01/25 15:52:04 by woohyeong        ###   ########.fr       */
+/*   Updated: 2023/01/26 15:12:43 by him              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ char	*ft_make_path(char *paths, char *cmd)
 
 	part_path = ft_strjoin(paths, "/");
 	if (!part_path)
-		ft_error_exit("malloc error", 1);
+		ft_error_exit("2-malloc error", 1);
 	res = ft_strjoin(part_path, cmd);
 	if (!res)
-		ft_error_exit("malloc error", 1);
+		ft_error_exit("3-malloc error", 1);
 	free(part_path);
 	return (res);
 }
@@ -49,7 +49,7 @@ char	*yes_path(char *cmd, t_env *env)
 	struct stat	buf;
 	int			i;
 
-	if (*cmd == 0)
+	if (cmd == 0)
 		return (0);
 	paths = ft_split(env->value, ':');
 	i = -1;
@@ -74,6 +74,8 @@ char	*find_path(char *cmd, t_env *env, int *is_path)
 {
 	int	i;
 
+	if (*cmd == 0 || cmd == 0)
+		ft_command_error(cmd);
 	*is_path = 0;
 	env = find_env("PATH");
 	if (!env)
