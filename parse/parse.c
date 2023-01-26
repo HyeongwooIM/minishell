@@ -18,7 +18,6 @@ int quote_closed(char *s)
 					return (SYNTAX_Q);
 				s++;
 			}
-			s--;
 		}
 		else if (*s == '\'')
 		{
@@ -29,22 +28,11 @@ int quote_closed(char *s)
 					return (SYNTAX_Q);
 				s++;
 			}
-			s--;
 		}
 		s++;
 	}
 	return (SUCCESS);
 }
-
-	/*
-	 * while (*s != '\0') {
-	 * 	if (d_quote) {
-	 * 		while (!d_quote)
-	 * 			if (*s == '\0') return (error);
-	 * 	// same for small quote
-	 * 	  s++
-	 * 	}
-	 * }*/
 
 int	input_tokenize(t_parse *info)
 {

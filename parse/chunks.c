@@ -3,6 +3,8 @@
 //
 #include "minishell.h"
 
+void debug_print_chunks(t_token *chunks, int i);
+
 int get_sign_size(const char *sign)
 {
 	int size;
@@ -23,25 +25,23 @@ int get_sign_size(const char *sign)
 
 int get_chunk_size(char *str)
 {
-	int d_quote_on;
-	int s_quote_on;
+	int quote_on;
 	int size;
+	char delim;
 
 	if (*str == '|' || *str == '<' || *str == '>')
 		return (get_sign_size(str));
-	d_quote_on = FALSE;
-	s_quote_on = FALSE;
+	quote_on = FALSE;
 	size = 0;
+	delim = get_delim(str);
 	while (*str)
 	{
-		if (*str == '\'')
-			s_quote_on = !s_quote_on;
-		if (*str == '\"')
-			d_quote_on = !d_quote_on;
+		if (*str == delim)
+			quote_on = !quote_on;
 		if (is_space(*str) || *str == '|' || \
 		*str == '<' || *str == '>')
 		{
-			if (s_quote_on == FALSE && d_quote_on == FALSE)
+			if (quote_on == FALSE)
 				break ;
 		}
 		str++;
@@ -103,5 +103,13 @@ int	make_chunk_lst(t_parse *info)
 		tmp = tmp->next;
 	}
 	free_token_lst(raw);
+	debug_print_chunks(info->chunks, 0);
 	return (0);
+}
+
+void debug_print_chunks(t_token *chunks, int i) {
+	if (chunks == NULL)
+		return ;
+	printf("   ORIGIN chunks %d: type=%d word=%s\n", i, chunks->type, chunks->word);
+	debug_print_chunks(chunks->next, ++i);
 }

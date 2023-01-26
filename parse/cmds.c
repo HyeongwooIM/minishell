@@ -6,11 +6,16 @@
 
 void	add_name(t_token *token, t_cmd *cmds)
 {
-	cmds->name = strdup(token->word);
+	if (!token->word)
+		return ;
+	else
+		cmds->name = ft_strdup(token->word);
 }
 
 void	add_content(t_token *token, t_cmd *cmds)
 {
+	if (!token->word)
+		return ;
 	if (!cmds->content)
 	{
 		cmds->content = malloc(sizeof(char *) * 2);

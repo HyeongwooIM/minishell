@@ -17,15 +17,25 @@ void remove_delim(char *str, char delim) {
     str[i] = '\0';
 }
 
-char *dequote(char *str, int type)
+char	get_delim(char *str)
+{
+	while (*str)
+	{
+		if (*str == '\"')
+			return ('\"');
+		if (*str == '\'')
+			return ('\'');
+		str++;
+	}
+	return (0);
+}
+
+char	*dequote(char *str)
 {
 	char	*ret;
 	char	delim;
 
-	if (type == D_QUOTE)
-		delim = '\"';
-	else
-		delim = '\'';
+	delim = get_delim(str);
     remove_delim(str, delim);
     remove_delim(str, delim);
 	ret = ft_strdup(str);
@@ -33,4 +43,11 @@ char *dequote(char *str, int type)
 	if (*ret == '\0')
 		return (0);
 	return (ret);
+}
+
+int	ft_isalpha_underbar(int c)
+{
+	if (('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z') || c == '_')
+		return (1);
+	return (0);
 }
