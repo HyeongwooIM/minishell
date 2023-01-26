@@ -6,7 +6,7 @@
 /*   By: him <him@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 18:03:27 by woohyeong         #+#    #+#             */
-/*   Updated: 2023/01/26 20:53:09 by him              ###   ########.fr       */
+/*   Updated: 2023/01/26 21:05:53 by him              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	export_null_print(void)
 		printf("\n");
 		env = env->next;
 	}
-	g_info.env_lst = 0;
+	g_info.last_exit_num = 0;
 }
 
 void	free_env_arr(char	**str)
