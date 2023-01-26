@@ -1,14 +1,27 @@
 #include "minishell.h"
 
+char	get_delim(char *str)
+{
+	while (*str)
+	{
+		if (*str == '\"')
+			return ('\"');
+		if (*str == '\'')
+			return ('\'');
+		str++;
+	}
+	return (0);
+}
+
 int is_env(char c)
 {
     if (c == '\0')
         return (0);
-    if (c == '\"')
-        return (0);
     if (is_space(c))
         return (0);
     if (c == '$')
+        return (0);
+    if (c == '\"')
         return (0);
     return (1);
 }

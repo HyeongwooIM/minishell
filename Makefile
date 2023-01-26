@@ -40,6 +40,7 @@ SRCS_FILES = parse/parse.c \
              execute/ft_unset.c \
              execute/ft_rdir.c \
              execute/ft_pwd.c \
+             util/env.c \
              util/ft_error_exit.c \
              util/find_env.c \
              util/find_env_add.c \
