@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-static void ft_error_exit(char *str, int error_no)
+static void	ft_error_exit(char *str, int error_no)
 {
 	write(2, str, ft_strlen(str));
 	exit(error_no);

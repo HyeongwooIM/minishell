@@ -1,10 +1,10 @@
 #include "minishell.h"
 
-t_info g_info;
+t_info	g_info;
 
 void	free_cmds(t_cmd *cmds)
 {
-	t_cmd *tmp;
+	t_cmd	*tmp;
 
 	while (cmds)
 	{
@@ -17,7 +17,7 @@ void	free_cmds(t_cmd *cmds)
 	}
 }
 
-void	handle_terminal()
+void	handle_terminal(void)
 {
 	struct termios	term;
 
@@ -26,17 +26,18 @@ void	handle_terminal()
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
 
-int main(int argc, char *argv[], char *envp[])
+int	main(int argc, char *argv[], char *envp[])
 {
 	t_cmd	*cmds;
 
+	(void)argv;
 	if (argc != 1)
 	{
 		ft_putendl_fd("too many arguments", STDERR_FILENO);
 		exit(FAIL);
 	}
 	save_envs(envp);
-	while(1)
+	while (1)
 	{
 		cmds = NULL;
 		handle_terminal();

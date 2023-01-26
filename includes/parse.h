@@ -3,17 +3,17 @@
 //
 
 #ifndef PARSE_H
-#define PARSE_H
+# define PARSE_H
 
-#include "minishell.h"
+# include "minishell.h"
 
-#define FALSE 0
-#define TRUE 1
+# define FALSE 0
+# define TRUE 1
 
-typedef struct s_token t_token;
-typedef struct s_rdir t_rdir;
-typedef struct s_cmd t_cmd;
-typedef struct s_parse t_parse;
+typedef struct s_token	t_token;
+typedef struct s_rdir	t_rdir;
+typedef struct s_cmd	t_cmd;
+typedef struct s_parse	t_parse;
 
 typedef enum e_error
 {
@@ -25,9 +25,9 @@ typedef enum e_error
 }	t_error;
 
 /* utils.c */
-int is_space(char c);
-int just_white_space(char *str);
-t_cmd	*init_cmd();
+int		is_space(char c);
+int		just_white_space(char *str);
+t_cmd	*init_cmd(void);
 
 /* node.c */
 t_token	*new_token(int type, char *word);
@@ -44,20 +44,20 @@ char	**ft_strjoin_1to2(char **dest, char *src, int size);
 
 /* utils3.c */
 char	get_delim(char *str);
-int	ft_isalnum_underbar(int c);
-int is_env(char c);
+char	*env_value(char *str);
+int		ft_isalnum_underbar(int c);
+int		is_env(char c);
 
 /* chunks.c */
-int	make_chunk_lst(t_parse *info);
+int		make_chunk_lst(t_parse *info);
 
 /* replace.c */
 void	replace_chunk(t_parse *info);
 
 /* tokens.c */
-int	make_token_lst(t_parse *info);
+int		make_token_lst(t_parse *info);
 
 /* cmds.c */
-void make_cmd_lst(t_parse *info, t_cmd **cmds);
-
+void	make_cmd_lst(t_parse *info, t_cmd **cmds);
 
 #endif

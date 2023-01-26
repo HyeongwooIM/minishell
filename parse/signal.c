@@ -33,7 +33,7 @@ void	ignore_signal(void)
 	signal(SIGQUIT, SIG_IGN);
 }
 
-void	define_signal()
+void	define_signal(void)
 {
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, signal_handler);

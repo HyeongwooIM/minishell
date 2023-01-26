@@ -3,9 +3,9 @@
 //
 #include "minishell.h"
 
-t_info g_info;
+t_info	g_info;
 
-int quote_closed(char *s)
+int	quote_closed(char *s)
 {
 	while (*s)
 	{
@@ -38,19 +38,13 @@ int	input_tokenize(t_parse *info)
 {
 	if (just_white_space(info->input))
 		return (RESTART);
-	if(quote_closed(info->input) == SYNTAX_Q)
+	if (quote_closed(info->input) == SYNTAX_Q)
 		return (SYNTAX_Q);
 	make_chunk_lst(info);
 	replace_chunk(info);
 	if (make_token_lst(info) == SYNTAX_E)
-        return (SYNTAX_E);
+		return (SYNTAX_E);
 	return (SUCCESS);
-}
-
-void	init_parse_info(t_parse *info)
-{
-	info->chunks = NULL;
-	info->tokens = NULL;
 }
 
 void	error_handle(int error)
@@ -68,10 +62,10 @@ void	free_info(t_parse *lst)
 	free_token_lst(lst->tokens);
 }
 
-void    parse(t_cmd **cmds)
+void	parse(t_cmd **cmds)
 {
-	t_parse info;
-	int error;
+	t_parse	info;
+	int		error;
 
 	info.input = readline("minishell$ ");
 	if (!info.input)
@@ -81,7 +75,8 @@ void    parse(t_cmd **cmds)
 	}
 	if (*(info.input))
 		add_history(info.input);
-	init_parse_info(&info);
+	info.chunks = NULL;
+	info.tokens = NULL;
 	error = input_tokenize(&info);
 	if (error)
 	{

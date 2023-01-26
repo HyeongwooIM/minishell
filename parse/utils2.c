@@ -6,7 +6,7 @@
 
 void	free_token_lst(t_token *lst)
 {
-	t_token *tmp;
+	t_token	*tmp;
 
 	if (!lst)
 		return ;
@@ -19,64 +19,64 @@ void	free_token_lst(t_token *lst)
 	}
 }
 
-void free_rdir_lst(t_rdir *lst)
+void	free_rdir_lst(t_rdir *lst)
 {
-	t_rdir *tmp;
+	t_rdir	*tmp;
 
 	if (!lst)
 		return ;
 	while (lst)
 	{
 		tmp = lst->next;
-        free(lst->with);
-        free(lst);
+		free(lst->with);
+		free(lst);
 		lst = tmp;
 	}
 }
 
 void	free_arr2(char **ret)
 {
-    size_t	i;
+	size_t	i;
 
-    i = 0;
+	i = 0;
 	if (!ret)
 		return ;
-    while (ret[i] != 0)
-    {
-        free(ret[i]);
-        i++;
-    }
-    free(ret);
+	while (ret[i] != 0)
+	{
+		free(ret[i]);
+		i++;
+	}
+	free(ret);
 }
 
 char	*ft_strjoin_1to1(char *s1, char *s2)
 {
-    size_t	s1_len;
-    size_t	s2_len;
-    char	*new;
+	size_t	s1_len;
+	size_t	s2_len;
+	char	*new;
 
-    if (!s1 && !s2)
-        return (0);
-    if (!s1)
-        return (ft_strdup(s2));
-    if (!s2)
-        return (ft_strdup(s1));
-    s1_len = ft_strlen(s1);
-    s2_len = ft_strlen(s2);
-    if (!s1_len && !s2_len)
-        return (ft_strdup(""));
-    new = malloc(sizeof(char) * (s1_len + s2_len + 1));
-    if (!new)
-        return (0);
-    ft_strlcpy(new, s1, s1_len + 1);
-    ft_strlcpy(new + s1_len, s2, s2_len + 1);
-    free(s1);
-    return (new);
+	if (!s1 && !s2)
+		return (0);
+	if (!s1)
+		return (ft_strdup(s2));
+	if (!s2)
+		return (ft_strdup(s1));
+	s1_len = ft_strlen(s1);
+	s2_len = ft_strlen(s2);
+	if (!s1_len && !s2_len)
+		return (ft_strdup(""));
+	new = malloc(sizeof(char) * (s1_len + s2_len + 1));
+	if (!new)
+		return (0);
+	ft_strlcpy(new, s1, s1_len + 1);
+	ft_strlcpy(new + s1_len, s2, s2_len + 1);
+	free(s1);
+	return (new);
 }
 
 char	**ft_strjoin_1to2(char **dest, char *src, int size)
 {
-	long			i;
+	long	i;
 	char	**res;
 
 	if (!src && !dest)
