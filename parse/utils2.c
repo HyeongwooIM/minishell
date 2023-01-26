@@ -10,12 +10,6 @@ void	free_token_lst(t_token *lst)
 
 	if (!lst)
 		return ;
-//	while (lst)
-//	{
-//		tmp = lst;
-//		lst = lst->next;
-//		free(tmp);
-//	}
 	while (lst)
 	{
 		tmp = lst->next;
@@ -31,16 +25,12 @@ void free_rdir_lst(t_rdir *lst)
 
 	if (!lst)
 		return ;
-	if (!lst->next)
-	{
-		free(lst);
-		lst = NULL;
-	}
 	while (lst)
 	{
-		tmp = lst;
-		lst = lst->next;
-		free(tmp);
+		tmp = lst->next;
+        free(lst->with);
+        free(lst);
+		lst = tmp;
 	}
 }
 
@@ -57,31 +47,6 @@ void	free_arr2(char **ret)
         i++;
     }
     free(ret);
-}
-
-char *ft_charjoin(char *str, char c)
-{
-    char *ret;
-    int i;
-
-    if (!str)
-    {
-        ret = malloc(sizeof(char) * 2);
-        if (!ret)
-            ft_error_exit("malloc error\n", 1);
-        ret[0] = c;
-        ret[1] = '\0';
-        return (ret);
-    }
-    ret = malloc(sizeof(char) * (ft_strlen(str) + 2));
-    if (!ret)
-        ft_error_exit("malloc error\n", 1);
-    i = -1;
-    while (str[++i])
-        ret[i] = str[i];
-    ret[i] = c;
-    ret[++i] = '\0';
-    return (ret);
 }
 
 char	*ft_strjoin_1to1(char *s1, char *s2)
@@ -109,13 +74,11 @@ char	*ft_strjoin_1to1(char *s1, char *s2)
     return (new);
 }
 
-char	**ft_strjoin_1to2(char **dest, char *src)
+char	**ft_strjoin_1to2(char **dest, char *src, int size)
 {
-	unsigned int	word_num;
 	long			i;
 	char	**res;
 
-    word_num = 0;
 	if (!src && !dest)
 		return (0);
 	if (!src)
@@ -124,17 +87,17 @@ char	**ft_strjoin_1to2(char **dest, char *src)
 		res = malloc(sizeof(char *) * 2);
 	else
 	{
-		while (dest[word_num])
-			++word_num;
-		res = malloc(sizeof(char *) * (word_num + 2));
+		while (dest[size])
+			++size;
+		res = malloc(sizeof(char *) * (size + 2));
 	}
 	if (!res)
 		ft_error_exit("malloc error", 1);
 	i = -1;
-	while (++i < word_num)
+	while (++i < size)
 		res[i] = ft_strdup(dest[i]);
-	res[word_num] = ft_strdup(src);
-	res[word_num + 1] = 0;
+	res[size] = ft_strdup(src);
+	res[size + 1] = 0;
 	if (dest)
 		free_arr2(dest);
 	return (res);

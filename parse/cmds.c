@@ -14,6 +14,8 @@ void	add_name(t_token *token, t_cmd *cmds)
 
 void	add_content(t_token *token, t_cmd *cmds)
 {
+    int i;
+
 	if (token->word == NULL)
 		return ;
 	if (!cmds->content)
@@ -25,7 +27,11 @@ void	add_content(t_token *token, t_cmd *cmds)
 		(cmds->content)[1] = 0;
 	}
 	else
-		cmds->content = ft_strjoin_1to2(cmds->content, token->word);
+    {
+        i = -1;
+        while (cmds->content[++i])
+        cmds->content = ft_strjoin_1to2(cmds->content, token->word, i);
+    }
 }
 
 void	add_rdir(t_token *token, t_cmd *cmds)
