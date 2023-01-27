@@ -3,16 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+         #
+#    By: him <him@student.42seoul.kr>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/25 12:25:30 by him               #+#    #+#              #
-#    Updated: 2023/01/23 20:38:21 by woohyeong        ###   ########.fr        #
+#    Updated: 2023/01/27 12:04:15 by him              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-#CFLAGS = -Wall -Wextra -Werror
-CFLAGS =
+CFLAGS = -Wall -Werror -Wextra 
 INCLUDES = -I./includes
 #SRCS = $(addprefix ./mandatory/, ${SRCS_FILES})
 SRCS = ${SRCS_FILES}
@@ -50,33 +49,31 @@ OBJS = $(SRCS:.c=.o)
 NAME = minishell
 TOTAL_OBJS = $(OBJS)
 LIBFT = -Llibft -lft
-
-#READLINE_HDR = -I/usr/local/opt/readline/include
-#READLINE_HDR = him's
-READLINE_HDR = -I/goinfre/jiyun/.brew/opt/readline/include
-#READLINE_LIB = -L/usr/local/opt/readline/lib -lreadline
-#READLINE_LIB = him's
-READLINE_LIB = -L/goinfre/jiyun/.brew/opt/readline/lib -lreadline
-
+READLINE_HDR = -I/Users/him/.brew/opt/readline/include
+READLINE_LIB = -L/Users/him/.brew/opt/readline/lib -lreadline
 all : $(NAME)
 
 %.o : %.c
-	$(CC) $(CFLAGS) $(INCLUDES) $(READLINE_HDR) -c -o $@ $^
+	@$(CC) $(CFLAGS) $(INCLUDES) $(READLINE_HDR) -c -o $@ $^
 
 $(NAME) : $(TOTAL_OBJS)
-	make -C ./libft
-	$(CC) $(CFLAGS) $(TOTAL_OBJS) $(INCLUDES) $(READLINE_HDR) $(READLINE_LIB) $(LIBFT) -o ${NAME}
+	@make -C ./libft
+	@$(CC) $(CFLAGS) $(TOTAL_OBJS) $(INCLUDES) $(READLINE_HDR) $(READLINE_LIB) $(LIBFT) -o ${NAME}
+	@echo	"🙋‍♀️🙋‍♂️ make"
 
 clean :
-	make fclean -C ./libft
-	rm -rf $(OBJS)
+	@make fclean -C ./libft
+	@rm -rf $(OBJS)
+	@echo	"🙋‍♀️🙋‍♂️ make clean"
 
 fclean : clean
-	make fclean -C ./libft
-	rm -rf $(NAME)
+	@make fclean -C ./libft
+	@rm -rf $(NAME)
+	@echo	"🙋‍♀️🙋‍♂️ make fclean"
 
 re :
-	make fclean
-	make all
+	@make fclean
+	@make all
+	@echo	"🙋‍♀️🙋‍♂️ make re"
 
-.PHONY : all bonus clean fclean re%
+.PHONY : all bonus clean fclean re

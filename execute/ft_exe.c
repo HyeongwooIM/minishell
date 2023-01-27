@@ -6,7 +6,7 @@
 /*   By: him <him@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:30:00 by woohyeong         #+#    #+#             */
-/*   Updated: 2023/01/26 17:23:49 by him              ###   ########.fr       */
+/*   Updated: 2023/01/26 21:44:14 by him              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,6 @@ char	*yes_path(char *cmd, t_env *env)
 
 char	*find_path(char *cmd, t_env *env, int *is_path)
 {
-	int	i;
-
 	if (*cmd == 0 || cmd == 0)
 		ft_command_error(cmd);
 	*is_path = 0;

@@ -6,7 +6,7 @@
 /*   By: him <him@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 18:32:35 by woohyeong         #+#    #+#             */
-/*   Updated: 2023/01/26 20:14:57 by him              ###   ########.fr       */
+/*   Updated: 2023/01/26 21:44:56 by him              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ int	make_here_doc(t_rdir *rdir)
 {
 	pid_t	pid;
 	int		fd[2];
-	char	*buff;
-	char	*temp;
 	int		status;
 
 	if (pipe(fd) == -1 || !rdir->with)
@@ -86,7 +84,6 @@ int	ft_heredoc(t_cmd *cmd, int *flag)
 
 int	check_heredoc(t_cmd *cmd)
 {
-	int	heredoc_cnt;
 	int	flag;
 
 	flag = 0;

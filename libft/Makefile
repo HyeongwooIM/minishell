@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jiyun <jiyun@student.42seoul.kr>           +#+  +:+       +#+         #
+#    By: him <him@student.42seoul.kr>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/18 20:56:44 by jiyun             #+#    #+#              #
-#    Updated: 2022/04/03 15:21:47 by jiyun            ###   ########.fr        #
+#    Updated: 2023/01/26 21:25:24 by him              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -85,16 +85,16 @@ bonus:
 	make BONUS=1 all
 
 %.o: %.c
-	$(CC) $(CFLAGS) -o $@ -c $^
+	@$(CC) $(CFLAGS) -o $@ -c $^
 
 $(NAME): $(OBJS_FILES)
-	$(AR) $@ $^
+	@$(AR) $@ $^
 
 clean:
-	$(RM) $(OBJS) $(BONUS_OBJS)
+	@$(RM) $(OBJS) $(BONUS_OBJS)
 
 fclean: clean
-	$(RM) $(NAME)
+	@$(RM) $(NAME)
 
 re: fclean all
 

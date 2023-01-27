@@ -6,16 +6,11 @@
 /*   By: him <him@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 14:48:52 by him               #+#    #+#             */
-/*   Updated: 2023/01/26 14:50:40 by him              ###   ########.fr       */
+/*   Updated: 2023/01/26 21:48:53 by him              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	ft_error_return(char *str, int error_no)
-{
-	write(2, str, ft_strlen(str));
-}
 
 void	ft_error_exit(char *str, int error_no)
 {

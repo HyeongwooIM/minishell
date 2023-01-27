@@ -6,11 +6,22 @@
 /*   By: him <him@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 18:06:20 by woohyeong         #+#    #+#             */
-/*   Updated: 2023/01/26 20:20:10 by him              ###   ########.fr       */
+/*   Updated: 2023/01/27 10:35:01 by him              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// void child_signal_handler(int signo)
+// {
+// 	if (signo)// == SIGQUIT)
+// 	{
+// 		ft_putstr_fd("Quit: 3\n", 2);
+// 		exit (255);
+// 	}
+// 	ft_putstr_fd("Quit: 3\n", 2);
+// 	exit(199);
+// }
 
 static void	child_signal(void)
 {
@@ -26,8 +37,18 @@ void	wait_child(int pipe_cnt)
 	i = -1;
 	while (++i <= pipe_cnt)
 		wait(&status);
-	status = status >> 8;
-	g_info.last_exit_num = status;
+	if (status == 2)
+	{
+		printf("\n");
+		g_info.last_exit_num = status + 128;
+	}
+	else if (status == 3)
+	{
+		printf("Quit: %d\n", status);
+		g_info.last_exit_num = status + 128;
+	}
+	else
+		g_info.last_exit_num = status >> 8;
 }
 
 void	child_pro(int pipes[2][2], int pipe_cnt, int i, t_cmd *cmd)

@@ -6,8 +6,10 @@
 
 void	heredoc_sigint_handler(int signo)
 {
+	if (signo == SIGINT)
+		exit (1);
 	ft_putendl_fd("", STDOUT_FILENO);
-	exit(1);
+	exit(0);
 }
 
 void	signal_handler(int signo)

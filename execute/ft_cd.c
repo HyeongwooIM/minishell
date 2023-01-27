@@ -6,7 +6,7 @@
 /*   By: him <him@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:55:18 by woohyeong         #+#    #+#             */
-/*   Updated: 2023/01/26 20:43:49 by him              ###   ########.fr       */
+/*   Updated: 2023/01/26 21:29:48 by him              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	edit_pwd(char	*cwd)
 {
-	char	*cwd_temp;
 	t_env	*env_pwd;
 	t_env	*env_oldpwd;
 
@@ -34,7 +33,6 @@ void	edit_pwd(char	*cwd)
 void	ft_cd(t_cmd	*cmd)
 {
 	char	get_cwd[PATH_MAX];
-	char	*cd_path;
 	char	*path;
 
 	if (!cmd)
