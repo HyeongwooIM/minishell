@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   replace.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/27 14:06:15 by woohyeong         #+#    #+#             */
+/*   Updated: 2023/01/27 14:07:22 by woohyeong        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 char	*get_word(char *key)
@@ -42,7 +54,7 @@ int	replace_n_join(int env_size, char *word, char **s, char **tmp)
 	char	*key;
 
 	key = ft_substr((*s), 1, env_size - 1);
-	if(!key)
+	if (!key)
 		ft_error_exit("malloc error", 1);
 	word = get_word(key);
 	(*tmp) = ft_strjoin_1to1((*tmp), word);
