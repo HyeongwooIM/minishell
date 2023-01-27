@@ -6,7 +6,7 @@
 /*   By: him <him@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 14:06:15 by him               #+#    #+#             */
-/*   Updated: 2023/01/27 17:58:21 by him              ###   ########.fr       */
+/*   Updated: 2023/01/27 18:57:24 by him              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,7 @@ char	*get_word(char *key)
 	char	*ret;
 
 	if (!key || !*key)
-	{
-		free(key);
 		return (0);
-	}
 	if (*key == '?')
 	{
 		ret = ft_itoa(g_info.last_exit_num);
@@ -52,12 +49,15 @@ int	get_env_size(const char *s)
 int	replace_n_join(int env_size, char *word, char **s, char **tmp)
 {
 	char	*key;
+	char	*res_tmp;
 
 	key = ft_substr((*s), 1, env_size - 1);
 	if (!key)
 		ft_error_exit("malloc error", 1);
 	word = get_word(key);
+	res_tmp = *tmp;
 	(*tmp) = ft_strjoin_1to1((*tmp), word);
+	free(res_tmp);
 	free(word);
 	free(key);
 	return (env_size - 1);
