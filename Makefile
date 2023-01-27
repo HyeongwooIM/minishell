@@ -6,15 +6,15 @@
 #    By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/25 12:25:30 by him               #+#    #+#              #
-#    Updated: 2023/01/27 13:47:39 by woohyeong        ###   ########.fr        #
+#    Updated: 2023/01/27 13:58:29 by woohyeong        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 CFLAGS = -Wall -Werror -Wextra 
 INCLUDES = -I./includes
-#SRCS = $(addprefix ./mandatory/, ${SRCS_FILES})
-SRCS = ${SRCS_FILES}
+SRCS = $(addprefix ./src/, ${SRCS_FILES})
+# SRCS = ${SRCS_FILES}
 SRCS_FILES = parse/parse.c \
             parse/chunks.c \
             parse/replace.c \
@@ -49,15 +49,15 @@ OBJS = $(SRCS:.c=.o)
 NAME = minishell
 TOTAL_OBJS = $(OBJS)
 LIBFT = -Llibft -lft
-READLINE_HDR = -I/Users/him/.brew/opt/readline/include
-READLINE_LIB = -L/Users/him/.brew/opt/readline/lib -lreadline
+READLINE_HDR = -I/opt/homebrew/opt/readline/include
+READLINE_LIB = -L/opt/homebrew/opt/readline/lib -lreadline
 all : $(NAME)
 
 %.o : %.c
 	@$(CC) $(CFLAGS) $(INCLUDES) $(READLINE_HDR) -c -o $@ $^
 
 $(NAME) : $(TOTAL_OBJS)
-	@make -C ./libft
+	@make -C ../libft
 	@$(CC) $(CFLAGS) $(TOTAL_OBJS) $(INCLUDES) $(READLINE_HDR) $(READLINE_LIB) $(LIBFT) -o ${NAME}
 	@echo	"🙋‍♀️🙋‍♂️ make"
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: him <him@student.42seoul.kr>               +#+  +:+       +#+        */
+/*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 22:06:06 by him               #+#    #+#             */
-/*   Updated: 2023/01/26 22:15:28 by him              ###   ########.fr       */
+/*   Updated: 2023/01/27 13:56:45 by woohyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,9 @@ int	get_size(t_env *envs)
 char	**lst_to_arr(t_env *envs)
 {
 	char	**arr;
-	t_env	*tmp;
 	int		size;
 	int		i;
 
-	tmp = envs;
 	size = get_size(envs);
 	arr = malloc(sizeof(char *) * size + 1);
 	if (!arr)
