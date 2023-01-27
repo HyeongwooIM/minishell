@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   replace.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jiyun <jiyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/27 16:12:46 by jiyun             #+#    #+#             */
+/*   Updated: 2023/01/27 16:12:52 by jiyun            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "minishell.h"
 
 char	*get_word(char *key)
@@ -42,7 +53,7 @@ int	replace_n_join(int env_size, char *word, char **s, char **tmp)
 	char	*key;
 
 	key = ft_substr((*s), 1, env_size - 1);
-	if(!key)
+	if (!key)
 		ft_error_exit("malloc error", 1);
 	word = get_word(key);
 	(*tmp) = ft_strjoin_1to1((*tmp), word);
@@ -88,10 +99,10 @@ void	replace_chunk(t_parse *info)
 	cur = info->chunks;
 	while (cur && cur->word && *cur->word)
 	{
-		word = NULL;
 		if (cur->type == CHAR)
 		{
 			word = change_word(cur->word);
+			free(cur->word);
 			if (word == NULL)
 				cur->word = ft_strdup("");
 			else
