@@ -6,7 +6,7 @@
 /*   By: him <him@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 19:27:09 by him               #+#    #+#             */
-/*   Updated: 2023/01/26 20:22:27 by him              ###   ########.fr       */
+/*   Updated: 2023/01/26 21:08:42 by him              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	ft_unset(t_cmd *cmd)
 	char	**str;
 
 	str = cmd->content;
-	while (*str)
+	while (*str && g_info.env_lst)
 	{
 		env_temp = g_info.env_lst;
 		if (env_temp && ft_strcmp(env_temp->key, *cmd->content) == 0)

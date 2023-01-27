@@ -6,7 +6,7 @@
 /*   By: him <him@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 18:02:18 by woohyeong         #+#    #+#             */
-/*   Updated: 2023/01/26 20:47:08 by him              ###   ########.fr       */
+/*   Updated: 2023/01/27 09:15:24 by him              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ft_exit(t_cmd	*cmd)
 	len = 0;
 	if (!str)
 		exit (0);
-	if (str[1] != 0 && str[2] != 0)
+	if (str[0] != 0 && str[1] != 0)
 	{
 		ft_putstr_fd("exit : too many arguments\n", 1);
 		g_info.last_exit_num = 1;

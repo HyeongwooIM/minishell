@@ -6,23 +6,11 @@
 /*   By: him <him@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:54:05 by woohyeong         #+#    #+#             */
-/*   Updated: 2023/01/26 20:15:40 by him              ###   ########.fr       */
+/*   Updated: 2023/01/26 22:20:02 by him              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// void	wait_child(int pipe_cnt)
-// {
-// 	int	i;
-// 	int	status;
-
-// 	i = -1;
-// 	while (++i <= pipe_cnt)
-// 		wait(&status);
-// 	status = status >> 8;
-// 	g_info.last_exit_num = status;
-// }
 
 void	single_command(t_cmd	*cmd)
 {
@@ -61,7 +49,6 @@ int	pipe_count(t_cmd	*cmd)
 void	execute(t_cmd	*cmd)
 {
 	int		pipe_cnt;
-	t_env	*env;
 
 	if (!cmd)
 		return ;
