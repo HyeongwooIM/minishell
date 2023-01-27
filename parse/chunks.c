@@ -60,7 +60,7 @@ t_token	*make_raw_chunk_lst(char *input)
 		size = get_chunk_size(input);
 		word = ft_substr(input, 0, size);
 		if (!word)
-			ft_error_exit("malloc error\n", 1);
+			ft_error_exit("malloc error", 1);
 		add_token_node(NONE, word, &lst);
 		free(word);
 		input += size;
