@@ -12,8 +12,6 @@
 
 #include "minishell.h"
 
-t_info	g_info;
-
 int	quote_closed(char *s)
 {
 	while (*s)

@@ -100,10 +100,10 @@ void	replace_chunk(t_parse *info)
 	cur = info->chunks;
 	while (cur && cur->word && *cur->word)
 	{
-		word = NULL;
 		if (cur->type == CHAR)
 		{
 			word = change_word(cur->word);
+			free(cur->word);
 			if (word == NULL)
 				cur->word = ft_strdup("");
 			else
