@@ -3,18 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+         #
+#    By: him <him@student.42seoul.kr>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/25 12:25:30 by him               #+#    #+#              #
-#    Updated: 2023/01/27 14:09:08 by woohyeong        ###   ########.fr        #
+#    Updated: 2023/01/27 16:53:17 by him              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra 
+CFLAGS = -Wall -Werror -Wextra #-g3 -fsanitize=address 
 INCLUDES = -I./includes
-SRCS = $(addprefix ./src/, ${SRCS_FILES})
-# SRCS = ${SRCS_FILES}
+# SRCS = $(addprefix ./src/, ${SRCS_FILES})
+SRCS = ${SRCS_FILES}
 SRCS_FILES = parse/parse.c \
             parse/chunks.c \
             parse/replace.c \
@@ -49,8 +49,8 @@ OBJS = $(SRCS:.c=.o)
 NAME = minishell
 TOTAL_OBJS = $(OBJS)
 LIBFT = -Llibft -lft
-READLINE_HDR = -I/opt/homebrew/opt/readline/include
-READLINE_LIB = -L/opt/homebrew/opt/readline/lib -lreadline
+READLINE_HDR = -I/Users/him/.brew/opt/readline/include
+READLINE_LIB = -L/Users/him/.brew/opt/readline/lib -lreadline
 all : $(NAME)
 
 %.o : %.c
