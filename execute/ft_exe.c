@@ -6,7 +6,7 @@
 /*   By: him <him@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:30:00 by woohyeong         #+#    #+#             */
-/*   Updated: 2023/01/26 21:44:14 by him              ###   ########.fr       */
+/*   Updated: 2023/01/27 12:16:52 by him              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ char	*ft_make_path(char *paths, char *cmd)
 
 	part_path = ft_strjoin(paths, "/");
 	if (!part_path)
-		ft_error_exit("2-malloc error", 1);
+		ft_error_exit("malloc error", 1);
 	res = ft_strjoin(part_path, cmd);
 	if (!res)
-		ft_error_exit("3-malloc error", 1);
+		ft_error_exit("malloc error", 1);
 	free(part_path);
 	return (res);
 }

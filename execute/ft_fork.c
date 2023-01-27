@@ -6,22 +6,11 @@
 /*   By: him <him@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 18:06:20 by woohyeong         #+#    #+#             */
-/*   Updated: 2023/01/27 10:35:01 by him              ###   ########.fr       */
+/*   Updated: 2023/01/27 12:22:50 by him              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// void child_signal_handler(int signo)
-// {
-// 	if (signo)// == SIGQUIT)
-// 	{
-// 		ft_putstr_fd("Quit: 3\n", 2);
-// 		exit (255);
-// 	}
-// 	ft_putstr_fd("Quit: 3\n", 2);
-// 	exit(199);
-// }
 
 static void	child_signal(void)
 {
