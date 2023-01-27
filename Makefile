@@ -6,15 +6,14 @@
 #    By: him <him@student.42seoul.kr>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/25 12:25:30 by him               #+#    #+#              #
-#    Updated: 2023/01/27 16:53:17 by him              ###   ########.fr        #
+#    Updated: 2023/01/27 17:39:34 by him              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra #-g3 -fsanitize=address 
+CFLAGS = -Wall -Werror -Wextra
 INCLUDES = -I./includes
-# SRCS = $(addprefix ./src/, ${SRCS_FILES})
-SRCS = ${SRCS_FILES}
+SRCS = $(addprefix ./src/, ${SRCS_FILES})
 SRCS_FILES = parse/parse.c \
             parse/chunks.c \
             parse/replace.c \

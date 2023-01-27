@@ -6,7 +6,7 @@
 /*   By: him <him@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 18:38:50 by woohyeong         #+#    #+#             */
-/*   Updated: 2023/01/26 18:22:42 by him              ###   ########.fr       */
+/*   Updated: 2023/01/27 17:35:37 by him              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	ft_rdir(t_rdir *rdir)
 
 	in_fd = 0;
 	out_fd = 1;
+	error_flag = 0;
 	while (rdir)
 	{
 		if (rdir->type == RDIR || rdir->type == D_RDIR)
