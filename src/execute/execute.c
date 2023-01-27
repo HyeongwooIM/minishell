@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: him <him@student.42seoul.kr>               +#+  +:+       +#+        */
+/*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:54:05 by woohyeong         #+#    #+#             */
-/*   Updated: 2023/01/26 22:20:02 by him              ###   ########.fr       */
+/*   Updated: 2023/01/27 13:55:25 by woohyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ void	single_command(t_cmd	*cmd)
 {
 	int	p_in;
 	int	p_out;
-	int	flag;
 
-	flag = 0;
 	p_in = dup(STDIN_FILENO);
 	p_out = dup(STDOUT_FILENO);
 	if (check_builtin(cmd->name) && !cmd->next)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: him <him@student.42seoul.kr>               +#+  +:+       +#+        */
+/*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 18:02:18 by woohyeong         #+#    #+#             */
-/*   Updated: 2023/01/27 09:15:24 by him              ###   ########.fr       */
+/*   Updated: 2023/01/27 13:55:58 by woohyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,9 @@ int	check_content(char	*str)
 void	ft_exit(t_cmd	*cmd)
 {
 	int				exit_num;
-	unsigned int	len;
 	char			**str;
 
 	str = cmd->content;
-	len = 0;
 	if (!str)
 		exit (0);
 	if (str[0] != 0 && str[1] != 0)
