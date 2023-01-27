@@ -6,7 +6,7 @@
 #    By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/25 12:25:30 by him               #+#    #+#              #
-#    Updated: 2023/01/27 13:58:29 by woohyeong        ###   ########.fr        #
+#    Updated: 2023/01/27 14:09:08 by woohyeong        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,7 @@ all : $(NAME)
 	@$(CC) $(CFLAGS) $(INCLUDES) $(READLINE_HDR) -c -o $@ $^
 
 $(NAME) : $(TOTAL_OBJS)
-	@make -C ../libft
+	@make -C ./libft
 	@$(CC) $(CFLAGS) $(TOTAL_OBJS) $(INCLUDES) $(READLINE_HDR) $(READLINE_LIB) $(LIBFT) -o ${NAME}
 	@echo	"🙋‍♀️🙋‍♂️ make"
 
