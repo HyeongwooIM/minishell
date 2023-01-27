@@ -6,7 +6,7 @@
 /*   By: him <him@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 18:03:27 by woohyeong         #+#    #+#             */
-/*   Updated: 2023/01/26 21:09:18 by him              ###   ########.fr       */
+/*   Updated: 2023/01/27 16:39:55 by him              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	ft_export(char **str)
 		if (name_check(env_arr[0]))
 		{
 			temp = find_env_add(env_arr[0]);
-			if (env_arr[1])
+			if (env_arr[1] != 0)
 			{
 				free(temp->value);
 				temp->value = ft_strdup(env_arr[1]);

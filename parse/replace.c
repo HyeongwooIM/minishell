@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   replace.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiyun <jiyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/27 16:12:46 by jiyun             #+#    #+#             */
-/*   Updated: 2023/01/27 16:12:52 by jiyun            ###   ########.fr       */
+/*   Created: 2023/01/27 14:06:15 by woohyeong         #+#    #+#             */
+/*   Updated: 2023/01/27 14:07:22 by woohyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 char	*get_word(char *key)

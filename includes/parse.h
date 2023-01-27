@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiyun <jiyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/27 16:15:40 by jiyun             #+#    #+#             */
-/*   Updated: 2023/01/27 16:15:43 by jiyun            ###   ########.fr       */
+/*   Created: 2023/01/27 14:08:03 by woohyeong         #+#    #+#             */
+/*   Updated: 2023/01/27 14:08:04 by woohyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #ifndef PARSE_H
 # define PARSE_H
 

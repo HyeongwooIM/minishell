@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiyun <jiyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/27 16:15:30 by jiyun             #+#    #+#             */
-/*   Updated: 2023/01/27 16:15:33 by jiyun            ###   ########.fr       */
+/*   Created: 2023/01/27 14:07:53 by woohyeong         #+#    #+#             */
+/*   Updated: 2023/01/27 14:07:54 by woohyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 

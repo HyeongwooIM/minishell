@@ -6,7 +6,7 @@
 /*   By: him <him@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 22:06:06 by him               #+#    #+#             */
-/*   Updated: 2023/01/26 22:15:28 by him              ###   ########.fr       */
+/*   Updated: 2023/01/27 16:33:24 by him              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ char	*join_three(char *start, char *end, char *middle)
 	return (ret);
 }
 
-int	get_size(t_env *envs)
+size_t	get_size(t_env *envs)
 {
-	int	size;
+	size_t	size;
 
 	size = 0;
 	while (envs != NULL)
@@ -76,16 +76,15 @@ int	get_size(t_env *envs)
 
 char	**lst_to_arr(t_env *envs)
 {
-	char	**arr;
-	t_env	*tmp;
-	int		size;
-	int		i;
+	char		**arr;
+	size_t		size;
+	size_t		i;
 
-	tmp = envs;
 	size = get_size(envs);
-	arr = malloc(sizeof(char *) * size + 1);
+	arr = malloc(sizeof(char *) * (size + 1));
 	if (!arr)
 		ft_error_exit("malloc error", 1);
+	arr[size] = 0;
 	i = 0;
 	while (i < size && envs != NULL)
 	{
@@ -93,6 +92,6 @@ char	**lst_to_arr(t_env *envs)
 		envs = envs->next;
 		i++;
 	}
-	arr[i] = 0;
+
 	return (arr);
 }

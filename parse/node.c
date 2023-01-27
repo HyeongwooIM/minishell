@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   node.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiyun <jiyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/27 16:10:25 by jiyun             #+#    #+#             */
-/*   Updated: 2023/01/27 16:11:20 by jiyun            ###   ########.fr       */
+/*   Created: 2023/01/27 14:05:30 by woohyeong         #+#    #+#             */
+/*   Updated: 2023/01/27 14:05:33 by woohyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 t_token	*new_token(int type, char *word)

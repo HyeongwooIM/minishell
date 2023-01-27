@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiyun <jiyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/27 16:13:16 by jiyun             #+#    #+#             */
-/*   Updated: 2023/01/27 16:13:22 by jiyun            ###   ########.fr       */
+/*   Created: 2023/01/27 14:05:42 by woohyeong         #+#    #+#             */
+/*   Updated: 2023/01/27 14:05:43 by woohyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 int	is_syntax_error(t_token *tokens)

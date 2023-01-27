@@ -6,7 +6,7 @@
 /*   By: him <him@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 18:32:35 by woohyeong         #+#    #+#             */
-/*   Updated: 2023/01/26 21:44:56 by him              ###   ########.fr       */
+/*   Updated: 2023/01/27 13:05:22 by him              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	make_here_doc(t_rdir *rdir)
 	int		status;
 
 	if (pipe(fd) == -1 || !rdir->with)
-		ft_error_exit("create pipe faile", 1);
+		ft_error_exit("pipe error", 1);
 	ignore_signal();
 	pid = fork();
 	if (pid == -1)

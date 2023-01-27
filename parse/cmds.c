@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   cmds.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiyun <jiyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/27 16:10:20 by jiyun             #+#    #+#             */
-/*   Updated: 2023/01/27 16:11:10 by jiyun            ###   ########.fr       */
+/*   Created: 2023/01/27 14:05:14 by woohyeong         #+#    #+#             */
+/*   Updated: 2023/01/27 14:05:20 by woohyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 void	add_name(t_token *token, t_cmd *cmds)
@@ -29,7 +30,7 @@ void	add_content(t_token *token, t_cmd *cmds)
 	{
 		cmds->content = malloc(sizeof(char *) * 2);
 		if (!cmds->content)
-			ft_error_exit("malloc error\n", 1);
+			ft_error_exit("malloc error", 1);
 		(cmds->content)[0] = ft_strdup(token->word);
 		(cmds->content)[1] = 0;
 	}

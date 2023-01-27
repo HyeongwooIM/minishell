@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   chunks.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiyun <jiyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/27 16:09:58 by jiyun             #+#    #+#             */
-/*   Updated: 2023/01/27 16:10:05 by jiyun            ###   ########.fr       */
+/*   Created: 2023/01/27 14:06:27 by woohyeong         #+#    #+#             */
+/*   Updated: 2023/01/27 14:06:28 by woohyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 int	get_sign_size(const char *sign)
@@ -71,7 +72,7 @@ t_token	*make_raw_chunk_lst(char *input)
 		size = get_chunk_size(input);
 		word = ft_substr(input, 0, size);
 		if (!word)
-			ft_error_exit("malloc error\n", 1);
+			ft_error_exit("malloc error", 1);
 		add_token_node(NONE, word, &lst);
 		free(word);
 		input += size;

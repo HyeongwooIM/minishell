@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiyun <jiyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/27 16:10:56 by jiyun             #+#    #+#             */
-/*   Updated: 2023/01/27 16:11:04 by jiyun            ###   ########.fr       */
+/*   Created: 2023/01/27 14:05:55 by woohyeong         #+#    #+#             */
+/*   Updated: 2023/01/27 14:05:56 by woohyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 char	get_delim(char *str)

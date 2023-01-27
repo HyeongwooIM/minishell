@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiyun <jiyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/27 16:13:35 by jiyun             #+#    #+#             */
-/*   Updated: 2023/01/27 16:13:41 by jiyun            ###   ########.fr       */
+/*   Created: 2023/01/27 14:06:08 by woohyeong         #+#    #+#             */
+/*   Updated: 2023/01/27 14:06:09 by woohyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 int	is_space(char c)

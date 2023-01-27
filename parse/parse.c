@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiyun <jiyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/27 16:12:20 by jiyun             #+#    #+#             */
-/*   Updated: 2023/01/27 16:12:33 by jiyun            ###   ########.fr       */
+/*   Created: 2023/01/27 14:06:20 by woohyeong         #+#    #+#             */
+/*   Updated: 2023/01/27 14:06:21 by woohyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 int	quote_closed(char *s)

@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiyun <jiyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/27 16:13:44 by jiyun             #+#    #+#             */
-/*   Updated: 2023/01/27 16:13:48 by jiyun            ###   ########.fr       */
+/*   Created: 2023/01/27 14:06:02 by woohyeong         #+#    #+#             */
+/*   Updated: 2023/01/27 14:06:03 by woohyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 void	free_token_lst(t_token *lst)
