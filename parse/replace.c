@@ -29,11 +29,6 @@ int	get_env_size(const char *s)
 		return (i + 1);
 	while (s[i] != '\0')
 	{
-		if (s[i] == '?')
-		{
-			i++;
-			break ;
-		}
 		if (!ft_isalnum_underbar(s[i]) || s[i] == '\"' || \
 		s[i] == '$' || is_space(s[i]))
 			break ;
