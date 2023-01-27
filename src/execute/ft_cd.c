@@ -6,7 +6,7 @@
 /*   By: him <him@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:55:18 by woohyeong         #+#    #+#             */
-/*   Updated: 2023/01/26 21:29:48 by him              ###   ########.fr       */
+/*   Updated: 2023/01/27 17:46:08 by him              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ft_cd(t_cmd	*cmd)
 	path = *cmd->content;
 	if (chdir(path) || !getcwd(get_cwd, PATH_MAX))
 	{
-		ft_putstr_fd("fail diretory charnge\n", 2);
+		ft_putstr_fd("fail diretory change\n", 2);
 		g_info.last_exit_num = 1;
 		return ;
 	}
