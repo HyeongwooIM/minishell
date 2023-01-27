@@ -22,7 +22,7 @@ void	add_content(t_token *token, t_cmd *cmds)
 	{
 		cmds->content = malloc(sizeof(char *) * 2);
 		if (!cmds->content)
-			ft_error_exit("malloc error", 1);
+			ft_error_exit("malloc error\n", 1);
 		(cmds->content)[0] = ft_strdup(token->word);
 		(cmds->content)[1] = 0;
 	}
