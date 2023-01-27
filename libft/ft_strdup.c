@@ -15,6 +15,7 @@
 static void	ft_error_exit(char *str, int error_no)
 {
 	write(2, str, ft_strlen(str));
+	write(2, "\n", 1);
 	exit(error_no);
 }
 

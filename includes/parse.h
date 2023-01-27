@@ -49,7 +49,7 @@ int		ft_isalnum_underbar(int c);
 int		is_env(char c);
 
 /* chunks.c */
-int		make_chunk_lst(t_parse *info);
+void	make_chunk_lst(t_parse *info);
 
 /* replace.c */
 void	replace_chunk(t_parse *info);
