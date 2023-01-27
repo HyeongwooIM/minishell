@@ -4,7 +4,7 @@ char	*get_word(char *key)
 {
 	char	*ret;
 
-	if (!*key)
+	if (!key || !*key)
 	{
 		free(key);
 		return (0);
@@ -25,15 +25,10 @@ int	get_env_size(const char *s)
 	int	i;
 
 	i = 1;
-	if (ft_isdigit(s[i]))
+	if (ft_isdigit(s[i]) || s[i] == '?')
 		return (i + 1);
 	while (s[i] != '\0')
 	{
-		if (s[i] == '?')
-		{
-			i++;
-			break ;
-		}
 		if (!ft_isalnum_underbar(s[i]) || s[i] == '\"' || \
 		s[i] == '$' || is_space(s[i]))
 			break ;
@@ -44,9 +39,15 @@ int	get_env_size(const char *s)
 
 int	replace_n_join(int env_size, char *word, char **s, char **tmp)
 {
-	word = get_word(ft_substr((*s), 1, env_size - 1));
+	char	*key;
+
+	key = ft_substr((*s), 1, env_size - 1);
+	if(!key)
+		ft_error_exit("malloc error", 1);
+	word = get_word(key);
 	(*tmp) = ft_strjoin_1to1((*tmp), word);
 	free(word);
+	free(key);
 	return (env_size - 1);
 }
 

@@ -1,6 +1,3 @@
-//
-// Created by jiyun on 2023/01/17.
-//
 #include "minishell.h"
 
 int	get_sign_size(const char *sign)
@@ -83,7 +80,7 @@ int	get_chunk_type(char c)
 		return (CHAR);
 }
 
-int	make_chunk_lst(t_parse *info)
+void	make_chunk_lst(t_parse *info)
 {
 	t_token	*raw;
 	t_token	*tmp;
@@ -101,5 +98,4 @@ int	make_chunk_lst(t_parse *info)
 		tmp = tmp->next;
 	}
 	free_token_lst(raw);
-	return (0);
 }
