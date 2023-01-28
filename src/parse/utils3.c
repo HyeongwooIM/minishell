@@ -25,6 +25,18 @@ char	get_delim(char *str)
 	return (0);
 }
 
+int	is_special_sign(char c)
+{
+	if ((35 <= c && c <= 38) || \
+	(40 <= c && c <= 47) || \
+	(91 <= c && c <= 94))
+		return (1);
+	if (c == 33 || c == 58 || c == 59 || c == 61 || \
+	c == 64 || c == 123 || c == 125 || c == 126)
+		return (1);
+	return (0);
+}
+
 int	is_env(char c)
 {
 	if (c == '\0')
@@ -34,6 +46,8 @@ int	is_env(char c)
 	if (c == '$')
 		return (0);
 	if (c == '\"')
+		return (0);
+	if (is_special_sign(c))
 		return (0);
 	return (1);
 }

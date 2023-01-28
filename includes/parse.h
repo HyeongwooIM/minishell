@@ -44,9 +44,6 @@ void	add_token_node(int type, char *word, t_token **tokens);
 void	add_rdir_node(int type, char *with, t_rdir *rdir);
 
 /* utils2.c */
-void	free_token_lst(t_token *lst);
-void	free_rdir_lst(t_rdir *lst);
-void	free_arr2(char **ret);
 char	*ft_strjoin_1to1(char *s1, char *s2);
 char	**ft_strjoin_1to2(char **dest, char *src, int size);
 
@@ -55,6 +52,11 @@ char	get_delim(char *str);
 char	*env_value(char *str);
 int		ft_isalnum_underbar(int c);
 int		is_env(char c);
+
+/* free.c */
+void	free_token_lst(t_token *lst);
+void	free_rdir_lst(t_rdir *lst);
+void	free_arr2(char **ret);
 
 /* chunks.c */
 void	make_chunk_lst(t_parse *info);

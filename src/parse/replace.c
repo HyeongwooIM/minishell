@@ -49,15 +49,12 @@ int	get_env_size(const char *s)
 int	replace_n_join(int env_size, char *word, char **s, char **tmp)
 {
 	char	*key;
-	char	*res_tmp;
 
 	key = ft_substr((*s), 1, env_size - 1);
 	if (!key)
 		ft_error_exit("malloc error", 1);
 	word = get_word(key);
-	res_tmp = *tmp;
 	(*tmp) = ft_strjoin_1to1((*tmp), word);
-	free(res_tmp);
 	free(word);
 	free(key);
 	return (env_size - 1);

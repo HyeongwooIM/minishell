@@ -12,49 +12,17 @@
 
 #include "minishell.h"
 
-void	free_token_lst(t_token *lst)
+char	*deal_special_case(char *s1, char *s2)
 {
-	t_token	*tmp;
+	char	*tmp;
 
-	if (!lst)
-		return ;
-	while (lst)
-	{
-		tmp = lst->next;
-		free(lst->word);
-		free(lst);
-		lst = tmp;
-	}
-}
-
-void	free_rdir_lst(t_rdir *lst)
-{
-	t_rdir	*tmp;
-
-	if (!lst)
-		return ;
-	while (lst)
-	{
-		tmp = lst->next;
-		free(lst->with);
-		free(lst);
-		lst = tmp;
-	}
-}
-
-void	free_arr2(char **ret)
-{
-	size_t	i;
-
-	i = 0;
-	if (!ret)
-		return ;
-	while (ret[i] != 0)
-	{
-		free(ret[i]);
-		i++;
-	}
-	free(ret);
+	tmp = NULL;
+	if (!s1)
+		tmp = ft_strdup(s2);
+	else if (!s2)
+		tmp = ft_strdup(s1);
+	free(s1);
+	return (tmp);
 }
 
 char	*ft_strjoin_1to1(char *s1, char *s2)
@@ -63,12 +31,8 @@ char	*ft_strjoin_1to1(char *s1, char *s2)
 	size_t	s2_len;
 	char	*new;
 
-	if (!s1 && !s2)
-		return (0);
-	if (!s1)
-		return (ft_strdup(s2));
-	if (!s2)
-		return (ft_strdup(s1));
+	if ((!s1 && !s2) || !s1 || !s2)
+		return (deal_special_case(s1, s2));
 	s1_len = ft_strlen(s1);
 	s2_len = ft_strlen(s2);
 	if (!s1_len && !s2_len)
