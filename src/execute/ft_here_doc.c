@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_here_doc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: him <him@student.42seoul.kr>               +#+  +:+       +#+        */
+/*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 18:32:35 by him               #+#    #+#             */
-/*   Updated: 2023/01/27 17:57:11 by him              ###   ########.fr       */
+/*   Updated: 2023/01/28 23:33:42 by woohyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 void	read_doc(int *fd, char *with)
 {
 	char	*buff;
+	int		len;
 
+	len = 0;
 	close(fd[0]);
 	signal(SIGINT, heredoc_sigint_handler);
 	while (1)
@@ -25,6 +27,15 @@ void	read_doc(int *fd, char *with)
 		{
 			write(fd[1], "\0", 1);
 			break ;
+		}
+		len += ft_strlen(buff);
+		printf("%d\n", len);
+		if (len > 3)
+		{
+			ft_putstr_fd("heredoc> Too many characters in the document.", 2);
+			free(buff);
+			close(fd[1]);
+			exit(1);
 		}
 		write(fd[1], buff, ft_strlen(buff));
 		write(fd[1], "\n", 1);
@@ -39,6 +50,8 @@ int	stop_here_doc(int fd, t_rdir *rdir)
 {
 	rdir->here_doc_fd = 0;
 	close(fd);
+	write(2, "\n", 1);
+	g_info.last_exit_num = 1;
 	return (1);
 }
 
