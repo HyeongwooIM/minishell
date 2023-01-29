@@ -6,7 +6,7 @@
 /*   By: him <him@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 18:32:35 by him               #+#    #+#             */
-/*   Updated: 2023/01/29 15:30:10 by him              ###   ########.fr       */
+/*   Updated: 2023/01/29 15:49:26 by him              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	doc_util(int num, char *buff, int fd)
 	else if (num == 1)
 	{	
 		free(buff);
-		close(fd[1]);
+		close(fd);
 		exit(0);
 	}
 }
