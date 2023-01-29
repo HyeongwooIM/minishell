@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   ft_here_doc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
+/*   By: him <him@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 18:32:35 by him               #+#    #+#             */
-/*   Updated: 2023/01/28 23:33:42 by woohyeong        ###   ########.fr       */
+/*   Updated: 2023/01/29 15:49:26 by him              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	doc_util(int num, char *buff, int fd)
+{
+	if (num == 0)
+	{
+		free(buff);
+		close(fd);
+		exit(1);
+	}
+	else if (num == 1)
+	{	
+		free(buff);
+		close(fd);
+		exit(0);
+	}
+}
 
 void	read_doc(int *fd, char *with)
 {
@@ -29,21 +45,16 @@ void	read_doc(int *fd, char *with)
 			break ;
 		}
 		len += ft_strlen(buff);
-		printf("%d\n", len);
 		if (len > 3)
 		{
 			ft_putstr_fd("heredoc> Too many characters in the document.", 2);
-			free(buff);
-			close(fd[1]);
-			exit(1);
+			doc_util(0, buff, fd[1]);
 		}
 		write(fd[1], buff, ft_strlen(buff));
 		write(fd[1], "\n", 1);
 		free(buff);
 	}
-	free(buff);
-	close(fd[1]);
-	exit(0);
+	doc_util(1, buff, fd[1]);
 }
 
 int	stop_here_doc(int fd, t_rdir *rdir)
