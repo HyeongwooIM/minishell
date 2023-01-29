@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: woohyeong <woohyeong@student.42.fr>        +#+  +:+       +#+        */
+/*   By: him <him@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:59:35 by him               #+#    #+#             */
-/*   Updated: 2023/01/28 22:30:53 by woohyeong        ###   ########.fr       */
+/*   Updated: 2023/01/29 15:25:52 by him              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_echo(t_cmd	*cmd)
 		{
 			if (check_n(*str) && n == 1)
 				str++;
-			else 
+			else
 			{
 				n++;
 				ft_putstr_fd(*str, 1);
