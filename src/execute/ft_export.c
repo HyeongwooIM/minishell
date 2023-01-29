@@ -6,7 +6,7 @@
 /*   By: him <him@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 18:03:27 by him               #+#    #+#             */
-/*   Updated: 2023/01/27 17:56:57 by him              ###   ########.fr       */
+/*   Updated: 2023/01/29 16:15:24 by him              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	name_check(char *str)
 		}
 		str++;
 	}
+	g_info.last_exit_num = 0;
 	return (1);
 }
 
@@ -115,5 +116,4 @@ void	ft_export(char **str)
 		}
 		free_env_arr(env_arr);
 	}
-	g_info.last_exit_num = 0;
 }

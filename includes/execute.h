@@ -6,7 +6,7 @@
 /*   By: him <him@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 22:15:54 by him               #+#    #+#             */
-/*   Updated: 2023/01/27 12:01:31 by him              ###   ########.fr       */
+/*   Updated: 2023/01/29 16:22:49 by him              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,8 @@ void	ft_exe(t_cmd *cmd, t_env *env);
 // signal.c
 void	ignore_signal(void);
 void	heredoc_sigint_handler(int signo);
+
+// here_util.c
+void	doc_util(int num, char *buff, int fd);
 
 #endif

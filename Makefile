@@ -6,7 +6,7 @@
 #    By: him <him@student.42seoul.kr>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/25 12:25:30 by him               #+#    #+#              #
-#    Updated: 2023/01/27 17:39:34 by him              ###   ########.fr        #
+#    Updated: 2023/01/29 16:23:08 by him              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ SRCS_FILES = parse/parse.c \
             execute/ft_unset.c \
             execute/ft_rdir.c \
             execute/ft_pwd.c \
+			execute/here_util.c \
             util/env.c \
             util/ft_error_exit.c \
             util/find_env.c \
