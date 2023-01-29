@@ -6,27 +6,11 @@
 /*   By: him <him@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 18:32:35 by him               #+#    #+#             */
-/*   Updated: 2023/01/29 15:49:26 by him              ###   ########.fr       */
+/*   Updated: 2023/01/29 16:23:37 by him              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	doc_util(int num, char *buff, int fd)
-{
-	if (num == 0)
-	{
-		free(buff);
-		close(fd);
-		exit(1);
-	}
-	else if (num == 1)
-	{	
-		free(buff);
-		close(fd);
-		exit(0);
-	}
-}
 
 void	read_doc(int *fd, char *with)
 {
@@ -45,7 +29,7 @@ void	read_doc(int *fd, char *with)
 			break ;
 		}
 		len += ft_strlen(buff);
-		if (len > 3)
+		if (len > 65534)
 		{
 			ft_putstr_fd("heredoc> Too many characters in the document.", 2);
 			doc_util(0, buff, fd[1]);

@@ -6,7 +6,7 @@
 /*   By: him <him@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 19:27:09 by him               #+#    #+#             */
-/*   Updated: 2023/01/26 21:08:42 by him              ###   ########.fr       */
+/*   Updated: 2023/01/29 16:32:09 by him              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static void	env_free(t_env *env)
 	free(del_temp->key);
 	free(del_temp->value);
 	free(del_temp);
+	g_info.last_exit_num = 0;
 }
 
 static void	last_env_free(t_env *env)
@@ -32,6 +33,7 @@ static void	last_env_free(t_env *env)
 	free(del_temp->key);
 	free(del_temp->value);
 	free(del_temp);
+	g_info.last_exit_num = 0;
 }
 
 static void	first_env_free(t_env *env)
@@ -40,6 +42,7 @@ static void	first_env_free(t_env *env)
 	free(env->key);
 	free(env->value);
 	free(env);
+	g_info.last_exit_num = 0;
 }
 
 void	ft_unset(t_cmd *cmd)
@@ -60,7 +63,7 @@ void	ft_unset(t_cmd *cmd)
 			if (!env_temp->next)
 			{
 				ft_putstr_fd("not a valid identifier\n", 2);
-				return ;
+				g_info.last_exit_num = 1;
 			}
 			else if (env_temp->next->next == 0)
 				last_env_free(env_temp);
